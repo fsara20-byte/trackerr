@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CFA Level I Daily Command Center</title>
+<style>
+:root{--bg:#151821;--card:#1d2230;--card2:#242a3a;--line:#384154;--text:#f4f6fb;--muted:#b2b8c7;--accent:#9aa8ff;--good:#67d9a3;--warn:#f0c674;--bad:#ff7f8d;--soft:#2d3446}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font:14px Inter,system-ui,-apple-system,Segoe UI,sans-serif}
+header{position:sticky;top:0;z-index:5;background:rgba(21,24,33,.96);border-bottom:1px solid var(--line);padding:14px 22px}
+h1{font-size:20px;margin:0}.sub{color:var(--muted);font-size:12px;margin-top:4px}
+.wrap{max-width:1450px;margin:auto;padding:18px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}.metric{font-size:25px;font-weight:750;margin-top:5px}
+label{color:var(--muted);font-size:12px} input,select,textarea,button{font:inherit}
+input,select,textarea{width:100%;background:#202635;color:var(--text);border:1px solid var(--line);border-radius:8px;padding:8px}
+button{background:var(--accent);color:#071020;border:0;border-radius:9px;padding:9px 12px;font-weight:750;cursor:pointer}
+button.secondary{background:var(--card2);color:var(--text);border:1px solid var(--line)}
+.tabs{display:flex;gap:7px;overflow:auto;padding:8px 0 14px}.tab{white-space:nowrap;background:var(--card2);color:var(--muted)}.tab.active{background:var(--accent);color:#071020}
+.two{display:grid;grid-template-columns:1.45fr .75fr;gap:12px}.topichead{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.module{display:grid;grid-template-columns:92px minmax(260px,1fr) 92px 92px 92px 105px;gap:8px;align-items:center;padding:9px 0;border-top:1px solid var(--line)}
+.module:first-of-type{border-top:0}.modname{font-weight:650}.tiny{font-size:11px;color:var(--muted)}
+input[type=checkbox]{width:19px;height:19px;accent-color:var(--good)}progress{width:100%;height:12px}
+.task{padding:11px;border:1px solid var(--line);background:var(--card2);border-radius:10px;margin:8px 0}.task strong{display:block;margin-bottom:4px}
+.pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:3px 8px;color:var(--muted);font-size:11px}
+.toolbar{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:8px;align-items:end}.danger{color:var(--bad)}
+@media(max-width:1000px){.grid{grid-template-columns:repeat(2,1fr)}.two{grid-template-columns:1fr}.module{grid-template-columns:86px 1fr 70px 70px}.hide-sm{display:none}}
+@media(max-width:600px){.grid{grid-template-columns:1fr}.toolbar{grid-template-columns:1fr 1fr}.module{grid-template-columns:78px 1fr 64px}.mobilehide{display:none}}
+
+progress{appearance:none;-webkit-appearance:none;height:14px;border:none;border-radius:999px;overflow:hidden;background:var(--soft)}
+progress::-webkit-progress-bar{background:var(--soft);border-radius:999px}
+progress::-webkit-progress-value{background:linear-gradient(90deg,var(--accent),var(--good));border-radius:999px}
+progress::-moz-progress-bar{background:linear-gradient(90deg,var(--accent),var(--good));border-radius:999px}
+.donebox{display:flex;align-items:center;gap:8px;padding:7px 10px;border:1px solid var(--line);border-radius:9px;background:var(--card2);font-weight:700;color:var(--text)}
+.donebox input{width:18px;height:18px}
+.module.done{opacity:.68}
+.module.done .modname{text-decoration:line-through}
+.progressrow{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;margin-top:8px}
+.lefttext{font-size:12px;color:var(--muted)}
+</style></head>
+<body>
+<header><h1>CFA Level I Daily Command Center</h1><div class="sub">2026 curriculum modules • saves automatically in your browser • no login</div></header>
+<div class="wrap">
+<div class="toolbar card">
+<div><label>Plan start date</label><input type="date" id="startDate" value="2026-07-21"></div>
+<div><label>Exam date (set your exact date)</label><input type="date" id="examDate" value="2026-11-18"></div>
+<div><label>Today</label><input type="date" id="today"></div>
+<button onclick="rebuildPlan()">Rebuild plan</button>
+</div>
+
+<div class="grid" style="margin-top:12px">
+<div class="card"><label>Curriculum modules</label><div class="metric" id="totalModules">—</div><div class="tiny" id="moduleBreakdown"></div></div>
+<div class="card"><label>Overall progress</label><div class="metric" id="completed">—</div><progress id="overallProgress" max="100" value="0"></progress><div class="progressrow"><span class="lefttext" id="overallDonePct">0% complete</span><span class="lefttext" id="overallLeftPct">100% left</span></div></div>
+<div class="card"><label>Hours logged</label><div class="metric" id="hoursLogged">0</div><div class="tiny">July target: 5 h/day • August onward: 4 h/day</div></div>
+<div class="card"><label>On-track status</label><div class="metric" id="trackStatus">—</div><div class="tiny" id="trackDetail"></div></div>
+</div>
+
+<div class="tabs" id="tabs"></div>
+<div class="two">
+<section class="card">
+<div class="topichead"><div><h2 id="topicTitle" style="margin:0"></h2><div class="tiny" id="topicMeta"></div></div><span class="pill" id="topicPct"></span></div><progress id="topicProgress" max="100" value="0"></progress><div class="progressrow"><span class="lefttext" id="topicDoneText">0% complete</span><span class="lefttext" id="topicLeftText">100% left</span></div>
+<div id="modules"></div>
+</section>
+<aside>
+<div class="card">
+<h2 style="margin-top:0">Today’s exact plan</h2>
+<div id="dailyPlan"></div>
+<button class="secondary" style="width:100%;margin-top:8px" onclick="copyToday()">Copy today’s plan</button>
+</div>
+<div class="card">
+<h2 style="margin-top:0">Daily completion log</h2>
+<label>Actual study hours</label><input id="dailyHours" type="number" min="0" max="12" step=".25">
+<label style="display:block;margin-top:8px">Questions completed</label><input id="dailyQuestions" type="number" min="0">
+<label style="display:block;margin-top:8px">Main note / obstacle</label><textarea id="dailyNote" rows="3"></textarea>
+<button style="width:100%;margin-top:9px" onclick="saveDaily()">Save today</button>
+<div id="savedMsg" class="tiny" style="margin-top:7px"></div>
+</div>
+<div class="card">
+<h2 style="margin-top:0">Rules</h2>
+<div class="tiny">
+1. Finish the scheduled module before opening another.<br><br>
+2. For every module: learn → LES questions → review errors.<br><br>
+3. Do not make long notes. Save only formulas, rules and errors.<br><br>
+4. A module is complete only after its LES questions are attempted.
+</div>
+</div>
+</aside></div>
+</div>
+<script>
+const TOPICS={"Ethical and Professional Standards": ["Ethics and Trust in the Investment Profession", "Code of Ethics and Standards of Professional Conduct", "Guidance for Standards I–VII", "Introduction to the Global Investment Performance Standards (GIPS)", "Ethics Application"], "Quantitative Methods": ["Rates and Returns", "Time Value of Money in Finance", "Statistical Measures of Asset Returns", "Probability Trees and Conditional Expectations", "Portfolio Mathematics", "Simulation Methods", "Estimation and Inference", "Hypothesis Testing", "Parametric and Non-Parametric Tests of Independence", "Simple Linear Regression", "Introduction to Big Data Techniques"], "Economics": ["The Firm and Market Structures", "Understanding Business Cycles", "Fiscal Policy", "Monetary Policy", "Introduction to Geopolitics", "International Trade", "Capital Flows and the FX Market", "Exchange Rate Calculations"], "Corporate Issuers": ["Organizational Forms, Corporate Issuer Features, and Ownership", "Investors and Other Stakeholders", "Corporate Governance: Conflicts, Mechanisms, Risks, and Benefits", "Working Capital and Liquidity", "Capital Investments and Capital Allocation", "Capital Structure", "Business Models"], "Financial Statement Analysis": ["Introduction to Financial Statement Analysis", "Analyzing Income Statements", "Analyzing Balance Sheets", "Analyzing Statements of Cash Flows I", "Analyzing Statements of Cash Flows II", "Analysis of Inventories", "Analysis of Long-Term Assets", "Topics in Long-Term Liabilities and Equity", "Analysis of Income Taxes", "Financial Reporting Quality", "Financial Analysis Techniques", "Introduction to Financial Statement Modeling"], "Equity Investments": ["Market Organization and Structure", "Security Market Indexes", "Market Efficiency", "Overview of Equity Securities", "Company Analysis: Past and Present", "Industry and Competitive Analysis", "Company Analysis: Forecasting", "Equity Valuation: Concepts and Basic Tools"], "Fixed Income": ["Fixed-Income Instrument Features", "Fixed-Income Cash Flows and Types", "Fixed-Income Issuance and Trading", "Fixed-Income Markets for Corporate Issuers", "Fixed-Income Markets for Government Issuers", "Fixed-Income Bond Valuation: Prices and Yields", "Yield and Yield Spread Measures for Fixed-Rate Bonds", "Yield and Yield Spread Measures for Floating-Rate Instruments", "The Term Structure of Interest Rates: Spot, Par, and Forward Curves", "Interest Rate Risk and Return", "Yield-Based Bond Duration Measures and Properties", "Yield-Based Bond Convexity and Portfolio Properties", "Curve-Based and Empirical Fixed-Income Risk Measures", "Credit Risk", "Credit Analysis for Government Issuers", "Credit Analysis for Corporate Issuers", "Fixed-Income Securitization", "Asset-Backed Security (ABS) Instrument and Market Features", "Mortgage-Backed Security (MBS) Instrument and Market Features"], "Derivatives": ["Derivative Instrument and Derivative Market Features", "Forward Commitment and Contingent Claim Features and Instruments", "Derivative Benefits, Risks, and Issuer and Investor Uses", "Arbitrage, Replication, and the Cost of Carry in Pricing Derivatives", "Pricing and Valuation of Forward Contracts and for an Underlying with Varying Maturities", "Pricing and Valuation of Futures Contracts", "Pricing and Valuation of Interest Rates and Other Swaps", "Pricing and Valuation of Options", "Option Replication Using Put–Call Parity", "Valuing a Derivative Using a One-Period Binomial Model"], "Alternative Investments": ["Alternative Investment Features, Methods, and Structures", "Alternative Investment Performance and Returns", "Investments in Private Capital: Equity and Debt", "Real Estate and Infrastructure", "Natural Resources", "Hedge Funds", "Introduction to Digital Assets"], "Portfolio Management": ["Portfolio Risk and Return: Part I", "Portfolio Risk and Return: Part II", "Portfolio Management: An Overview", "Basics of Portfolio Planning and Construction", "The Behavioral Biases of Individuals", "Introduction to Risk Management"]};
+const ORDER=["Ethical and Professional Standards","Financial Statement Analysis","Alternative Investments","Quantitative Methods","Economics","Corporate Issuers","Equity Investments","Fixed Income","Derivatives","Portfolio Management"];
+const EST={"Ethical and Professional Standards":3,"Financial Statement Analysis":4,"Alternative Investments":3,"Quantitative Methods":4,"Economics":3.5,"Corporate Issuers":3,"Equity Investments":3.5,"Fixed Income":4,"Derivatives":3.5,"Portfolio Management":3.5};
+let state=JSON.parse(localStorage.getItem("cfaSpecificV2")||"{}");
+state.modules=state.modules||{}; state.daily=state.daily||{}; state.active=state.active||"Financial Statement Analysis";
+document.getElementById("today").value=new Date().toISOString().slice(0,10);
+
+function key(t,i){return t+"::"+i}
+function getM(t,i){return state.modules[key(t,i)]||{done:false,hours:0,questions:0,score:"",confidence:""}}
+function save(){localStorage.setItem("cfaSpecificV2",JSON.stringify(state));updateSummary()}
+function renderTabs(){const x=document.getElementById("tabs");x.innerHTML="";ORDER.forEach(t=>{let b=document.createElement("button");b.className="tab "+(t===state.active?"active":"");b.textContent=t+" ("+TOPICS[t].length+")";b.onclick=()=>{state.active=t;save();render()};x.appendChild(b)})}
+function renderModules(){
+ const t=state.active, list=TOPICS[t]; document.getElementById("topicTitle").textContent=t;
+ const done=list.filter((_,i)=>getM(t,i).done).length;
+ document.getElementById("topicMeta").textContent=list.length+" modules • estimated "+(list.length*EST[t]).toFixed(1)+" first-pass hours";
+ const pct=Math.round(done/list.length*100);
+ document.getElementById("topicPct").textContent=pct+"% complete";
+ document.getElementById("topicProgress").value=pct;
+ document.getElementById("topicDoneText").textContent=pct+"% complete";
+ document.getElementById("topicLeftText").textContent=(100-pct)+"% left";
+ const c=document.getElementById("modules");c.innerHTML="";
+ list.forEach((name,i)=>{const m=getM(t,i);let d=document.createElement("div");d.className="module"+(m.done?" done":"");
+ d.innerHTML=`<label class="donebox"><input type="checkbox" ${m.done?"checked":""} onchange="setM('${esc(t)}',${i},'done',this.checked)"><span>Done</span></label>
+ <div><div class="modname">${i+1}. ${name}</div><div class="tiny">Learn content → complete LES questions → review every error</div></div>
+ <div><label>Hours</label><input type="number" step=".25" value="${m.hours||""}" onchange="setM('${esc(t)}',${i},'hours',this.value)"></div>
+ <div><label>Questions</label><input type="number" value="${m.questions||""}" onchange="setM('${esc(t)}',${i},'questions',this.value)"></div>
+ <div class="mobilehide"><label>Score %</label><input type="number" value="${m.score||""}" onchange="setM('${esc(t)}',${i},'score',this.value)"></div>
+ <div class="hide-sm"><label>Confidence 1–5</label><input type="number" min="1" max="5" value="${m.confidence||""}" onchange="setM('${esc(t)}',${i},'confidence',this.value)"></div>`;
+ c.appendChild(d)})
+}
+function esc(s){return s.replaceAll("'","\\'")}
+function setM(t,i,f,v){let m=getM(t,i);m[f]=f==="done"?v:(v===""?"":Number(v));state.modules[key(t,i)]=m;save();renderModules();renderPlan()}
+function availableHours(date){return date.getMonth()===6?5:4}
+function unfinished(){let a=[];ORDER.forEach(t=>TOPICS[t].forEach((n,i)=>{if(!getM(t,i).done)a.push({t,n,i,need:Math.max(.75,EST[t]-(Number(getM(t,i).hours)||0))})}));return a}
+function buildSchedule(){
+ let queue=unfinished(), schedule={}, d=new Date(document.getElementById("startDate").value+"T12:00:00"), end=new Date(document.getElementById("examDate").value+"T12:00:00");
+ let q=0, remaining=queue[0]?queue[0].need:0;
+ while(d<=end && q<queue.length){let cap=availableHours(d), tasks=[];while(cap>.01 && q<queue.length){
+   let use=Math.min(cap,remaining); tasks.push({t:queue[q].t,n:queue[q].n,i:queue[q].i,h:+use.toFixed(2),finish:use>=remaining-.01});
+   cap-=use;remaining-=use;if(remaining<=.01){q++;remaining=queue[q]?queue[q].need:0}
+ } schedule[d.toISOString().slice(0,10)]=tasks;d.setDate(d.getDate()+1)}
+ return schedule
+}
+function renderPlan(){
+ const date=document.getElementById("today").value,s=buildSchedule()[date]||[],c=document.getElementById("dailyPlan");c.innerHTML="";
+ if(!s.length){c.innerHTML='<div class="task">No scheduled curriculum work. Use today for mixed questions, error-log review or a mock.</div>';return}
+ s.forEach(x=>{let learn=Math.round(x.h*60*.58),qs=Math.round(x.h*60*.30),rev=Math.max(10,Math.round(x.h*60*.12));
+ let d=document.createElement("div");d.className="task";d.innerHTML=`<strong>${x.t} — Module ${x.i+1}</strong><div>${x.n}</div>
+ <div class="tiny" style="margin-top:6px">${x.h} h total: ${learn} min LES content • ${qs} min LES questions • ${rev} min error review ${x.finish?"• Finish module today":"• Continue next day"}</div>`;c.appendChild(d)})
+}
+function updateSummary(){
+ let total=0,done=0,h=0;ORDER.forEach(t=>TOPICS[t].forEach((_,i)=>{total++;let m=getM(t,i);if(m.done)done++;h+=Number(m.hours)||0}));
+ Object.values(state.daily).forEach(x=>h+=Number(x.hours)||0);
+ document.getElementById("totalModules").textContent=total;
+ document.getElementById("moduleBreakdown").textContent=ORDER.map(t=>t.split(" ")[0]+": "+TOPICS[t].length).join(" • ");
+ document.getElementById("completed").textContent=done+" / "+total;
+ const overallPct=Math.round(done/total*100);
+ document.getElementById("overallProgress").value=overallPct;
+ document.getElementById("overallDonePct").textContent=overallPct+"% complete";
+ document.getElementById("overallLeftPct").textContent=(100-overallPct)+"% left";
+ document.getElementById("hoursLogged").textContent=h.toFixed(1);
+ let now=new Date(document.getElementById("today").value+"T12:00:00"), start=new Date(document.getElementById("startDate").value+"T12:00:00");
+ let expected=0,d=new Date(start);while(d<=now){expected+=availableHours(d);d.setDate(d.getDate()+1)}
+ let delta=h-expected, status=delta>=-2?"ON TRACK":"BEHIND";document.getElementById("trackStatus").textContent=status;
+ document.getElementById("trackStatus").style.color=status==="ON TRACK"?"var(--good)":"var(--bad)";
+ document.getElementById("trackDetail").textContent=(delta>=0?delta.toFixed(1)+" hours ahead":Math.abs(delta).toFixed(1)+" hours behind")+" versus the 5h/4h daily plan";
+}
+function saveDaily(){let d=document.getElementById("today").value;state.daily[d]={hours:Number(document.getElementById("dailyHours").value)||0,questions:Number(document.getElementById("dailyQuestions").value)||0,note:document.getElementById("dailyNote").value};save();document.getElementById("savedMsg").textContent="Saved for "+d}
+function loadDaily(){let x=state.daily[document.getElementById("today").value]||{};document.getElementById("dailyHours").value=x.hours||"";document.getElementById("dailyQuestions").value=x.questions||"";document.getElementById("dailyNote").value=x.note||""}
+function rebuildPlan(){state.startDate=document.getElementById("startDate").value;state.examDate=document.getElementById("examDate").value;save();renderPlan()}
+function copyToday(){let text=[...document.querySelectorAll("#dailyPlan .task")].map(x=>x.innerText).join("\n\n");navigator.clipboard.writeText(text)}
+function render(){renderTabs();renderModules();renderPlan();loadDaily();updateSummary()}
+["today","startDate","examDate"].forEach(id=>document.getElementById(id).addEventListener("change",()=>{renderPlan();loadDaily();updateSummary()}));
+render();
+</script></body></html>
