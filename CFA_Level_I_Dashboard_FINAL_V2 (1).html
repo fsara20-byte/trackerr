@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>CFA Level I Study Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=IBM+Plex+Mono:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+:root{
+--bg:#f4f1e8;--card:#fffdf8;--card2:#efe9d9;--line:#ddd3b8;
+--text:#131a2c;--muted:#6c6455;--accent:#8a6a1f;--accent2:#1f5c46;
+--good:#1f6b45;--warn:#a5670a;--bad:#8c3232;--soft:#e9e1cb;
+--body-bg:
+radial-gradient(circle at 12% 5%,rgba(169,121,31,.06),transparent 30%),
+radial-gradient(circle at 90% 18%,rgba(31,92,70,.05),transparent 28%),
+linear-gradient(180deg,#f8f5ee 0%,#f2eee1 100%);
+--header-bg:rgba(248,245,238,.92);--input-bg:#fffdf8;
+--shadow:0 10px 30px rgba(19,26,44,.08);--button-text:#fffdf8;
+--serif:'Playfair Display',Georgia,'Times New Roman',serif;
+--mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth} html{color-scheme:light} body{margin:0;background:var(--body-bg);color:var(--text);font:14px/1.5 'Inter',system-ui,-apple-system,Segoe UI,sans-serif;transition:background .2s ease,color .2s ease}
+h1,h2,h3{font-family:var(--serif);font-weight:700;letter-spacing:.2px}
+header{position:sticky;top:0;z-index:5;background:var(--header-bg);border-bottom:1px solid var(--line);padding:16px 22px;backdrop-filter:blur(14px)}
+h1{font-size:22px;margin:0;letter-spacing:.3px}.sub{color:var(--muted);font-size:12px;margin-top:5px;letter-spacing:.15px}
+.wrap{max-width:1450px;margin:auto;padding:18px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;box-shadow:var(--shadow)}.metric{font-family:var(--mono);font-size:24px;font-weight:600;margin-top:6px;letter-spacing:-.2px}
+label{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.06em} input,select,textarea,button{font:inherit}
+input,select,textarea{width:100%;background:var(--input-bg);color:var(--text);border:1px solid var(--line);border-radius:6px;padding:8px}
+button{background:var(--accent);color:var(--button-text);border:1px solid var(--accent);border-radius:6px;padding:9px 14px;font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.06em;cursor:pointer}
+button.secondary{background:transparent;color:var(--text);border:1px solid var(--line)}
+.tabs{display:flex;gap:4px;overflow:auto;padding:8px 0 16px;border-bottom:1px solid var(--line)}
+.tab{white-space:nowrap;background:transparent;color:var(--muted);border:0;border-bottom:2px solid transparent;border-radius:0;padding:9px 12px 11px;display:flex;flex-direction:column;align-items:flex-start;gap:3px;box-shadow:none!important}
+.tab-name{font-size:12.5px;font-weight:700;letter-spacing:.02em}
+.tab-sub{font-size:10px;color:var(--muted);font-family:var(--mono);letter-spacing:0}
+.tab.active{background:transparent;color:var(--text);border-bottom-color:var(--accent)}
+.tab.active .tab-sub{color:var(--accent)}
+.two{display:grid;grid-template-columns:1.45fr .75fr;gap:12px}.topichead{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.module{display:grid;grid-template-columns:92px minmax(260px,1fr) 92px 92px 92px 105px;gap:8px;align-items:center;padding:9px 0;border-top:1px solid var(--line)}
+.module:first-of-type{border-top:0}.modname{font-weight:650}.tiny{font-size:11px;color:var(--muted)}
+input[type=checkbox]{width:19px;height:19px;accent-color:var(--good)}progress{width:100%;height:12px}
+.task{padding:11px;border:1px solid var(--line);background:var(--card2);border-radius:8px;margin:8px 0}.task strong{display:block;margin-bottom:4px}
+.pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:3px 8px;color:var(--muted);font-size:11px;font-family:var(--mono)}
+.toolbar{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:8px;align-items:end}.danger{color:var(--bad)}
+@media(max-width:1000px){.grid{grid-template-columns:repeat(2,1fr)}.two{grid-template-columns:1fr}.module{grid-template-columns:86px 1fr 70px 70px}.hide-sm{display:none}}
+@media(max-width:600px){.grid{grid-template-columns:1fr}.toolbar{grid-template-columns:1fr 1fr}.module{grid-template-columns:78px 1fr 64px}.mobilehide{display:none}}
+
+progress{appearance:none;-webkit-appearance:none;height:10px;border:none;border-radius:3px;overflow:hidden;background:var(--soft)}
+progress::-webkit-progress-bar{background:var(--soft);border-radius:3px}
+progress::-webkit-progress-value{background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:3px}
+progress::-moz-progress-bar{background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:3px}
+.donebox{display:flex;align-items:center;gap:8px;padding:7px 10px;border:1px solid var(--line);border-radius:6px;background:var(--card2);font-weight:700;color:var(--text)}
+.donebox input{width:18px;height:18px}
+.module.done{opacity:.68}
+.module.done .modname{text-decoration:line-through}
+.progressrow{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;margin-top:8px}
+.lefttext{font-size:12px;color:var(--muted)}
+
+.pomodoro-shell{background:linear-gradient(135deg,rgba(101,116,232,.08),rgba(47,158,115,.08));border:1px solid var(--line);border-radius:20px;padding:18px}
+.pomodoro-wrap{display:grid;grid-template-columns:1.2fr .8fr;gap:16px;align-items:stretch}
+.pomo-left,.pomo-right{background:rgba(255,255,255,.55);border:1px solid var(--line);border-radius:18px;padding:16px}
+html[data-theme="dark"] .pomo-left,html[data-theme="dark"] .pomo-right{background:rgba(255,255,255,.03)}
+.pomo-topline{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.mode-pill{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;background:var(--card2);border:1px solid var(--line);font-size:12px;color:var(--muted)}
+.mode-dot{width:8px;height:8px;border-radius:999px;background:var(--accent);display:inline-block}
+.timer-mode{text-align:center;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1.3px}
+@property --timer-progress{syntax:"<angle>";inherits:false;initial-value:0deg}
+.timer-ring{--timer-progress:0deg;display:flex;align-items:center;justify-content:center;width:240px;height:240px;margin:14px auto;border-radius:999px;background:
+radial-gradient(circle at 50% 50%, var(--card) 0 58%, transparent 59%),
+conic-gradient(from -90deg,var(--accent) 0deg,var(--good) var(--timer-progress),var(--soft) var(--timer-progress),var(--soft) 360deg);
+box-shadow:inset 0 0 0 10px rgba(255,255,255,.35),0 18px 40px rgba(66,72,102,.10);
+transition:--timer-progress .2s linear}
+html[data-theme="dark"] .timer-ring{box-shadow:inset 0 0 0 10px rgba(255,255,255,.05),0 18px 40px rgba(0,0,0,.22)}
+.timer-display{font-family:var(--mono);font-size:56px;font-weight:600;letter-spacing:1px;text-align:center}
+.timer-sub{margin-top:6px;text-align:center;color:var(--muted);font-size:12px}
+.timer-controls{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:8px;margin-top:14px}
+.timer-controls button{height:42px;border-radius:12px}
+.timer-controls button:first-child{box-shadow:0 8px 22px rgba(101,116,232,.22)}
+.timer-settings{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.setting-card{padding:10px;border:1px solid var(--line);background:var(--card2);border-radius:14px}
+.setting-card label{display:block;margin-bottom:6px}
+.setting-card input{text-align:center;font-weight:700}
+.focus-lock{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border:1px solid var(--line);background:var(--card2);border-radius:14px;margin-top:14px}
+.stats-grid{display:grid;grid-template-columns:1fr;gap:10px}
+.stat-card{padding:14px;border:1px solid var(--line);background:var(--card2);border-radius:16px}
+.stat-label{font-size:12px;color:var(--muted);margin-bottom:6px}
+.session-count{font-size:30px;font-weight:800;line-height:1}
+.stat-main{font-size:18px;font-weight:750}
+.focus-rule{line-height:1.55}
+@media(max-width:900px){.pomodoro-wrap{grid-template-columns:1fr}.timer-ring{width:220px;height:220px}}
+@media(max-width:650px){.timer-settings{grid-template-columns:1fr}.timer-controls{grid-template-columns:1fr 1fr 1fr}.timer-display{font-size:50px}}
+
+.header-row{display:flex;align-items:center;justify-content:space-between;gap:16px}.live-clock{text-align:right;min-width:270px}.live-clock #liveDay{font-size:12px;color:var(--muted)}.live-clock strong{display:block;font-family:var(--mono);font-size:21px;font-weight:600;letter-spacing:.5px}.live-clock>span{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+.clock-switcher{display:flex;justify-content:flex-end;gap:4px;margin-bottom:6px;flex-wrap:wrap}
+.clock-zone-btn{background:transparent;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:4px 8px;font-size:9px;line-height:1;text-transform:uppercase;letter-spacing:.45px;box-shadow:none}
+.clock-zone-btn:hover,.clock-zone-btn.active{border-color:var(--accent);color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,var(--card))}
+.today-badge{display:inline-flex;align-items:center;gap:6px;margin-top:6px;padding:4px 8px;border:1px solid var(--line);border-radius:999px;color:var(--good);font-size:11px}.toolbar-actions{display:flex;gap:8px}.toolbar-actions button{height:36px}.auto-note{margin-top:5px;color:var(--muted);font-size:10px}@media(max-width:650px){.header-row{align-items:flex-start}.live-clock{min-width:auto}.clock-switcher{justify-content:flex-start}.live-clock{text-align:left}.live-clock strong{font-size:18px}.live-clock #liveDay{max-width:160px}.toolbar-actions{grid-column:1/-1}.toolbar-actions button{flex:1}}
+
+.plan-topline{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.plan-actions{display:flex;gap:6px;flex-wrap:wrap}
+.plan-actions button{padding:7px 10px;font-size:12px}
+#planEditor{min-height:260px;line-height:1.55;resize:vertical;margin-top:8px;background:var(--input-bg)}
+.custom-plan-note{font-size:10px;color:var(--accent);margin:5px 0 2px}
+.task.custom{white-space:pre-wrap;line-height:1.5}
+[hidden]{display:none!important}
+
+#weightList{margin-top:10px}
+.weight-row{padding:9px 0;border-top:1px solid var(--line)}
+.weight-row:first-child{border-top:0;padding-top:2px}
+.weight-row-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:5px}
+.weight-row-name{font-size:12px;font-weight:650;color:var(--text)}
+.weight-row-range{font-family:var(--mono);font-size:11px;color:var(--accent);white-space:nowrap}
+.weight-track{height:5px;border-radius:3px;background:var(--soft);overflow:hidden;position:relative}
+.weight-mass{position:absolute;inset:0;background:color-mix(in srgb,var(--accent) 22%,transparent);border-radius:3px}
+.weight-fill{position:absolute;inset:0;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:3px}
+.weight-row-foot{margin-top:4px;font-size:10px;color:var(--muted);font-family:var(--mono)}
+
+html[data-theme="dark"]{color-scheme:dark;--bg:#0b0f17;--card:#131926;--card2:#1a2233;--line:#2c3346;--text:#f1ede1;--muted:#9aa0b4;--accent:#d4af37;--accent2:#3f8f6c;--good:#4caf7d;--warn:#d9a441;--bad:#c0524f;--soft:#212a3d;--body-bg:linear-gradient(180deg,#0c111c 0,#090d15 100%);--header-bg:rgba(11,15,23,.94);--input-bg:#161e2d;--shadow:0 8px 28px rgba(0,0,0,.32);--button-text:#0b0f17}
+.theme-area{display:flex;align-items:center;gap:10px}.theme-toggle{display:flex;align-items:center;gap:8px;background:transparent;color:var(--text);border:1px solid var(--line);padding:8px 11px;min-width:118px;justify-content:center;border-radius:6px;font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-weight:600}.theme-toggle:hover{border-color:var(--accent);color:var(--accent)}.theme-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)}
+@media(max-width:650px){.theme-area{flex-direction:column;align-items:flex-end;gap:6px}.theme-toggle{min-width:105px;padding:7px 9px}}
+
+.mock-section{margin-top:12px}.mock-header{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:14px}.mock-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}.mock-stat{background:var(--card2);border:1px solid var(--line);border-radius:11px;padding:12px}.mock-stat .metric{font-size:22px}.mock-form{display:grid;grid-template-columns:1.2fr 1.4fr .7fr .7fr;gap:10px;align-items:end}.mock-notes{grid-column:1/-1}.mock-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:10px}.topic-score-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:10px}.mock-table-wrap{overflow:auto;margin-top:14px}.mock-table{width:100%;border-collapse:collapse;min-width:760px}.mock-table th,.mock-table td{padding:10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}.mock-table th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.4px}.mock-table button{padding:6px 9px;font-size:12px}.mock-trend{display:flex;align-items:flex-end;gap:8px;height:130px;padding:12px 4px 0;margin-top:10px;border-bottom:1px solid var(--line)}.trend-item{flex:1;min-width:32px;max-width:70px;text-align:center}.trend-bar{width:100%;min-height:4px;background:linear-gradient(180deg,var(--accent),var(--good));border-radius:7px 7px 2px 2px}.trend-label{font-size:10px;color:var(--muted);margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.trend-score{font-size:10px;font-weight:700;margin-bottom:4px}.empty-state{padding:18px;text-align:center;color:var(--muted);background:var(--card2);border:1px dashed var(--line);border-radius:10px}.mock-details summary{cursor:pointer;color:var(--text);font-weight:700;margin-top:12px}.score-good{color:var(--good);font-weight:750}.score-warn{color:var(--warn);font-weight:750}.score-bad{color:var(--bad);font-weight:750}
+@media(max-width:900px){.mock-summary{grid-template-columns:repeat(2,1fr)}.mock-form{grid-template-columns:1fr 1fr}.topic-score-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.mock-summary,.mock-form{grid-template-columns:1fr}.topic-score-grid{grid-template-columns:1fr}.mock-actions{flex-direction:column}.mock-actions button{width:100%}}
+
+body::before{
+content:"";position:fixed;inset:0;pointer-events:none;opacity:.28;
+background-image:
+linear-gradient(rgba(90,74,40,.05) 1px,transparent 1px),
+linear-gradient(90deg,rgba(90,74,40,.05) 1px,transparent 1px);
+background-size:44px 44px;mask-image:linear-gradient(to bottom,black,transparent 72%);
+}
+header{backdrop-filter:blur(14px)}
+button{transition:filter .16s ease,border-color .16s ease}
+button:hover{filter:brightness(1.08)}
+button.secondary:hover{border-color:var(--accent);color:var(--accent)}
+.top-nav{max-width:1450px;margin:0 auto;padding:0 18px 14px;display:flex;gap:8px;overflow:auto}
+.top-nav a{display:inline-flex;align-items:center;white-space:nowrap;padding:8px 13px;border:1px solid var(--line);border-radius:4px;background:var(--card);color:var(--muted);text-decoration:none;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.top-nav a:hover{border-color:var(--accent);color:var(--accent)}
+.finance-hero{max-width:1450px;margin:16px auto 18px;padding:0 18px}
+.finance-hero-card{position:relative;overflow:hidden;border-radius:14px;padding:32px 34px;background:
+linear-gradient(120deg,#0c1e3d 0%,#132c52 58%,#0f3a30 100%);color:#f4f1e8;box-shadow:0 20px 48px rgba(12,25,50,.24);border:1px solid rgba(212,175,55,.25)}
+.finance-hero-card::before{content:"";position:absolute;inset:0;opacity:.14;background-image:
+linear-gradient(rgba(244,241,232,.18) 1px,transparent 1px),
+linear-gradient(90deg,rgba(244,241,232,.18) 1px,transparent 1px);background-size:48px 48px}
+.finance-hero-card::after{content:"";position:absolute;right:-40px;top:-70px;width:430px;height:260px;border:1px solid rgba(212,175,55,.35);border-radius:50%;transform:rotate(-13deg);box-shadow:
+-70px 68px 0 -1px rgba(212,175,55,.14),
+-145px 122px 0 -1px rgba(212,175,55,.08)}
+.finance-hero-content{position:relative;z-index:1;max-width:700px}
+.finance-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:2px;font-weight:600;color:#d4af37;text-transform:uppercase}
+.finance-title{margin:12px 0 10px;font-family:var(--serif);font-size:33px;line-height:1.14;font-weight:700;color:#f4f1e8}
+.finance-copy{max-width:620px;color:rgba(244,241,232,.72);line-height:1.6}
+.finance-badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.finance-badge{padding:7px 12px;border:1px solid rgba(212,175,55,.35);border-radius:3px;background:rgba(212,175,55,.08);font-size:10.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:#e7dcb8}
+.section-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:26px 0 12px}
+.section-heading h2{margin:0;font-size:19px}
+.section-heading p{margin:4px 0 0;color:var(--muted);font-size:12px}
+#focus,#overview,#curriculum,#plan,#mockExams{scroll-margin-top:110px}
+#pomodoroTop{border:1px solid color-mix(in srgb,var(--accent) 20%,var(--line))}
+.pomodoro-shell{background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 8%,var(--card)),color-mix(in srgb,var(--accent2) 7%,var(--card)))}
+.module{padding:12px 0}
+.module:hover{background:color-mix(in srgb,var(--card2) 65%,transparent)}
+.mock-section{margin-top:18px}
+@media(max-width:700px){
+.finance-hero-card{padding:24px 20px}.finance-title{font-size:26px}
+.top-nav{padding-bottom:10px}.finance-hero{margin-top:12px}
+}
+
+
+.history-section,.sync-section,.resources-section{margin-top:18px}
+.section-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.history-toolbar{display:grid;grid-template-columns:1.2fr .8fr auto;gap:8px;align-items:end;margin:12px 0}
+.history-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0}
+.history-stat{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:12px}
+.history-table-wrap{overflow:auto}
+.history-table{width:100%;border-collapse:collapse;min-width:720px}
+.history-table th,.history-table td{padding:10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.history-table th{font-size:11px;text-transform:uppercase;letter-spacing:.45px;color:var(--muted)}
+.history-table button{padding:6px 9px;font-size:12px}
+.sync-actions{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:12px}
+.sync-code{min-height:108px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;resize:vertical}
+.sync-status{margin-top:8px;color:var(--muted);font-size:11px}
+.resource-card{display:flex;flex-direction:column;justify-content:space-between;gap:14px;min-height:170px;padding:18px;border:1px solid var(--line);border-radius:16px;background:
+linear-gradient(145deg,color-mix(in srgb,var(--accent) 6%,var(--card)),var(--card))}
+.resource-card h3{margin:0;font-size:18px}
+.resource-card p{margin:7px 0 0;color:var(--muted);line-height:1.55}
+.resource-card a{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;background:var(--accent);color:var(--button-text);padding:10px 12px;border-radius:10px;font-weight:750}
+.resource-tag{display:inline-flex;width:max-content;padding:5px 8px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:10px;font-weight:750;text-transform:uppercase;letter-spacing:.55px}
+.backup-warning{padding:10px 12px;border:1px solid color-mix(in srgb,var(--warn) 42%,var(--line));border-radius:11px;background:color-mix(in srgb,var(--warn) 7%,var(--card));font-size:11px;color:var(--muted);line-height:1.5}
+@media(max-width:850px){
+.section-grid{grid-template-columns:1fr}
+.history-summary{grid-template-columns:1fr 1fr 1fr}
+}
+@media(max-width:700px){
+.module{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0;padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--card2)}
+.module>div:nth-child(2){grid-column:1/-1;order:-1}
+.module .donebox{width:max-content}
+.module>div:not(:nth-child(2)){min-width:0}
+.hide-sm,.mobilehide{display:block}
+.history-toolbar{grid-template-columns:1fr}
+.history-summary{grid-template-columns:1fr}
+.sync-actions{grid-template-columns:1fr}
+}
+
+
+.resource-links{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.resource-links a{width:100%}
+@media(max-width:560px){.resource-links{grid-template-columns:1fr}}
+
+.applications-section{margin-top:18px}
+.application-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0}
+.application-stat{background:var(--card2);border:1px solid var(--line);border-radius:13px;padding:12px}
+.application-toolbar{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;margin:12px 0}
+.application-table-wrap{overflow:auto}
+.application-table{width:100%;border-collapse:collapse;min-width:1160px}
+.application-table th,.application-table td{padding:9px 7px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.application-table th{font-size:10px;text-transform:uppercase;letter-spacing:.55px;color:var(--muted)}
+.application-table input,.application-table select{min-width:110px;padding:7px;font-size:12px}
+.application-table .school-input{min-width:135px;font-weight:750}
+.application-table .program-input{min-width:190px}
+.application-table .notes-input{min-width:230px}
+.application-link{display:inline-flex;align-items:center;justify-content:center;padding:7px 9px;border-radius:8px;background:var(--accent);color:var(--button-text);text-decoration:none;font-size:11px;font-weight:750;white-space:nowrap}
+.deadline-count{font-weight:800;white-space:nowrap}
+.deadline-count.urgent{color:var(--bad)}
+.deadline-count.soon{color:var(--warn)}
+.deadline-count.safe{color:var(--good)}
+.deadline-count.tbc{color:var(--muted)}
+.application-note{padding:10px 12px;border:1px solid var(--line);border-radius:11px;background:var(--card2);color:var(--muted);font-size:11px;line-height:1.55}
+@media(max-width:850px){.application-summary{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.application-summary{grid-template-columns:1fr}}
+
+
+.header-title-area{min-width:0}
+.exam-countdown{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:9px}
+.countdown-label{font-size:10px;font-weight:800;letter-spacing:.9px;text-transform:uppercase;color:var(--muted);margin-right:3px}
+.countdown-unit{display:inline-flex;align-items:baseline;gap:4px;padding:6px 9px;border:1px solid var(--line);border-radius:4px;background:var(--card2);box-shadow:none}
+.countdown-value{font-family:var(--mono);font-size:16px;font-weight:600;line-height:1;color:var(--accent)}
+.countdown-name{font-size:9px;text-transform:uppercase;letter-spacing:.55px;color:var(--muted)}
+.countdown-date{font-size:10px;color:var(--muted);margin-left:3px}
+.exam-countdown.finished .countdown-unit{border-color:color-mix(in srgb,var(--good) 38%,var(--line))}
+.exam-countdown.finished .countdown-value{color:var(--good)}
+@media(max-width:760px){
+.header-row{flex-direction:column;align-items:stretch}
+.theme-area{flex-direction:row;align-items:center;justify-content:space-between}
+.exam-countdown{gap:5px}
+.countdown-unit{padding:5px 7px}
+.countdown-value{font-size:14px}
+.countdown-date{width:100%;margin:1px 0 0}
+}
+
+
+/* Final study-system upgrade */
+.grid{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+.schedule-settings{margin-top:12px}
+.schedule-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;align-items:end}
+.readiness-breakdown{margin-top:8px;font-size:10px;color:var(--muted);line-height:1.55}
+.readiness-score{color:var(--accent)}
+.review-row{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:7px}
+.review-row button{padding:5px 7px;font-size:9px}
+.review-badge{display:inline-flex;padding:4px 7px;border:1px solid var(--line);border-radius:999px;font-family:var(--mono);font-size:9px;color:var(--muted)}
+.review-badge.due{border-color:color-mix(in srgb,var(--bad) 45%,var(--line));color:var(--bad);background:color-mix(in srgb,var(--bad) 6%,var(--card))}
+.review-badge.soon{border-color:color-mix(in srgb,var(--warn) 45%,var(--line));color:var(--warn)}
+.weak-panel{margin:14px 0;padding:14px;border:1px solid var(--line);border-radius:10px;background:var(--card2)}
+.weak-list{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
+.weak-item{padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--card)}
+.weak-item strong{display:block}.weak-score{font-family:var(--mono);color:var(--bad);margin-top:4px}
+.error-section{margin-top:18px}
+.error-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0}
+.error-stat{padding:12px;background:var(--card2);border:1px solid var(--line);border-radius:11px}
+.error-form{display:grid;grid-template-columns:1fr 1.2fr 1.2fr 1fr;gap:10px;align-items:end}
+.error-wide{grid-column:span 2}
+.error-table-wrap{overflow:auto;margin-top:14px}
+.error-table{width:100%;border-collapse:collapse;min-width:1050px}
+.error-table th,.error-table td{padding:9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.error-table th{font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}
+.error-table button{padding:6px 8px;font-size:10px}
+.due-review-banner{padding:9px 11px;border-left:3px solid var(--warn);background:color-mix(in srgb,var(--warn) 7%,var(--card));margin-bottom:9px;font-size:11px;line-height:1.5}
+.collapsible-section>.collapse-head{position:relative;padding-right:110px}
+.collapse-toggle{position:absolute;right:0;top:0;background:transparent!important;color:var(--muted)!important;border-color:var(--line)!important;padding:6px 9px!important;font-size:10px!important}
+.collapsible-section.collapsed>:not(:first-child){display:none!important}
+.app-checklist{min-width:240px}.app-checklist summary{cursor:pointer;font-weight:700;color:var(--text)}
+.app-check-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px}
+.app-check-item{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:10px}.app-check-item input{width:16px;height:16px}
+.app-small-input{min-width:125px!important}
+@media(max-width:1000px){.schedule-grid{grid-template-columns:repeat(3,1fr)}.weak-list{grid-template-columns:1fr}.error-form{grid-template-columns:1fr 1fr}.error-summary{grid-template-columns:1fr 1fr}}
+@media(max-width:650px){.schedule-grid,.error-form,.error-summary{grid-template-columns:1fr}.error-wide{grid-column:auto}.module{grid-template-columns:1fr 1fr}.review-row{grid-column:1/-1}}
+
+</style></head>
+<body>
+<header><div class="header-row"><div class="header-title-area">
+  <h1>CFA Level I Study Dashboard</h1>
+  <div class="exam-countdown" id="examCountdown" aria-live="polite">
+    <span class="countdown-label">Exam countdown</span>
+    <span class="countdown-unit"><span class="countdown-value" id="countdownMonths">—</span><span class="countdown-name">Months</span></span>
+    <span class="countdown-unit"><span class="countdown-value" id="countdownDays">—</span><span class="countdown-name">Days</span></span>
+    <span class="countdown-unit"><span class="countdown-value" id="countdownTotalDays">—</span><span class="countdown-name">Total days left</span></span>
+    <span class="countdown-date" id="countdownDateLabel">Set your exam date below</span>
+  </div>
+  <div class="sub">Daily focus, curriculum and mock tracking</div>
+</div><div class="theme-area"><button aria-pressed="false" class="theme-toggle" id="themeToggle" onclick="toggleTheme()" type="button"><span class="theme-dot"></span><span id="themeToggleText">Dark mode</span></button><div class="live-clock">
+  <div class="clock-switcher" role="group" aria-label="Display time zone">
+    <button class="clock-zone-btn" data-clock-zone="Dubai" onclick="setClockZone('Dubai')" type="button">Dubai</button>
+    <button class="clock-zone-btn" data-clock-zone="Europe" onclick="setClockZone('Europe')" type="button">Europe</button>
+    <button class="clock-zone-btn" data-clock-zone="Singapore" onclick="setClockZone('Singapore')" type="button">Singapore</button>
+  </div>
+  <div id="liveDay">—</div>
+  <strong id="liveTime">—</strong>
+  <span id="liveZoneLabel">Dubai time</span>
+</div></div></div>
+</header>
+<nav class="top-nav" aria-label="Dashboard sections">
+  <a href="#focus">Focus timer</a>
+  <a href="#overview">Overview</a>
+  <a href="#plan">Daily plan</a>
+  <a href="#curriculum">Curriculum</a>
+  <a href="#mockExams">Mock exams</a><a href="#errorLog">Error log</a><a href="#mifApplications">MiF deadlines</a><a href="#history">History</a><a href="#sync">Backup & sync</a><a href="#resources">News & jobs</a>
+</nav>
+<section class="finance-hero">
+  <div class="finance-hero-card">
+    <div class="finance-hero-content">
+      <div class="finance-eyebrow">CFA LEVEL I • STUDY CONTROL</div>
+      <div class="finance-title">One dashboard for focused daily execution.</div>
+      <div class="finance-copy">Track modules, study hours, practice questions and mock performance without turning the site into another distraction.</div>
+      <div class="finance-badges">
+        <span class="finance-badge">Dubai · Europe · Singapore</span>
+        <span class="finance-badge">Daily study plan</span>
+        <span class="finance-badge">Mock analytics</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+<div class="card" id="focus" style="margin-bottom:12px">
+  <h2 style="margin-top:0">Pomodoro Focus Timer</h2>
+  <div class="pomodoro-shell">
+    <div class="pomodoro-wrap">
+      <div class="pomo-left">
+        <div class="pomo-topline">
+          <div class="mode-pill"><span class="mode-dot"></span><span id="timerMode">Focus session</span></div>
+          <div class="pill">Stay on one task only</div>
+        </div>
+        <div class="timer-ring" id="timerRing" role="progressbar" aria-label="Pomodoro session elapsed time" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <div>
+            <div class="timer-display" id="timerDisplay">25:00</div>
+            <div class="timer-sub" id="timerProgressText">0% elapsed</div>
+          </div>
+        </div>
+        <div class="timer-controls">
+          <button onclick="startTimer()">Start</button>
+          <button class="secondary" onclick="pauseTimer()">Pause</button>
+          <button class="secondary" onclick="resetTimer()">Reset</button>
+        </div>
+        <div class="timer-settings">
+          <div class="setting-card">
+            <label>Focus minutes</label>
+            <input id="focusMinutes" max="120" min="5" type="number" value="25"/>
+          </div>
+          <div class="setting-card">
+            <label>Short break</label>
+            <input id="shortBreakMinutes" max="30" min="1" type="number" value="5"/>
+          </div>
+          <div class="setting-card">
+            <label>Long break</label>
+            <input id="longBreakMinutes" max="60" min="5" type="number" value="15"/>
+          </div>
+        </div>
+        <div class="focus-lock">
+          <div>
+            <strong>Focus mode</strong>
+            <div class="tiny">Hide distractions while the timer is running</div>
+          </div>
+          <input checked="" id="focusModeToggle" style="width:20px;height:20px" type="checkbox"/>
+        </div>
+      </div>
+
+      <div class="pomo-right">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label">Completed focus sessions</div>
+            <div class="session-count" id="sessionCount">0</div>
+            <div class="tiny" style="margin-top:8px">A long break starts after 4 focus sessions.</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">Current cycle</div>
+            <div class="stat-main" id="cycleStatus">Session 1 of 4</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">Focus rule</div>
+            <div class="tiny focus-rule">Work only on the module shown in Today’s exact plan. No switching topics, no random checking, no extra tabs.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div><div class="toolbar card" id="overview">
+<div><label>Plan start date</label><input id="startDate" type="date" value="2026-07-21"/></div>
+<div><label>Exam date (set your exact date)</label><input id="examDate" type="date" value="2026-11-18"/></div>
+<div><label>View / log date</label><input id="today" type="date"/><div class="auto-note">Automatically opens on the real Dubai date.</div></div>
+<div class="toolbar-actions"><button onclick="jumpToToday()">Go to today</button><button class="secondary" onclick="rebuildPlan()">Rebuild plan</button></div>
+</div>
+<div class="card schedule-settings">
+  <div class="mock-header"><div><h2 style="margin:0">Study Schedule Settings</h2><div class="tiny">Controls the automatic plan and the on-track calculation.</div></div><span class="pill">Editable</span></div>
+  <div class="schedule-grid">
+    <div><label>Curriculum complete by</label><input id="curriculumDeadline" type="date" value="2026-09-30"/></div>
+    <div><label>July hours / study day</label><input id="julyHours" type="number" min="0" max="12" step=".25" value="5"/></div>
+    <div><label>Weekday hours</label><input id="weekdayHours" type="number" min="0" max="12" step=".25" value="4"/></div>
+    <div><label>Weekend hours</label><input id="weekendHours" type="number" min="0" max="12" step=".25" value="4"/></div>
+    <div><label>Weekly rest day</label><select id="restDay"><option value="none">No fixed rest day</option><option value="0">Sunday</option><option value="1">Monday</option><option value="2">Tuesday</option><option value="3">Wednesday</option><option value="4">Thursday</option><option value="5">Friday</option><option value="6">Saturday</option></select></div>
+    <div><label>Question target</label><input id="questionTarget" type="number" min="500" max="10000" step="100" value="3000"/></div>
+  </div>
+</div>
+<div class="grid" style="margin-top:12px">
+<div class="card"><label>Curriculum modules</label><div class="metric" id="totalModules">—</div><div class="tiny" id="moduleBreakdown"></div></div>
+<div class="card"><label>Overall progress</label><div class="metric" id="completed">—</div><progress id="overallProgress" max="100" value="0"></progress><div class="progressrow"><span class="lefttext" id="overallDonePct">0% complete</span><span class="lefttext" id="overallLeftPct">100% left</span></div></div>
+<div class="card"><label>Hours logged</label><div class="metric" id="hoursLogged">0</div><div class="tiny">Uses Daily completion log only • module time is not double-counted</div></div>
+<div class="card"><label>On-track status</label><div class="metric" id="trackStatus">—</div><div class="tiny" id="trackDetail"></div></div>
+<div class="card"><label>Current readiness</label><div class="metric readiness-score" id="readinessScore">0%</div><progress id="readinessProgress" max="100" value="0"></progress><div class="readiness-breakdown" id="readinessBreakdown">Complete modules and questions to build readiness.</div></div>
+<div class="card"><label>Projected curriculum finish</label><div class="metric" id="projectedFinish">—</div><div class="tiny" id="projectedFinishDetail">Based on remaining modules and your schedule settings.</div></div>
+</div>
+<section id="curriculum"><div class="section-heading"><div><h2>Curriculum</h2><p>Select a topic and update each module as you progress.</p></div></div><div class="tabs" id="tabs"></div>
+<div class="two">
+<section class="card">
+<div class="topichead"><div><h2 id="topicTitle" style="margin:0"></h2><div class="tiny" id="topicMeta"></div></div><span class="pill" id="topicPct"></span></div><progress id="topicProgress" max="100" value="0"></progress><div class="progressrow"><span class="lefttext" id="topicDoneText">0% complete</span><span class="lefttext" id="topicLeftText">100% left</span></div>
+<div id="modules"></div>
+</section>
+<aside>
+
+<div class="card" id="weightings">
+<h2 style="margin-top:0">Exam Weightings</h2>
+<div class="tiny">Official CFA Institute topic weights, ranked by priority.</div>
+<div id="weightList"></div>
+</div>
+
+<div class="card" id="plan">
+<div class="plan-topline">
+<div><h2 style="margin:0">Daily exact plan</h2><div class="today-badge" id="selectedDateLabel">Live date</div></div>
+<div class="plan-actions">
+<button class="secondary" id="editPlanBtn" onclick="beginPlanEdit()">Edit plan</button>
+<button hidden="" id="savePlanBtn" onclick="savePlanEdit()">Save edits</button>
+<button class="secondary" hidden="" id="cancelPlanBtn" onclick="cancelPlanEdit()">Cancel</button>
+<button class="secondary" hidden="" id="autoPlanBtn" onclick="resetCustomPlan()">Use automatic</button>
+</div>
+</div>
+<div class="custom-plan-note" hidden="" id="customPlanNote">Custom plan saved for this date.</div>
+<textarea aria-label="Edit daily plan" hidden="" id="planEditor"></textarea>
+<div id="dailyPlan"></div>
+<button class="secondary" onclick="copyToday()" style="width:100%;margin-top:8px">Copy today’s plan</button>
+</div>
+<div class="card">
+<h2 style="margin-top:0">Daily completion log</h2>
+<label>Actual study hours</label><input id="dailyHours" max="12" min="0" step=".25" type="number"/>
+<label style="display:block;margin-top:8px">Questions completed</label><input id="dailyQuestions" min="0" type="number"/>
+<label style="display:block;margin-top:8px">Main note / obstacle</label><textarea id="dailyNote" rows="3"></textarea>
+<button onclick="saveDaily()" style="width:100%;margin-top:9px">Save today</button>
+<div class="tiny" id="savedMsg" style="margin-top:7px"></div>
+</div>
+<div class="card">
+<h2 style="margin-top:0">Rules</h2>
+<div class="tiny">
+1. Finish the scheduled module before opening another.<br/><br/>
+2. For every module: learn → LES questions → review errors.<br/><br/>
+3. Do not make long notes. Save only formulas, rules and errors.<br/><br/>
+4. A module is complete only after its LES questions are attempted.
+</div>
+</div>
+</aside></div></section>
+<section class="card mock-section" id="mockExams">
+<div class="mock-header"><div><h2 style="margin:0">Mock Exams</h2><div class="tiny">Record each mock, compare scores and identify weak topics.</div></div><span class="pill" id="mockCountPill">0 mocks</span></div>
+<div class="mock-summary">
+<div class="mock-stat"><label>Average score</label><div class="metric" id="mockAverage">—</div></div>
+<div class="mock-stat"><label>Best score</label><div class="metric" id="mockBest">—</div></div>
+<div class="mock-stat"><label>Latest score</label><div class="metric" id="mockLatest">—</div></div>
+<div class="mock-stat"><label>Mocks at 70%+</label><div class="metric" id="mockAbove70">0</div></div>
+</div>
+<div class="weak-panel">
+  <div class="mock-header"><div><h3 style="margin:0">Weakest Topics</h3><div class="tiny">Calculated from the topic scores entered in your mock exams.</div></div><button class="secondary" onclick="addWeakTopicsToTomorrow()">Add to tomorrow</button></div>
+  <div class="weak-list" id="weakTopicList"><div class="empty-state">Add topic scores to a mock to unlock weak-topic analysis.</div></div>
+</div>
+<div class="mock-form">
+<div><label>Mock date</label><input id="mockDate" type="date"/></div>
+<div><label>Mock name / source</label><input id="mockName" placeholder="CFA Institute Mock 1" type="text"/></div>
+<div><label>Overall score %</label><input id="mockScore" max="100" min="0" placeholder="68" step="0.1" type="number"/></div>
+<div><label>Time taken (hours)</label><input id="mockHours" max="8" min="0" placeholder="4.5" step="0.25" type="number"/></div>
+<div class="mock-notes"><label>Main mistakes / notes</label><textarea id="mockNotes" placeholder="What caused the lost marks? What must be reviewed?" rows="3"></textarea></div>
+</div>
+<details class="mock-details"><summary>Optional topic scores</summary><div class="topic-score-grid" id="mockTopicInputs"></div></details>
+<div class="mock-actions"><button class="secondary" hidden="" id="cancelMockBtn" onclick="clearMockForm()">Cancel edit</button><button id="saveMockBtn" onclick="saveMock()">Add mock exam</button></div>
+<div style="margin-top:16px"><h3 style="margin:0">Score trend</h3><div id="mockTrend"></div></div>
+<div class="mock-table-wrap"><table class="mock-table"><thead><tr><th>Date</th><th>Mock</th><th>Overall</th><th>Topic average</th><th>Time</th><th>Notes</th><th>Actions</th></tr></thead><tbody id="mockTableBody"></tbody></table></div>
+</section>
+
+
+<section class="card error-section" id="errorLog">
+  <div class="mock-header"><div><h2 style="margin:0">Question Error Log</h2><div class="tiny">Turn every wrong question into a scheduled review.</div></div><span class="pill" id="errorCountPill">0 open</span></div>
+  <div class="error-summary">
+    <div class="error-stat"><label>Open errors</label><div class="metric" id="errorOpen">0</div></div>
+    <div class="error-stat"><label>Due for review</label><div class="metric" id="errorDue">0</div></div>
+    <div class="error-stat"><label>Resolved</label><div class="metric" id="errorResolved">0</div></div>
+    <div class="error-stat"><label>Total logged</label><div class="metric" id="errorTotal">0</div></div>
+  </div>
+  <div class="error-form">
+    <div><label>Date</label><input id="errorDate" type="date"/></div>
+    <div><label>Topic</label><select id="errorTopic" onchange="updateErrorModuleOptions()"></select></div>
+    <div><label>Module</label><select id="errorModule"></select></div>
+    <div><label>Question / source</label><input id="errorSource" placeholder="LES Q12 or Mock 1"/></div>
+    <div class="error-wide"><label>Concept or formula</label><input id="errorConcept" placeholder="e.g. FIFO inventory under rising prices"/></div>
+    <div class="error-wide"><label>What mistake did you make?</label><textarea id="errorMistake" rows="2" placeholder="Be specific about why your answer was wrong."></textarea></div>
+    <div class="error-wide"><label>Correct rule / solution</label><textarea id="errorCorrection" rows="2" placeholder="Write the rule or calculation you need to remember."></textarea></div>
+    <div><label>Next review</label><input id="errorNextReview" type="date"/></div>
+    <div><button style="width:100%" onclick="saveErrorEntry()">Add error</button></div>
+  </div>
+  <div class="error-table-wrap"><table class="error-table"><thead><tr><th>Review</th><th>Topic / module</th><th>Concept</th><th>Mistake</th><th>Correct rule</th><th>Source</th><th>Next review</th><th>Actions</th></tr></thead><tbody id="errorTableBody"></tbody></table></div>
+</section>
+
+<section class="card history-section" id="history">
+  <div class="mock-header">
+    <div>
+      <h2 style="margin:0">Study History</h2>
+      <div class="tiny">Review every saved daily log in one place.</div>
+    </div>
+    <span class="pill" id="historyCountPill">0 days</span>
+  </div>
+
+  <div class="history-summary">
+    <div class="history-stat"><label>Total logged hours</label><div class="metric" id="historyHours">0</div></div>
+    <div class="history-stat"><label>Total questions</label><div class="metric" id="historyQuestions">0</div></div>
+    <div class="history-stat"><label>Average hours / study day</label><div class="metric" id="historyAverage">0</div></div>
+  </div>
+
+  <div class="history-toolbar">
+    <div><label>Search date or comment</label><input id="historySearch" type="search" placeholder="e.g. income statements or 2026-07-22"/></div>
+    <div><label>Minimum hours</label><input id="historyMinHours" type="number" min="0" step=".25" placeholder="0"/></div>
+    <button class="secondary" onclick="exportHistoryCSV()">Export CSV</button>
+  </div>
+
+  <div class="history-table-wrap">
+    <table class="history-table">
+      <thead><tr><th>Date</th><th>Hours</th><th>Questions</th><th>Comment</th><th>Actions</th></tr></thead>
+      <tbody id="historyTableBody"></tbody>
+    </table>
+  </div>
+</section>
+
+<section class="card sync-section" id="sync">
+  <div class="mock-header">
+    <div>
+      <h2 style="margin:0">Backup & Cross-Device Transfer</h2>
+      <div class="tiny">Move your dashboard data between browsers without an account.</div>
+    </div>
+    <span class="pill">Manual sync</span>
+  </div>
+
+  <div class="backup-warning">
+    GitHub Pages is a static website, so it cannot provide automatic real-time device syncing without a database or login system. This section gives you safe manual syncing through a backup file or a copyable sync code.
+  </div>
+
+  <div class="section-grid" style="margin-top:12px">
+    <div>
+      <h3 style="margin:0 0 6px">Backup file</h3>
+      <div class="tiny">Download all modules, logs, mocks, plans, timer settings and theme.</div>
+      <div class="sync-actions">
+        <button onclick="downloadBackup()">Download backup</button>
+        <button class="secondary" onclick="document.getElementById('backupFileInput').click()">Import backup</button>
+      </div>
+      <input id="backupFileInput" type="file" accept=".json,application/json" hidden/>
+    </div>
+    <div>
+      <h3 style="margin:0 0 6px">Sync code</h3>
+      <div class="tiny">Copy this code on one device and paste it on another.</div>
+      <textarea id="syncCode" class="sync-code" placeholder="Generate or paste a sync code"></textarea>
+      <div class="sync-actions">
+        <button onclick="generateSyncCode()">Generate & copy</button>
+        <button class="secondary" onclick="importSyncCode()">Import code</button>
+      </div>
+    </div>
+  </div>
+  <div class="sync-status" id="syncStatus"></div>
+</section>
+
+
+<section class="card applications-section focus-hide" id="mifApplications">
+  <div class="mock-header">
+    <div>
+      <h2 style="margin:0">2027 MiF Application Deadlines</h2>
+      <div class="tiny">Your target European finance programmes. Every field is editable and stored with the rest of the dashboard.</div>
+    </div>
+    <span class="pill" id="applicationCountPill">9 programmes</span>
+  </div>
+
+  <div class="application-summary">
+    <div class="application-stat"><label>Total programmes</label><div class="metric" id="applicationTotal">0</div></div>
+    <div class="application-stat"><label>Confirmed upcoming dates</label><div class="metric" id="applicationConfirmed">0</div></div>
+    <div class="application-stat"><label>Submitted</label><div class="metric" id="applicationSubmitted">0</div></div>
+    <div class="application-stat"><label>Offers</label><div class="metric" id="applicationOffers">0</div></div>
+  </div>
+
+  <div class="application-note">
+    Official dates were checked on 22 July 2026. Only published dates are pre-filled. “TBC” means the school has not yet published its 2027 deadline. HEC’s listed date is a pre-registration deadline, not the final application deadline.
+  </div>
+
+  <div class="application-toolbar">
+    <div class="tiny">Use the date column for the school deadline or your own earlier target date.</div>
+    <button onclick="addApplication()">Add programme</button>
+  </div>
+
+  <div class="application-table-wrap">
+    <table class="application-table">
+      <thead>
+        <tr>
+          <th>School</th>
+          <th>Programme</th>
+          <th>Priority</th>
+          <th>Round / date type</th>
+          <th>Official deadline</th>
+          <th>Personal target</th>
+          <th>Countdown</th>
+          <th>Status</th>
+          <th>Requirements & documents</th>
+          <th>Notes</th>
+          <th>Last verified</th>
+          <th>Official page</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="applicationTableBody"></tbody>
+    </table>
+  </div>
+</section>
+
+<section class="resources-section focus-hide" id="resources">
+  <div class="section-heading">
+    <div>
+      <h2>News & Careers</h2>
+      <p>Kept separate from the study workflow so it does not become a distraction.</p>
+    </div>
+  </div>
+  <div class="section-grid">
+    <article class="resource-card">
+      <div>
+        <span class="resource-tag">Market news</span>
+        <h3>Reuters Markets</h3>
+        <p>Use this for a quick global markets check. Open it after your study block, not during Pomodoro focus mode.</p>
+      </div>
+      <a href="https://www.reuters.com/markets/" target="_blank" rel="noopener noreferrer">Open market news</a>
+    </article>
+    <article class="resource-card">
+      <div>
+        <span class="resource-tag">Dubai finance jobs</span>
+        <h3>Career Search</h3>
+        <p>Search Dubai finance vacancies using both a specialist finance platform and a broader public job board.</p>
+      </div>
+      <div class="resource-links">
+        <a href="https://www.efinancialcareers.com/jobs/finance/in-dubai%2Cunited-arab-emirates" target="_blank" rel="noopener noreferrer">eFinancialCareers</a>
+        <a href="https://ae.indeed.com/jobs?l=Dubai&amp;q=finance" target="_blank" rel="noopener noreferrer">Indeed Finance</a>
+      </div>
+    </article>
+  </div>
+</section>
+
+</div>
+<script>
+const TOPICS={"Ethical and Professional Standards": ["Ethics and Trust in the Investment Profession", "Code of Ethics and Standards of Professional Conduct", "Guidance for Standards I–VII", "Introduction to the Global Investment Performance Standards (GIPS)", "Ethics Application"], "Quantitative Methods": ["Rates and Returns", "Time Value of Money in Finance", "Statistical Measures of Asset Returns", "Probability Trees and Conditional Expectations", "Portfolio Mathematics", "Simulation Methods", "Estimation and Inference", "Hypothesis Testing", "Parametric and Non-Parametric Tests of Independence", "Simple Linear Regression", "Introduction to Big Data Techniques"], "Economics": ["The Firm and Market Structures", "Understanding Business Cycles", "Fiscal Policy", "Monetary Policy", "Introduction to Geopolitics", "International Trade", "Capital Flows and the FX Market", "Exchange Rate Calculations"], "Corporate Issuers": ["Organizational Forms, Corporate Issuer Features, and Ownership", "Investors and Other Stakeholders", "Corporate Governance: Conflicts, Mechanisms, Risks, and Benefits", "Working Capital and Liquidity", "Capital Investments and Capital Allocation", "Capital Structure", "Business Models"], "Financial Statement Analysis": ["Introduction to Financial Statement Analysis", "Analyzing Income Statements", "Analyzing Balance Sheets", "Analyzing Statements of Cash Flows I", "Analyzing Statements of Cash Flows II", "Analysis of Inventories", "Analysis of Long-Term Assets", "Topics in Long-Term Liabilities and Equity", "Analysis of Income Taxes", "Financial Reporting Quality", "Financial Analysis Techniques", "Introduction to Financial Statement Modeling"], "Equity Investments": ["Market Organization and Structure", "Security Market Indexes", "Market Efficiency", "Overview of Equity Securities", "Company Analysis: Past and Present", "Industry and Competitive Analysis", "Company Analysis: Forecasting", "Equity Valuation: Concepts and Basic Tools"], "Fixed Income": ["Fixed-Income Instrument Features", "Fixed-Income Cash Flows and Types", "Fixed-Income Issuance and Trading", "Fixed-Income Markets for Corporate Issuers", "Fixed-Income Markets for Government Issuers", "Fixed-Income Bond Valuation: Prices and Yields", "Yield and Yield Spread Measures for Fixed-Rate Bonds", "Yield and Yield Spread Measures for Floating-Rate Instruments", "The Term Structure of Interest Rates: Spot, Par, and Forward Curves", "Interest Rate Risk and Return", "Yield-Based Bond Duration Measures and Properties", "Yield-Based Bond Convexity and Portfolio Properties", "Curve-Based and Empirical Fixed-Income Risk Measures", "Credit Risk", "Credit Analysis for Government Issuers", "Credit Analysis for Corporate Issuers", "Fixed-Income Securitization", "Asset-Backed Security (ABS) Instrument and Market Features", "Mortgage-Backed Security (MBS) Instrument and Market Features"], "Derivatives": ["Derivative Instrument and Derivative Market Features", "Forward Commitment and Contingent Claim Features and Instruments", "Derivative Benefits, Risks, and Issuer and Investor Uses", "Arbitrage, Replication, and the Cost of Carry in Pricing Derivatives", "Pricing and Valuation of Forward Contracts and for an Underlying with Varying Maturities", "Pricing and Valuation of Futures Contracts", "Pricing and Valuation of Interest Rates and Other Swaps", "Pricing and Valuation of Options", "Option Replication Using Put–Call Parity", "Valuing a Derivative Using a One-Period Binomial Model"], "Alternative Investments": ["Alternative Investment Features, Methods, and Structures", "Alternative Investment Performance and Returns", "Investments in Private Capital: Equity and Debt", "Real Estate and Infrastructure", "Natural Resources", "Hedge Funds", "Introduction to Digital Assets"], "Portfolio Management": ["Portfolio Risk and Return: Part I", "Portfolio Risk and Return: Part II", "Portfolio Management: An Overview", "Basics of Portfolio Planning and Construction", "The Behavioral Biases of Individuals", "Introduction to Risk Management"]};
+const ORDER=["Ethical and Professional Standards","Financial Statement Analysis","Alternative Investments","Quantitative Methods","Economics","Corporate Issuers","Equity Investments","Fixed Income","Derivatives","Portfolio Management"];
+const EST={"Ethical and Professional Standards":3,"Financial Statement Analysis":4,"Alternative Investments":3,"Quantitative Methods":4,"Economics":3.5,"Corporate Issuers":3,"Equity Investments":3.5,"Fixed Income":4,"Derivatives":3.5,"Portfolio Management":3.5};
+// Official CFA Institute Level I topic weight ranges, 2026 curriculum (unchanged from 2025).
+const WEIGHTS={"Ethical and Professional Standards":[15,20],"Financial Statement Analysis":[11,14],"Equity Investments":[11,14],"Fixed Income":[11,14],"Portfolio Management":[8,12],"Alternative Investments":[7,10],"Quantitative Methods":[6,9],"Economics":[6,9],"Corporate Issuers":[6,9],"Derivatives":[5,8]};
+function weightRange(t){const w=WEIGHTS[t];return w?w[0]+"–"+w[1]+"%":"—"}
+function weightMid(t){const w=WEIGHTS[t];return w?(w[0]+w[1])/2:0}
+let state=JSON.parse(localStorage.getItem("cfaSpecificV2")||"{}");
+state.modules=state.modules||{}; state.daily=state.daily||{}; state.customPlans=state.customPlans||{}; state.mocks=Array.isArray(state.mocks)?state.mocks:[]; state.active=state.active||"Financial Statement Analysis";
+state.settings=Object.assign({curriculumDeadline:"2026-09-30",julyHours:5,weekdayHours:4,weekendHours:4,restDay:"none",questionTarget:3000},state.settings||{});
+state.errors=Array.isArray(state.errors)?state.errors:[];
+state.sectionOpen=state.sectionOpen||{};
+
+const DEFAULT_MIF_APPLICATIONS=[{"id": "hec-mif", "school": "HEC Paris", "program": "Master in International Finance", "priority": "High", "round": "2027 pre-registration", "deadline": "2026-08-24", "status": "Waiting for opening", "notes": "Pre-register by 24 Aug 2026. Final 2027 application rounds not published yet.", "url": "https://www.hec.edu/en/master-s-programs/master-international-finance"}, {"id": "bocconi-fin", "school": "Bocconi", "program": "MSc Finance", "priority": "High", "round": "International Round 1", "deadline": "2026-10-29", "status": "Preparing", "notes": "Round 1 application window: 1–29 Oct 2026.", "url": "https://www.unibocconi.it/en/applying-bocconi/master-science-and-ma-programs/application-and-admissions/admissions"}, {"id": "lse-fin", "school": "LSE", "program": "MSc Finance", "priority": "High", "round": "Rolling — 2027 dates TBC", "deadline": "", "status": "Waiting for opening", "notes": "No fixed 2027 date published yet. Apply early once applications open.", "url": "https://www.lse.ac.uk/study-at-lse/graduate/msc-finance-full-time"}, {"id": "lbs-mfa", "school": "London Business School", "program": "Masters in Financial Analysis", "priority": "High", "round": "2027 rounds TBC", "deadline": "", "status": "Waiting for opening", "notes": "Relevant pre-experience finance programme; 2027 round dates not yet published.", "url": "https://www.london.edu/masters-degrees/masters-in-financial-analysis/apply"}, {"id": "imperial-fin", "school": "Imperial College London", "program": "MSc Finance", "priority": "High", "round": "2027 rounds TBC", "deadline": "", "status": "Waiting for opening", "notes": "2027 dates are not yet published on the official admissions page.", "url": "https://www.imperial.ac.uk/business-school/masters/finance/admissions/"}, {"id": "escp-fin", "school": "ESCP Business School", "program": "MSc Finance", "priority": "High", "round": "2027 calendar TBC", "deadline": "", "status": "Waiting for opening", "notes": "Monitor the official admissions calendar; apply in an early round.", "url": "https://escp.eu/programmes/specialised-masters-MSc/MSc-finance"}, {"id": "esade-fin", "school": "ESADE", "program": "MSc Finance", "priority": "Medium", "round": "2027 deadlines TBC", "deadline": "", "status": "Waiting for opening", "notes": "2027 deadline calendar has not yet been published.", "url": "https://www.esade.edu/master-of-science/en/admissions"}, {"id": "edhec-fin", "school": "EDHEC", "program": "MSc Finance / Financial Markets", "priority": "Medium", "round": "2027 deadlines TBC", "deadline": "", "status": "Waiting for opening", "notes": "2027 application rounds are not yet published.", "url": "https://www.edhec.edu/en/programmes/masters-degree/msc-finance"}, {"id": "ie-fin", "school": "IE Business School", "program": "Master in Finance", "priority": "High", "round": "Rolling admissions", "deadline": "", "status": "Researching", "notes": "No fixed deadline. Set an earlier personal target because places are limited.", "url": "https://www.ie.edu/business-school/programs/masters/master-in-finance/admissions-fees/"}];
+state.applications=Array.isArray(state.applications)&&state.applications.length?state.applications:JSON.parse(JSON.stringify(DEFAULT_MIF_APPLICATIONS));
+state.applications.forEach(app=>Object.assign(app,{personalTarget:app.personalTarget||"",eligibility:app.eligibility||"Not checked",gmat:app.gmat||"TBC",english:app.english||"TBC",transcript:Boolean(app.transcript),cv:Boolean(app.cv),essayProgress:Number(app.essayProgress)||0,rec1:Boolean(app.rec1),rec2:Boolean(app.rec2),fee:app.fee||"",interview:app.interview||"Not started",lastVerified:app.lastVerified||"2026-07-22"}));
+
+let planEditMode=false;
+let editingMockId=null;
+
+const DUBAI_TZ="Asia/Dubai";
+const CLOCK_ZONES={
+ Dubai:{timeZone:"Asia/Dubai",label:"Dubai"},
+ Europe:{timeZone:"Europe/Amsterdam",label:"Europe · Amsterdam"},
+ Singapore:{timeZone:"Asia/Singapore",label:"Singapore"}
+};
+let selectedClockZone=localStorage.getItem("cfaClockZoneV1")||"Dubai";
+if(!CLOCK_ZONES[selectedClockZone])selectedClockZone="Dubai";
+function setClockZone(zone){
+ if(!CLOCK_ZONES[zone])return;
+ selectedClockZone=zone;
+ localStorage.setItem("cfaClockZoneV1",zone);
+ updateLiveClock();
+}
+function updateClockButtons(){
+ document.querySelectorAll("[data-clock-zone]").forEach(btn=>{
+   const active=btn.dataset.clockZone===selectedClockZone;
+   btn.classList.toggle("active",active);
+   btn.setAttribute("aria-pressed",String(active));
+ });
+}
+function dubaiParts(date=new Date()){
+ const parts=new Intl.DateTimeFormat("en-CA",{timeZone:DUBAI_TZ,year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:false,weekday:"long"}).formatToParts(date);
+ return Object.fromEntries(parts.map(p=>[p.type,p.value]));
+}
+function dubaiDateKey(date=new Date()){const p=dubaiParts(date);return `${p.year}-${p.month}-${p.day}`}
+function formatDubaiDay(date=new Date()){return new Intl.DateTimeFormat("en-GB",{timeZone:DUBAI_TZ,weekday:"long",day:"numeric",month:"long",year:"numeric"}).format(date)}
+
+function updateExamCountdown(){
+ const dateInput=document.getElementById("examDate");
+ const wrap=document.getElementById("examCountdown");
+ if(!dateInput||!wrap)return;
+ const dateKey=dateInput.value;
+ if(!dateKey){
+   ["countdownMonths","countdownDays","countdownTotalDays"].forEach(id=>document.getElementById(id).textContent="—");
+   document.getElementById("countdownDateLabel").textContent="Set your exam date below";
+   wrap.classList.remove("finished");
+   return;
+ }
+ // Countdown to the start of exam day in Dubai.
+ const target=new Date(dateKey+"T00:00:00+04:00");
+ const now=new Date();
+ let diff=target.getTime()-now.getTime();
+ document.getElementById("countdownDateLabel").textContent="Exam day • "+new Intl.DateTimeFormat("en-GB",{weekday:"short",day:"numeric",month:"short",year:"numeric",timeZone:DUBAI_TZ}).format(target);
+ if(diff<=0){
+   diff=0;wrap.classList.add("finished");
+ }else{
+   wrap.classList.remove("finished");
+ }
+ const nowDubaiKey=dubaiDateKey(now);
+ const nowDayStart=new Date(nowDubaiKey+"T00:00:00+04:00");
+
+ let months=(target.getFullYear()-nowDayStart.getFullYear())*12+(target.getMonth()-nowDayStart.getMonth());
+ let monthAnchor=new Date(nowDayStart);
+ monthAnchor.setMonth(monthAnchor.getMonth()+months);
+ if(monthAnchor>target){
+   months--;
+   monthAnchor=new Date(nowDayStart);
+   monthAnchor.setMonth(monthAnchor.getMonth()+months);
+ }
+
+ const remainderMs=Math.max(0,target-monthAnchor);
+ const remainderDays=Math.floor(remainderMs/86400000);
+ const totalDaysLeft=Math.max(0,Math.ceil(diff/86400000));
+
+ document.getElementById("countdownMonths").textContent=String(Math.max(0,months));
+ document.getElementById("countdownDays").textContent=String(remainderDays);
+ document.getElementById("countdownTotalDays").textContent=String(totalDaysLeft);
+}
+
+function updateLiveClock(){
+ const now=new Date(),cfg=CLOCK_ZONES[selectedClockZone]||CLOCK_ZONES.Dubai;
+ document.getElementById("liveDay").textContent=new Intl.DateTimeFormat("en-GB",{timeZone:cfg.timeZone,weekday:"long",day:"numeric",month:"long",year:"numeric"}).format(now);
+ document.getElementById("liveTime").textContent=new Intl.DateTimeFormat("en-GB",{timeZone:cfg.timeZone,hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:true}).format(now);
+ document.getElementById("liveZoneLabel").textContent=cfg.label+" time";
+ updateClockButtons();
+ const realToday=dubaiDateKey(now);
+ if(window._lastDubaiDate && window._lastDubaiDate!==realToday){jumpToToday();}
+ window._lastDubaiDate=realToday;
+}
+document.getElementById("today").value=dubaiDateKey();
+if(state.startDate)document.getElementById("startDate").value=state.startDate;
+if(state.examDate)document.getElementById("examDate").value=state.examDate;
+
+
+
+const REVIEW_INTERVALS=[1,7,21,45];
+function addDaysKey(dateKey,days){const d=new Date(dateKey+"T12:00:00+04:00");d.setDate(d.getDate()+days);return d.toISOString().slice(0,10)}
+function daysBetweenKeys(a,b){return Math.ceil((new Date(b+"T12:00:00+04:00")-new Date(a+"T12:00:00+04:00"))/86400000)}
+function totalLoggedQuestions(){const daily=Object.values(state.daily||{}).reduce((s,x)=>s+(Number(x.questions)||0),0);if(daily>0)return daily;return Object.values(state.modules||{}).reduce((s,x)=>s+(Number(x.questions)||0),0)}
+function averageModuleScore(){const scores=Object.values(state.modules||{}).map(x=>Number(x.score)).filter(x=>Number.isFinite(x)&&x>0);return scores.length?scores.reduce((a,b)=>a+b,0)/scores.length:0}
+function weightedCompletion(){const denom=ORDER.reduce((s,t)=>s+weightMid(t),0);const num=ORDER.reduce((s,t)=>{const list=TOPICS[t],done=list.filter((_,i)=>getM(t,i).done).length;return s+weightMid(t)*(done/list.length)},0);return denom?num/denom:0}
+function latestMockAverage(){const scores=[...(state.mocks||[])].sort((a,b)=>a.date.localeCompare(b.date)).slice(-3).map(x=>Number(x.score)).filter(Number.isFinite);return scores.length?scores.reduce((a,b)=>a+b,0)/scores.length:0}
+function calculateReadiness(){let total=0,done=0;ORDER.forEach(t=>TOPICS[t].forEach((_,i)=>{total++;if(getM(t,i).done)done++}));const curriculum=total?done/total:0;const weighted=weightedCompletion();const questions=Math.min(1,totalLoggedQuestions()/Math.max(1,Number(state.settings.questionTarget)||3000));const score=Math.min(1,averageModuleScore()/75);const mock=Math.min(1,latestMockAverage()/75);const value=Math.round(100*(.30*curriculum+.25*weighted+.15*questions+.15*score+.15*mock));return {value,curriculum,weighted,questions,score,mock}}
+function initSettings(){const map={curriculumDeadline:"curriculumDeadline",julyHours:"julyHours",weekdayHours:"weekdayHours",weekendHours:"weekendHours",restDay:"restDay",questionTarget:"questionTarget"};Object.entries(map).forEach(([id,key])=>{const el=document.getElementById(id);if(!el)return;el.value=state.settings[key];el.addEventListener("change",()=>{state.settings[key]=["julyHours","weekdayHours","weekendHours","questionTarget"].includes(key)?Number(el.value):el.value;save();renderPlan();updateSummary()})})}
+function plannedHoursBetween(startKey,endKey){if(!startKey||!endKey||endKey<startKey)return 0;let total=0,d=new Date(startKey+"T12:00:00+04:00"),end=new Date(endKey+"T12:00:00+04:00");while(d<=end){total+=availableHours(d);d.setDate(d.getDate()+1)}return total}function expectedModuleProgress(dateKey=dubaiDateKey()){const start=document.getElementById("startDate").value,deadline=state.settings.curriculumDeadline;if(!start||!deadline)return 0;const capped=dateKey>deadline?deadline:dateKey;const total=Math.max(.01,plannedHoursBetween(start,deadline));const elapsed=Math.max(0,plannedHoursBetween(start,capped));return Math.min(1,elapsed/total)}function projectedFinishDate(){const schedule=buildSchedule(),keys=Object.keys(schedule).filter(k=>(schedule[k]||[]).length);return keys.length?keys[keys.length-1]:dubaiDateKey()}
+function moduleReviewInfo(m){if(!m.done)return "Not completed";if(!m.nextReview)return "Review date not set";const days=daysBetweenKeys(dubaiDateKey(),m.nextReview);if(days<0)return `Review overdue ${Math.abs(days)}d`;if(days===0)return "Review due today";return `Next review in ${days}d`}
+function reviewModule(topic,index){const m=getM(topic,index),today=dubaiDateKey();m.done=true;m.lastReviewed=today;m.reviewStage=Math.min(REVIEW_INTERVALS.length,(Number(m.reviewStage)||0)+1);const interval=REVIEW_INTERVALS[Math.min(m.reviewStage,REVIEW_INTERVALS.length-1)];m.nextReview=addDaysKey(today,interval);state.modules[key(topic,index)]=m;save();renderModules();renderPlan();renderWeightings()}
+function dueModuleReviews(dateKey){const out=[];ORDER.forEach(t=>TOPICS[t].forEach((n,i)=>{const m=getM(t,i);if(m.done&&m.nextReview&&m.nextReview<=dateKey)out.push({topic:t,module:n,index:i,nextReview:m.nextReview})}));return out}
+function dueErrorReviews(dateKey){return (state.errors||[]).filter(e=>e.status!=="Resolved"&&e.nextReview&&e.nextReview<=dateKey)}
+
+function key(t,i){return t+"::"+i}
+function getM(t,i){return state.modules[key(t,i)]||{done:false,hours:0,questions:0,score:"",confidence:"",lastReviewed:"",nextReview:"",reviewStage:0}}
+function save(){localStorage.setItem("cfaSpecificV2",JSON.stringify(state));updateSummary()}
+function renderTabs(){const x=document.getElementById("tabs");x.innerHTML="";ORDER.forEach(t=>{let b=document.createElement("button");b.className="tab "+(t===state.active?"active":"");b.innerHTML=`<span class="tab-name">${t}</span><span class="tab-sub">${TOPICS[t].length} mods · ${weightRange(t)}</span>`;b.onclick=()=>{state.active=t;save();render()};x.appendChild(b)})}
+function renderModules(){
+ const t=state.active, list=TOPICS[t]; document.getElementById("topicTitle").textContent=t;
+ const done=list.filter((_,i)=>getM(t,i).done).length;
+ document.getElementById("topicMeta").textContent=list.length+" modules • estimated "+(list.length*EST[t]).toFixed(1)+" first-pass hours • exam weight "+weightRange(t);
+ const pct=Math.round(done/list.length*100);
+ document.getElementById("topicPct").textContent=pct+"% complete";
+ document.getElementById("topicProgress").value=pct;
+ document.getElementById("topicDoneText").textContent=pct+"% complete";
+ document.getElementById("topicLeftText").textContent=(100-pct)+"% left";
+ const c=document.getElementById("modules");c.innerHTML="";
+ list.forEach((name,i)=>{const m=getM(t,i);let d=document.createElement("div");d.className="module"+(m.done?" done":"");
+ d.innerHTML=`<label class="donebox"><input type="checkbox" ${m.done?"checked":""} onchange="setM('${esc(t)}',${i},'done',this.checked)"><span>Done</span></label>
+ <div><div class="modname">${i+1}. ${name}</div><div class="tiny">Learn content → complete LES questions → review every error</div><div class="review-row"><span class="review-badge ${m.nextReview&&m.nextReview<=dubaiDateKey()?"due":""}">${moduleReviewInfo(m)}</span>${m.done?`<button class="secondary" onclick="reviewModule('${esc(t)}',${i})">Reviewed today</button>`:""}</div></div>
+ <div><label>Hours</label><input type="number" step=".25" value="${m.hours||""}" onchange="setM('${esc(t)}',${i},'hours',this.value)"></div>
+ <div><label>Questions</label><input type="number" value="${m.questions||""}" onchange="setM('${esc(t)}',${i},'questions',this.value)"></div>
+ <div class="mobilehide"><label>Score %</label><input type="number" value="${m.score||""}" onchange="setM('${esc(t)}',${i},'score',this.value)"></div>
+ <div class="hide-sm"><label>Confidence 1–5</label><input type="number" min="1" max="5" value="${m.confidence||""}" onchange="setM('${esc(t)}',${i},'confidence',this.value)"></div>`;
+ c.appendChild(d)})
+}
+function esc(s){return s.replaceAll("'","\\'")}
+function setM(t,i,f,v){let m=getM(t,i),wasDone=m.done;m[f]=f==="done"?v:(v===""?"":Number(v));if(f==="done"&&v&&!wasDone){m.lastReviewed=dubaiDateKey();m.reviewStage=0;m.nextReview=addDaysKey(dubaiDateKey(),1)}if(f==="done"&&!v){m.lastReviewed="";m.nextReview="";m.reviewStage=0}state.modules[key(t,i)]=m;save();renderModules();renderPlan();renderWeightings()}
+function availableHours(date){const rest=String(state.settings.restDay);if(rest!=="none"&&String(date.getDay())===rest)return 0;if(date.getMonth()===6)return Number(state.settings.julyHours)||0;return (date.getDay()===0||date.getDay()===6)?(Number(state.settings.weekendHours)||0):(Number(state.settings.weekdayHours)||0)}
+function unfinished(){let a=[];ORDER.forEach(t=>TOPICS[t].forEach((n,i)=>{if(!getM(t,i).done)a.push({t,n,i,need:Math.max(.75,EST[t]-(Number(getM(t,i).hours)||0))})}));return a}
+function buildSchedule(){
+ let queue=unfinished(), schedule={}, configuredStart=document.getElementById("startDate").value, liveStart=dubaiDateKey(), effectiveStart=configuredStart>liveStart?configuredStart:liveStart, d=new Date(effectiveStart+"T12:00:00+04:00"), end=new Date(document.getElementById("examDate").value+"T12:00:00+04:00");
+ let q=0, remaining=queue[0]?queue[0].need:0;
+ while(d<=end && q<queue.length){let cap=availableHours(d), tasks=[];while(cap>.01 && q<queue.length){
+   let use=Math.min(cap,remaining); tasks.push({t:queue[q].t,n:queue[q].n,i:queue[q].i,h:+use.toFixed(2),finish:use>=remaining-.01});
+   cap-=use;remaining-=use;if(remaining<=.01){q++;remaining=queue[q]?queue[q].need:0}
+ } schedule[d.toISOString().slice(0,10)]=tasks;d.setDate(d.getDate()+1)}
+ return schedule
+}
+function automaticPlanText(date){
+ const s=buildSchedule()[date]||[],moduleReviews=dueModuleReviews(date),errorReviews=dueErrorReviews(date),parts=[];
+ if(moduleReviews.length||errorReviews.length){const lines=[...moduleReviews.slice(0,3).map(x=>`• Module review: ${x.topic} — ${x.module}`),...errorReviews.slice(0,3).map(x=>`• Error review: ${x.topic} — ${x.concept}`)];parts.push(`REVIEW QUEUE — 30 MIN\n${lines.join("\\n")}`)}
+ if(!s.length)parts.push("No scheduled curriculum work. Use today for mixed questions, error-log review or a mock.");else parts.push(s.map(x=>{const learn=Math.round(x.h*60*.58),qs=Math.round(x.h*60*.30),rev=Math.max(10,Math.round(x.h*60*.12));return `${x.t} — Module ${x.i+1}\n${x.n}\n${x.h} h total: ${learn} min LES content • ${qs} min LES questions • ${rev} min error review ${x.finish?"• Finish module today":"• Continue next day"}`}).join("\n\n"));
+ return parts.join("\n\n");
+}
+function displayedPlanText(date){
+ return Object.prototype.hasOwnProperty.call(state.customPlans,date)?state.customPlans[date]:automaticPlanText(date);
+}
+function renderPlan(){
+ const date=document.getElementById("today").value,c=document.getElementById("dailyPlan"),editor=document.getElementById("planEditor");
+ const selectedNoon=new Date(date+"T12:00:00+04:00");
+ const isToday=date===dubaiDateKey();
+ const custom=Object.prototype.hasOwnProperty.call(state.customPlans,date);
+ document.getElementById("selectedDateLabel").textContent=(isToday?"Today • ":"")+new Intl.DateTimeFormat("en-GB",{timeZone:DUBAI_TZ,weekday:"short",day:"numeric",month:"short",year:"numeric"}).format(selectedNoon);
+ document.getElementById("customPlanNote").hidden=!custom||planEditMode;
+ document.getElementById("autoPlanBtn").hidden=!custom||planEditMode;
+ document.getElementById("editPlanBtn").hidden=planEditMode;
+ document.getElementById("savePlanBtn").hidden=!planEditMode;
+ document.getElementById("cancelPlanBtn").hidden=!planEditMode;
+ editor.hidden=!planEditMode;
+ c.hidden=planEditMode;
+ if(planEditMode)return;
+ c.innerHTML="";
+ const text=displayedPlanText(date).trim();
+ const blocks=text?text.split(/\n\s*\n/):["No plan entered for this date."];
+ blocks.forEach(part=>{const d=document.createElement("div");d.className="task"+(custom?" custom":"");d.textContent=part.trim();c.appendChild(d)});
+}
+function beginPlanEdit(){
+ const date=document.getElementById("today").value;
+ planEditMode=true;
+ document.getElementById("planEditor").value=displayedPlanText(date);
+ renderPlan();
+ setTimeout(()=>document.getElementById("planEditor").focus(),0);
+}
+function savePlanEdit(){
+ const date=document.getElementById("today").value;
+ const value=document.getElementById("planEditor").value.trim();
+ state.customPlans[date]=value||"No plan entered for this date.";
+ planEditMode=false;
+ save();
+ renderPlan();
+}
+function cancelPlanEdit(){planEditMode=false;renderPlan()}
+function resetCustomPlan(){
+ const date=document.getElementById("today").value;
+ delete state.customPlans[date];
+ planEditMode=false;
+ save();
+ renderPlan();
+}
+function updateSummary(){
+ let total=0,done=0;ORDER.forEach(t=>TOPICS[t].forEach((_,i)=>{total++;if(getM(t,i).done)done++}));
+ const h=Object.values(state.daily).reduce((sum,x)=>sum+(Number(x.hours)||0),0);
+ document.getElementById("totalModules").textContent=total;
+ document.getElementById("moduleBreakdown").textContent=ORDER.map(t=>t.split(" ")[0]+": "+TOPICS[t].length).join(" • ");
+ document.getElementById("completed").textContent=done+" / "+total;
+ const overallPct=Math.round(done/total*100);document.getElementById("overallProgress").value=overallPct;document.getElementById("overallDonePct").textContent=overallPct+"% complete";document.getElementById("overallLeftPct").textContent=(100-overallPct)+"% left";document.getElementById("hoursLogged").textContent=h.toFixed(1);
+ const now=new Date(dubaiDateKey()+"T12:00:00+04:00"),start=new Date(document.getElementById("startDate").value+"T12:00:00+04:00");let expectedHours=0,d=new Date(start);while(d<=now){expectedHours+=availableHours(d);d.setDate(d.getDate()+1)}
+ const expectedModules=Math.round(total*expectedModuleProgress()),hoursDelta=h-expectedHours,moduleDelta=done-expectedModules;const status=hoursDelta>=-2&&moduleDelta>=-1?"ON TRACK":"BEHIND";document.getElementById("trackStatus").textContent=status;document.getElementById("trackStatus").style.color=status==="ON TRACK"?"var(--good)":"var(--bad)";document.getElementById("trackDetail").textContent=`Hours ${hoursDelta>=0?"+":""}${hoursDelta.toFixed(1)} • Modules ${moduleDelta>=0?"+":""}${moduleDelta} versus plan`;
+ const r=calculateReadiness();document.getElementById("readinessScore").textContent=r.value+"%";document.getElementById("readinessProgress").value=r.value;document.getElementById("readinessBreakdown").textContent=`Curriculum ${Math.round(r.curriculum*100)}% • Weighted completion ${Math.round(r.weighted*100)}% • Questions ${Math.round(r.questions*100)}% • Scores ${Math.round(r.score*100)}% • Mocks ${Math.round(r.mock*100)}%`;
+ const finish=projectedFinishDate(),deadline=state.settings.curriculumDeadline,finishEl=document.getElementById("projectedFinish");finishEl.textContent=new Intl.DateTimeFormat("en-GB",{day:"numeric",month:"short",year:"numeric"}).format(new Date(finish+"T12:00:00+04:00"));finishEl.style.color=finish<=deadline?"var(--good)":"var(--bad)";document.getElementById("projectedFinishDetail").textContent=finish<=deadline?`On or before your ${deadline} target`:`After your ${deadline} target — increase hours or reduce rest days`;
+}
+function saveDaily(){let d=document.getElementById("today").value;state.daily[d]={hours:Number(document.getElementById("dailyHours").value)||0,questions:Number(document.getElementById("dailyQuestions").value)||0,note:document.getElementById("dailyNote").value};save();renderHistory();document.getElementById("savedMsg").textContent="Saved for "+d}
+function loadDaily(){let x=state.daily[document.getElementById("today").value]||{};document.getElementById("dailyHours").value=x.hours||"";document.getElementById("dailyQuestions").value=x.questions||"";document.getElementById("dailyNote").value=x.note||""}
+function rebuildPlan(){state.startDate=document.getElementById("startDate").value;state.examDate=document.getElementById("examDate").value;save();renderPlan();updateSummary()}
+function jumpToToday(){document.getElementById("today").value=dubaiDateKey();renderPlan();loadDaily();updateSummary()}
+function copyToday(){const date=document.getElementById("today").value;const text=planEditMode?document.getElementById("planEditor").value:displayedPlanText(date);navigator.clipboard.writeText(text)}
+
+let timerState=JSON.parse(localStorage.getItem("cfaPomodoroV2")||"{}");
+timerState.mode=timerState.mode||"focus";
+timerState.sessions=Number(timerState.sessions)||0;
+timerState.running=Boolean(timerState.running);
+timerState.remaining=Number(timerState.remaining)||25*60;
+timerState.sessionTotal=Number(timerState.sessionTotal)||0;
+timerState.endAt=Number(timerState.endAt)||null;
+let timerInterval=null;
+function getTimerMinutes(){if(timerState.mode==="focus")return Number(document.getElementById("focusMinutes").value)||25;if(timerState.mode==="short")return Number(document.getElementById("shortBreakMinutes").value)||5;return Number(document.getElementById("longBreakMinutes").value)||15}
+function configuredTimerSeconds(){return Math.max(1,Math.round(getTimerMinutes()*60))}
+function currentRemaining(){if(timerState.running&&timerState.endAt)return Math.max(0,Math.ceil((timerState.endAt-Date.now())/1000));return Math.max(0,Number(timerState.remaining)||0)}
+function saveTimer(){timerState.focusMinutes=Number(document.getElementById("focusMinutes").value)||25;timerState.shortBreakMinutes=Number(document.getElementById("shortBreakMinutes").value)||5;timerState.longBreakMinutes=Number(document.getElementById("longBreakMinutes").value)||15;localStorage.setItem("cfaPomodoroV2",JSON.stringify(timerState))}
+function renderTimer(){
+ timerState.remaining=currentRemaining();
+ const m=Math.floor(timerState.remaining/60),s=timerState.remaining%60;
+ const total=Math.max(1,Number(timerState.sessionTotal)||configuredTimerSeconds());
+ const elapsed=Math.max(0,Math.min(total,total-timerState.remaining));
+ const progress=Math.max(0,Math.min(100,(elapsed/total)*100));
+ const ring=document.getElementById("timerRing");
+ document.getElementById("timerDisplay").textContent=String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
+ document.getElementById("timerMode").textContent=timerState.mode==="focus"?"Focus session":timerState.mode==="short"?"Short break":"Long break";
+ document.getElementById("sessionCount").textContent=timerState.sessions;
+ document.getElementById("cycleStatus").textContent="Session "+((timerState.sessions%4)+1)+" of 4";
+ document.getElementById("timerProgressText").textContent=Math.round(progress)+"% elapsed";
+ ring.style.setProperty("--timer-progress",(progress*3.6)+"deg");
+ ring.setAttribute("aria-valuenow",String(Math.round(progress)));
+ document.title=(timerState.running?"▶ ":"")+document.getElementById("timerDisplay").textContent+" • CFA Dashboard";
+}
+function timerTick(){const remaining=currentRemaining();timerState.remaining=remaining;if(remaining<=0&&timerState.running){renderTimer();completeTimer();return}renderTimer();saveTimer()}
+function startTimer(){
+ if(timerState.running)return;
+ if(timerState.remaining<=0)timerState.remaining=configuredTimerSeconds();
+ if(!timerState.sessionTotal||timerState.remaining>timerState.sessionTotal)timerState.sessionTotal=configuredTimerSeconds();
+ timerState.running=true;
+ timerState.endAt=Date.now()+timerState.remaining*1000;
+ clearInterval(timerInterval);
+ timerInterval=setInterval(timerTick,250);
+ toggleFocusUI(true);
+ saveTimer();
+ renderTimer();
+}
+function pauseTimer(){timerState.remaining=currentRemaining();timerState.running=false;timerState.endAt=null;clearInterval(timerInterval);timerInterval=null;toggleFocusUI(false);saveTimer();renderTimer()}
+function resetTimer(){pauseTimer();timerState.sessionTotal=configuredTimerSeconds();timerState.remaining=timerState.sessionTotal;renderTimer();saveTimer()}
+function completeTimer(){
+ clearInterval(timerInterval);timerInterval=null;timerState.running=false;timerState.endAt=null;
+ try{const a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=880;g.gain.value=.08;o.start();setTimeout(()=>{o.stop();a.close()},700)}catch(e){}
+ if(timerState.mode==="focus"){timerState.sessions++;timerState.mode=timerState.sessions%4===0?"long":"short"}else timerState.mode="focus";
+ timerState.sessionTotal=configuredTimerSeconds();
+ timerState.remaining=timerState.sessionTotal;
+ toggleFocusUI(false);
+ alert(timerState.mode==="focus"?"Break finished. Start the next focus session.":"Focus session complete. Take your break.");
+ saveTimer();renderTimer();
+}
+function toggleFocusUI(active){if(!document.getElementById("focusModeToggle")?.checked)return;document.querySelectorAll("aside .card,.focus-hide,#history,#sync,#mockExams,#errorLog").forEach(el=>{if(el.id==="plan")return;el.style.display=active?"none":""})}
+function initPomodoro(){
+ const f=document.getElementById("focusMinutes"),s=document.getElementById("shortBreakMinutes"),l=document.getElementById("longBreakMinutes");
+ f.value=timerState.focusMinutes||25;s.value=timerState.shortBreakMinutes||5;l.value=timerState.longBreakMinutes||15;
+ if(!timerState.sessionTotal)timerState.sessionTotal=configuredTimerSeconds();
+ if(timerState.remaining>timerState.sessionTotal)timerState.sessionTotal=timerState.remaining;
+ [f,s,l].forEach(el=>el.addEventListener("change",()=>{if(!timerState.running){timerState.sessionTotal=configuredTimerSeconds();timerState.remaining=timerState.sessionTotal;saveTimer();renderTimer()}}));
+ if(timerState.running&&timerState.endAt){timerInterval=setInterval(timerTick,250);toggleFocusUI(true)}else{timerState.running=false;timerState.endAt=null}
+ timerTick();
+}
+
+
+const MOCK_TOPIC_LABELS={
+ "Ethical and Professional Standards":"Ethics","Financial Statement Analysis":"FSA","Alternative Investments":"Alternative Investments","Quantitative Methods":"Quant","Economics":"Economics","Corporate Issuers":"Corporate Issuers","Equity Investments":"Equity","Fixed Income":"Fixed Income","Derivatives":"Derivatives","Portfolio Management":"Portfolio Management"
+};
+function safeText(value){return String(value??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[ch]))}
+function initMockInputs(){
+ const box=document.getElementById("mockTopicInputs");box.innerHTML="";
+ ORDER.forEach((topic,i)=>{const d=document.createElement("div");d.innerHTML=`<label>${MOCK_TOPIC_LABELS[topic]}</label><input type="number" id="mockTopic${i}" min="0" max="100" step="0.1" placeholder="%">`;box.appendChild(d)});
+ document.getElementById("mockDate").value=dubaiDateKey();
+}
+function topicAverage(scores){const vals=Object.values(scores||{}).map(Number).filter(v=>Number.isFinite(v));return vals.length?vals.reduce((a,b)=>a+b,0)/vals.length:null}
+function scoreClass(score){return score>=70?"score-good":score>=60?"score-warn":"score-bad"}
+function saveMock(){
+ const date=document.getElementById("mockDate").value;
+ const name=document.getElementById("mockName").value.trim();
+ const score=Number(document.getElementById("mockScore").value);
+ const hoursRaw=document.getElementById("mockHours").value;
+ if(!date||!name||!Number.isFinite(score)||score<0||score>100){alert("Enter the mock date, name and a valid overall score from 0 to 100.");return}
+ const topicScores={};ORDER.forEach((topic,i)=>{const raw=document.getElementById(`mockTopic${i}`).value;if(raw!==""){const v=Number(raw);if(v>=0&&v<=100)topicScores[topic]=v}});
+ const item={id:editingMockId||String(Date.now()),date,name,score,hours:hoursRaw===""?null:Number(hoursRaw),notes:document.getElementById("mockNotes").value.trim(),topicScores};
+ if(editingMockId){const idx=state.mocks.findIndex(m=>m.id===editingMockId);if(idx>=0)state.mocks[idx]=item}else state.mocks.push(item);
+ save();clearMockForm();renderMocks();
+}
+function editMock(id){
+ const m=state.mocks.find(x=>x.id===id);if(!m)return;editingMockId=id;
+ document.getElementById("mockDate").value=m.date;document.getElementById("mockName").value=m.name;document.getElementById("mockScore").value=m.score;document.getElementById("mockHours").value=m.hours??"";document.getElementById("mockNotes").value=m.notes||"";
+ ORDER.forEach((topic,i)=>document.getElementById(`mockTopic${i}`).value=m.topicScores&&m.topicScores[topic]!=null?m.topicScores[topic]:"");
+ document.getElementById("saveMockBtn").textContent="Update mock exam";document.getElementById("cancelMockBtn").hidden=false;document.getElementById("mockExams").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function deleteMock(id){if(!confirm("Delete this mock exam entry?"))return;state.mocks=state.mocks.filter(m=>m.id!==id);save();if(editingMockId===id)clearMockForm();renderMocks()}
+function clearMockForm(){editingMockId=null;document.getElementById("mockDate").value=dubaiDateKey();document.getElementById("mockName").value="";document.getElementById("mockScore").value="";document.getElementById("mockHours").value="";document.getElementById("mockNotes").value="";ORDER.forEach((_,i)=>document.getElementById(`mockTopic${i}`).value="");document.getElementById("saveMockBtn").textContent="Add mock exam";document.getElementById("cancelMockBtn").hidden=true}
+
+function getWeakTopics(){const acc={};(state.mocks||[]).forEach(m=>Object.entries(m.topicScores||{}).forEach(([t,v])=>{const n=Number(v);if(Number.isFinite(n)){acc[t]=acc[t]||[];acc[t].push(n)}}));return Object.entries(acc).map(([topic,vals])=>({topic,score:vals.reduce((a,b)=>a+b,0)/vals.length})).sort((a,b)=>a.score-b.score)}
+function renderWeakTopics(){const box=document.getElementById("weakTopicList");if(!box)return;const weak=getWeakTopics().slice(0,3);box.innerHTML=weak.length?weak.map((x,i)=>`<div class="weak-item"><strong>${i+1}. ${safeText(MOCK_TOPIC_LABELS[x.topic]||x.topic)}</strong><div class="weak-score">${x.score.toFixed(1)}%</div></div>`).join(""):'<div class="empty-state">Add topic scores to a mock to unlock weak-topic analysis.</div>'}
+function addWeakTopicsToTomorrow(){const weak=getWeakTopics().slice(0,3);if(!weak.length){alert("Add topic scores to at least one mock first.");return}const tomorrow=addDaysKey(dubaiDateKey(),1),prefix=`WEAK-TOPIC REVIEW — 60 MIN\n${weak.map(x=>`• ${MOCK_TOPIC_LABELS[x.topic]||x.topic}: ${x.score.toFixed(1)}%`).join("\\n")}\n\n`;state.customPlans[tomorrow]=prefix+displayedPlanText(tomorrow);save();alert("Weak-topic review added to tomorrow's plan.")}
+
+function renderMocks(){
+ const mocks=[...state.mocks].sort((a,b)=>a.date.localeCompare(b.date));
+ const scores=mocks.map(m=>Number(m.score)).filter(Number.isFinite);
+ const avg=scores.length?scores.reduce((a,b)=>a+b,0)/scores.length:null;
+ const best=scores.length?Math.max(...scores):null;const latest=mocks.length?mocks[mocks.length-1].score:null;
+ document.getElementById("mockCountPill").textContent=`${mocks.length} mock${mocks.length===1?"":"s"}`;
+ document.getElementById("mockAverage").textContent=avg==null?"—":avg.toFixed(1)+"%";document.getElementById("mockBest").textContent=best==null?"—":best.toFixed(1)+"%";document.getElementById("mockLatest").textContent=latest==null?"—":Number(latest).toFixed(1)+"%";document.getElementById("mockAbove70").textContent=scores.filter(s=>s>=70).length;
+ const trend=document.getElementById("mockTrend");
+ if(!mocks.length)trend.innerHTML='<div class="empty-state">No mock exams added yet.</div>';else trend.innerHTML=`<div class="mock-trend">${mocks.map((m,i)=>`<div class="trend-item" title="${safeText(m.name)}: ${Number(m.score).toFixed(1)}%"><div class="trend-score">${Number(m.score).toFixed(0)}%</div><div class="trend-bar" style="height:${Math.max(4,Number(m.score))}%"></div><div class="trend-label">M${i+1}</div></div>`).join("")}</div>`;
+ const body=document.getElementById("mockTableBody");
+ if(!mocks.length){body.innerHTML='<tr><td colspan="7"><div class="empty-state">Add your first mock when you begin the review phase.</div></td></tr>';renderWeakTopics();return}
+ body.innerHTML=[...mocks].reverse().map(m=>{const ta=topicAverage(m.topicScores);return `<tr><td>${safeText(m.date)}</td><td><strong>${safeText(m.name)}</strong></td><td class="${scoreClass(Number(m.score))}">${Number(m.score).toFixed(1)}%</td><td>${ta==null?"—":ta.toFixed(1)+"%"}</td><td>${m.hours==null?"—":Number(m.hours).toFixed(2)+" h"}</td><td class="tiny">${safeText(m.notes||"—")}</td><td><button class="secondary" onclick="editMock('${safeText(m.id)}')">Edit</button> <button class="secondary danger" onclick="deleteMock('${safeText(m.id)}')">Delete</button></td></tr>`}).join("");renderWeakTopics();
+}
+
+
+
+function initErrorLog(){const topic=document.getElementById("errorTopic");topic.innerHTML=ORDER.map(t=>`<option value="${safeText(t)}">${safeText(t)}</option>`).join("");document.getElementById("errorDate").value=dubaiDateKey();document.getElementById("errorNextReview").value=addDaysKey(dubaiDateKey(),1);updateErrorModuleOptions()}
+function updateErrorModuleOptions(){const topic=document.getElementById("errorTopic").value,box=document.getElementById("errorModule");box.innerHTML=(TOPICS[topic]||[]).map((m,i)=>`<option value="${i}">${i+1}. ${safeText(m)}</option>`).join("")}
+function saveErrorEntry(){const topic=document.getElementById("errorTopic").value,index=Number(document.getElementById("errorModule").value),concept=document.getElementById("errorConcept").value.trim(),mistake=document.getElementById("errorMistake").value.trim(),correction=document.getElementById("errorCorrection").value.trim();if(!concept||!mistake||!correction){alert("Enter the concept, your mistake and the correct rule.");return}state.errors.push({id:"err-"+Date.now(),date:document.getElementById("errorDate").value||dubaiDateKey(),topic,moduleIndex:index,module:(TOPICS[topic]||[])[index]||"",source:document.getElementById("errorSource").value.trim(),concept,mistake,correction,nextReview:document.getElementById("errorNextReview").value||addDaysKey(dubaiDateKey(),1),reviewCount:0,status:"Open"});save();["errorSource","errorConcept","errorMistake","errorCorrection"].forEach(id=>document.getElementById(id).value="");document.getElementById("errorNextReview").value=addDaysKey(dubaiDateKey(),1);renderErrors();renderPlan()}
+function reviewError(id){const e=state.errors.find(x=>x.id===id);if(!e)return;e.reviewCount=(Number(e.reviewCount)||0)+1;const interval=REVIEW_INTERVALS[Math.min(e.reviewCount,REVIEW_INTERVALS.length-1)];e.nextReview=addDaysKey(dubaiDateKey(),interval);save();renderErrors();renderPlan()}
+function resolveError(id){const e=state.errors.find(x=>x.id===id);if(!e)return;e.status=e.status==="Resolved"?"Open":"Resolved";save();renderErrors();renderPlan()}
+function deleteErrorEntry(id){if(!confirm("Delete this error-log entry?"))return;state.errors=state.errors.filter(x=>x.id!==id);save();renderErrors();renderPlan()}
+function addErrorToTomorrow(id){const e=state.errors.find(x=>x.id===id);if(!e)return;const tomorrow=addDaysKey(dubaiDateKey(),1),line=`ERROR REVIEW — 20 MIN\n• ${e.topic}: ${e.concept}\n\n`;state.customPlans[tomorrow]=line+displayedPlanText(tomorrow);save();alert("Error review added to tomorrow's plan.")}
+function renderErrors(){const body=document.getElementById("errorTableBody");if(!body)return;const list=[...(state.errors||[])].sort((a,b)=>(a.nextReview||"9999").localeCompare(b.nextReview||"9999")),open=list.filter(x=>x.status!=="Resolved"),due=open.filter(x=>x.nextReview&&x.nextReview<=dubaiDateKey()),resolved=list.filter(x=>x.status==="Resolved");document.getElementById("errorCountPill").textContent=`${open.length} open`;document.getElementById("errorOpen").textContent=open.length;document.getElementById("errorDue").textContent=due.length;document.getElementById("errorResolved").textContent=resolved.length;document.getElementById("errorTotal").textContent=list.length;if(!list.length){body.innerHTML='<tr><td colspan="8"><div class="empty-state">Add incorrect questions here as you study.</div></td></tr>';return}body.innerHTML=list.map(e=>`<tr><td><span class="review-badge ${e.status!=="Resolved"&&e.nextReview<=dubaiDateKey()?"due":""}">${e.status}</span><div class="tiny">Reviewed ${Number(e.reviewCount)||0}×</div></td><td><strong>${safeText(MOCK_TOPIC_LABELS[e.topic]||e.topic)}</strong><div class="tiny">${safeText(e.module||"—")}</div></td><td>${safeText(e.concept)}</td><td class="tiny">${safeText(e.mistake)}</td><td class="tiny">${safeText(e.correction)}</td><td>${safeText(e.source||"—")}</td><td>${safeText(e.nextReview||"—")}</td><td><button class="secondary" onclick="reviewError('${safeText(e.id)}')">Reviewed</button> <button class="secondary" onclick="addErrorToTomorrow('${safeText(e.id)}')">Tomorrow</button> <button class="secondary" onclick="resolveError('${safeText(e.id)}')">${e.status==="Resolved"?"Reopen":"Resolve"}</button> <button class="secondary danger" onclick="deleteErrorEntry('${safeText(e.id)}')">Delete</button></td></tr>`).join("")}
+
+function formatHistoryDate(dateKey){
+ try{
+   return new Intl.DateTimeFormat("en-GB",{weekday:"short",day:"numeric",month:"short",year:"numeric"}).format(new Date(dateKey+"T12:00:00+04:00"));
+ }catch(e){return dateKey}
+}
+function renderHistory(){
+ const query=(document.getElementById("historySearch")?.value||"").trim().toLowerCase();
+ const minHours=Number(document.getElementById("historyMinHours")?.value)||0;
+ const entries=Object.entries(state.daily||{})
+   .map(([date,x])=>({date,hours:Number(x.hours)||0,questions:Number(x.questions)||0,note:x.note||""}))
+   .sort((a,b)=>b.date.localeCompare(a.date));
+ const filtered=entries.filter(x=>(x.date+" "+x.note).toLowerCase().includes(query)&&x.hours>=minHours);
+ const totalHours=entries.reduce((s,x)=>s+x.hours,0);
+ const totalQuestions=entries.reduce((s,x)=>s+x.questions,0);
+ document.getElementById("historyCountPill").textContent=`${entries.length} study day${entries.length===1?"":"s"}`;
+ document.getElementById("historyHours").textContent=totalHours.toFixed(1);
+ document.getElementById("historyQuestions").textContent=totalQuestions;
+ document.getElementById("historyAverage").textContent=entries.length?(totalHours/entries.length).toFixed(1):"0";
+ const body=document.getElementById("historyTableBody");
+ if(!filtered.length){
+   body.innerHTML='<tr><td colspan="5"><div class="empty-state">No matching study logs.</div></td></tr>';
+   return;
+ }
+ body.innerHTML=filtered.map(x=>`<tr>
+   <td><strong>${safeText(formatHistoryDate(x.date))}</strong><div class="tiny">${safeText(x.date)}</div></td>
+   <td>${x.hours.toFixed(2)}</td>
+   <td>${x.questions}</td>
+   <td>${safeText(x.note||"—")}</td>
+   <td><button class="secondary" onclick="editHistoryEntry('${safeText(x.date)}')">Open</button> <button class="secondary danger" onclick="deleteHistoryEntry('${safeText(x.date)}')">Delete</button></td>
+ </tr>`).join("");
+}
+function editHistoryEntry(date){
+ document.getElementById("today").value=date;
+ planEditMode=false;
+ renderPlan();loadDaily();updateSummary();
+ document.getElementById("plan").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function deleteHistoryEntry(date){
+ if(!confirm(`Delete the study log for ${date}?`))return;
+ delete state.daily[date];save();renderHistory();loadDaily();
+}
+function exportHistoryCSV(){
+ const rows=[["Date","Hours","Questions","Comment"]];
+ Object.entries(state.daily||{}).sort((a,b)=>a[0].localeCompare(b[0])).forEach(([date,x])=>{
+   rows.push([date,Number(x.hours)||0,Number(x.questions)||0,x.note||""]);
+ });
+ const csv=rows.map(row=>row.map(v=>`"${String(v).replaceAll('"','""')}"`).join(",")).join("\n");
+ downloadTextFile(`CFA-study-history-${dubaiDateKey()}.csv`,csv,"text/csv;charset=utf-8");
+}
+function getBackupPayload(){
+ return {
+   version:1,
+   exportedAt:new Date().toISOString(),
+   dashboardState:JSON.parse(localStorage.getItem("cfaSpecificV2")||"{}"),
+   pomodoroState:JSON.parse(localStorage.getItem("cfaPomodoroV2")||"{}"),
+   theme:localStorage.getItem("cfaThemeV1")||"light",
+    clockZone:localStorage.getItem("cfaClockZoneV1")||"Dubai"
+ };
+}
+function downloadTextFile(filename,text,type){
+ const blob=new Blob([text],{type});
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement("a");a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();
+ setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function downloadBackup(){
+ const payload=getBackupPayload();
+ downloadTextFile(`CFA-dashboard-backup-${dubaiDateKey()}.json`,JSON.stringify(payload,null,2),"application/json");
+ setSyncStatus("Backup downloaded.");
+}
+function validateAndApplyBackup(payload){
+ if(!payload||typeof payload!=="object"||!payload.dashboardState)throw new Error("Invalid dashboard backup.");
+ localStorage.setItem("cfaSpecificV2",JSON.stringify(payload.dashboardState));
+ localStorage.setItem("cfaPomodoroV2",JSON.stringify(payload.pomodoroState||{}));
+ localStorage.setItem("cfaThemeV1",payload.theme==="dark"?"dark":"light");
+ localStorage.setItem("cfaClockZoneV1",CLOCK_ZONES[payload.clockZone]?payload.clockZone:"Dubai");
+ setSyncStatus("Data imported. Reloading dashboard…");
+ setTimeout(()=>location.reload(),450);
+}
+function setSyncStatus(message,isError=false){
+ const el=document.getElementById("syncStatus");
+ if(!el)return;
+ el.textContent=message;
+ el.style.color=isError?"var(--bad)":"var(--good)";
+}
+function utf8ToBase64(str){
+ const bytes=new TextEncoder().encode(str);let binary="";
+ for(let i=0;i<bytes.length;i+=8192)binary+=String.fromCharCode(...bytes.subarray(i,i+8192));
+ return btoa(binary);
+}
+function base64ToUtf8(code){
+ const binary=atob(code.trim());const bytes=new Uint8Array(binary.length);
+ for(let i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);
+ return new TextDecoder().decode(bytes);
+}
+async function generateSyncCode(){
+ try{
+   const code=utf8ToBase64(JSON.stringify(getBackupPayload()));
+   document.getElementById("syncCode").value=code;
+   await navigator.clipboard.writeText(code);
+   setSyncStatus("Sync code generated and copied.");
+ }catch(e){setSyncStatus("Sync code generated, but your browser blocked automatic copying.",true)}
+}
+function importSyncCode(){
+ try{
+   const code=document.getElementById("syncCode").value.trim();
+   if(!code)throw new Error("Paste a sync code first.");
+   validateAndApplyBackup(JSON.parse(base64ToUtf8(code)));
+ }catch(e){setSyncStatus(e.message||"Could not import sync code.",true)}
+}
+function initBackupImport(){
+ const input=document.getElementById("backupFileInput");
+ if(!input)return;
+ input.addEventListener("change",async()=>{
+   const file=input.files?.[0];if(!file)return;
+   try{validateAndApplyBackup(JSON.parse(await file.text()))}
+   catch(e){setSyncStatus(e.message||"Could not import backup.",true)}
+   finally{input.value=""}
+ });
+}
+
+
+const APPLICATION_STATUSES=["Researching","Waiting for opening","Preparing","Submitted","Interview","Offer","Rejected","Withdrawn"];
+const APPLICATION_PRIORITIES=["High","Medium","Low"];
+
+function appSafe(value){return String(value??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;")}
+function applicationDaysLeft(dateKey){
+ if(!dateKey)return null;
+ const today=new Date(dubaiDateKey()+"T00:00:00+04:00");
+ const deadline=new Date(dateKey+"T23:59:59+04:00");
+ return Math.ceil((deadline-today)/86400000);
+}
+function applicationCountdown(app){
+ if(!app.deadline)return {text:"TBC / rolling",cls:"tbc"};
+ const days=applicationDaysLeft(app.deadline);
+ if(days<0)return {text:`Passed ${Math.abs(days)}d ago`,cls:"urgent"};
+ if(days===0)return {text:"Due today",cls:"urgent"};
+ if(days<=14)return {text:`${days} days`,cls:"urgent"};
+ if(days<=45)return {text:`${days} days`,cls:"soon"};
+ return {text:`${days} days`,cls:"safe"};
+}
+function renderApplications(){
+ const body=document.getElementById("applicationTableBody");
+ if(!body)return;
+ const apps=[...state.applications].sort((a,b)=>{
+   if(a.deadline&&b.deadline)return a.deadline.localeCompare(b.deadline);
+   if(a.deadline)return -1;if(b.deadline)return 1;
+   return (a.school||"").localeCompare(b.school||"");
+ });
+ document.getElementById("applicationCountPill").textContent=`${apps.length} programme${apps.length===1?"":"s"}`;
+ document.getElementById("applicationTotal").textContent=apps.length;
+ document.getElementById("applicationConfirmed").textContent=apps.filter(x=>x.deadline&&applicationDaysLeft(x.deadline)>=0).length;
+ document.getElementById("applicationSubmitted").textContent=apps.filter(x=>["Submitted","Interview","Offer"].includes(x.status)).length;
+ document.getElementById("applicationOffers").textContent=apps.filter(x=>x.status==="Offer").length;
+ body.innerHTML=apps.map(app=>{
+   const c=applicationCountdown(app);
+   return `<tr>
+    <td><input class="school-input" value="${appSafe(app.school)}" onchange="updateApplication('${appSafe(app.id)}','school',this.value)"></td>
+    <td><input class="program-input" value="${appSafe(app.program)}" onchange="updateApplication('${appSafe(app.id)}','program',this.value)"></td>
+    <td><select onchange="updateApplication('${appSafe(app.id)}','priority',this.value)">${APPLICATION_PRIORITIES.map(x=>`<option ${x===app.priority?"selected":""}>${x}</option>`).join("")}</select></td>
+    <td><input value="${appSafe(app.round)}" onchange="updateApplication('${appSafe(app.id)}','round',this.value)"></td>
+    <td><input type="date" value="${appSafe(app.deadline)}" onchange="updateApplication('${appSafe(app.id)}','deadline',this.value)"></td>
+    <td><input class="app-small-input" type="date" value="${appSafe(app.personalTarget)}" onchange="updateApplication('${appSafe(app.id)}','personalTarget',this.value)"></td>
+    <td><span class="deadline-count ${c.cls}">${c.text}</span></td>
+    <td><select onchange="updateApplication('${appSafe(app.id)}','status',this.value)">${APPLICATION_STATUSES.map(x=>`<option ${x===app.status?"selected":""}>${x}</option>`).join("")}</select></td>
+    <td><details class="app-checklist"><summary>Checklist & requirements</summary><div style="margin-top:8px"><label>Eligibility</label><select onchange="updateApplication('${appSafe(app.id)}','eligibility',this.value)"><option ${app.eligibility==="Not checked"?"selected":""}>Not checked</option><option ${app.eligibility==="Eligible"?"selected":""}>Eligible</option><option ${app.eligibility==="Needs confirmation"?"selected":""}>Needs confirmation</option><option ${app.eligibility==="Not eligible"?"selected":""}>Not eligible</option></select><label style="display:block;margin-top:7px">GMAT / GRE</label><input value="${appSafe(app.gmat)}" onchange="updateApplication('${appSafe(app.id)}','gmat',this.value)"><label style="display:block;margin-top:7px">English test</label><input value="${appSafe(app.english)}" onchange="updateApplication('${appSafe(app.id)}','english',this.value)"><label style="display:block;margin-top:7px">Essay progress %</label><input type="number" min="0" max="100" value="${Number(app.essayProgress)||0}" onchange="updateApplication('${appSafe(app.id)}','essayProgress',Number(this.value))"><label style="display:block;margin-top:7px">Fee</label><input value="${appSafe(app.fee)}" onchange="updateApplication('${appSafe(app.id)}','fee',this.value)"><label style="display:block;margin-top:7px">Interview</label><input value="${appSafe(app.interview)}" onchange="updateApplication('${appSafe(app.id)}','interview',this.value)"><div class="app-check-grid">${[["transcript","Transcript"],["cv","CV"],["rec1","Recommender 1"],["rec2","Recommender 2"]].map(([f,l])=>`<label class="app-check-item"><input type="checkbox" ${app[f]?"checked":""} onchange="updateApplication('${appSafe(app.id)}','${f}',this.checked)">${l}</label>`).join("")}</div></div></details></td>
+    <td><input class="notes-input" value="${appSafe(app.notes)}" onchange="updateApplication('${appSafe(app.id)}','notes',this.value)"></td>
+    <td><input class="app-small-input" type="date" value="${appSafe(app.lastVerified)}" onchange="updateApplication('${appSafe(app.id)}','lastVerified',this.value)"></td>
+    <td>${app.url?`<a class="application-link" href="${appSafe(app.url)}" target="_blank" rel="noopener noreferrer">Open</a>`:"—"}</td>
+    <td><button class="secondary danger" onclick="deleteApplication('${appSafe(app.id)}')">Delete</button></td>
+   </tr>`;
+ }).join("");
+}
+function updateApplication(id,field,value){
+ const app=state.applications.find(x=>x.id===id);if(!app)return;
+ app[field]=value;save();renderApplications();
+}
+function addApplication(){
+ state.applications.push({
+   id:"app-"+Date.now(),school:"New school",program:"Finance programme",priority:"Medium",round:"Deadline TBC",deadline:"",personalTarget:"",status:"Researching",notes:"",url:"",eligibility:"Not checked",gmat:"TBC",english:"TBC",transcript:false,cv:false,essayProgress:0,rec1:false,rec2:false,fee:"",interview:"Not started",lastVerified:dubaiDateKey()
+ });
+ save();renderApplications();
+ setTimeout(()=>document.getElementById("mifApplications").scrollIntoView({behavior:"smooth",block:"start"}),50);
+}
+function deleteApplication(id){
+ const app=state.applications.find(x=>x.id===id);
+ if(!app||!confirm(`Delete ${app.school} — ${app.program}?`))return;
+ state.applications=state.applications.filter(x=>x.id!==id);save();renderApplications();
+}
+
+
+const COLLAPSIBLE_IDS=["mockExams","errorLog","history","sync","mifApplications","resources"];
+function setSectionOpen(id,open){state.sectionOpen[id]=open;const section=document.getElementById(id);if(!section)return;section.classList.toggle("collapsed",!open);const btn=section.querySelector(":scope > .collapse-head .collapse-toggle");if(btn)btn.textContent=open?"Collapse":"Expand";localStorage.setItem("cfaSpecificV2",JSON.stringify(state))}
+function initCollapsibles(){COLLAPSIBLE_IDS.forEach(id=>{const section=document.getElementById(id);if(!section)return;section.classList.add("collapsible-section");const head=section.firstElementChild;if(!head)return;head.classList.add("collapse-head");if(!head.querySelector(".collapse-toggle")){const btn=document.createElement("button");btn.type="button";btn.className="secondary collapse-toggle";btn.onclick=()=>setSectionOpen(id,section.classList.contains("collapsed"));head.appendChild(btn)}const open=Object.prototype.hasOwnProperty.call(state.sectionOpen,id)?Boolean(state.sectionOpen[id]):false;setSectionOpen(id,open)})}
+
+const THEME_KEY="cfaThemeV1";
+function applyTheme(theme){
+ const safe=theme==="dark"?"dark":"light";
+ document.documentElement.dataset.theme=safe;
+ localStorage.setItem(THEME_KEY,safe);
+ const button=document.getElementById("themeToggle");
+ const text=document.getElementById("themeToggleText");
+ if(button)button.setAttribute("aria-pressed",String(safe==="dark"));
+ if(text)text.textContent=safe==="dark"?"Light mode":"Dark mode";
+}
+function toggleTheme(){applyTheme(document.documentElement.dataset.theme==="dark"?"light":"dark")}
+function initTheme(){
+ const saved=localStorage.getItem(THEME_KEY);
+ const preferred=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";
+ applyTheme(saved||preferred);
+}
+
+function renderWeightings(){
+ const box=document.getElementById("weightList");if(!box)return;
+ const maxMid=Math.max(...ORDER.map(weightMid));
+ const rows=[...ORDER].sort((a,b)=>weightMid(b)-weightMid(a)).map(t=>{
+   const list=TOPICS[t];const done=list.filter((_,i)=>getM(t,i).done).length;
+   const frac=done/list.length;const massPct=(weightMid(t)/maxMid)*100;const fillPct=massPct*frac;
+   return `<div class="weight-row">
+     <div class="weight-row-top"><span class="weight-row-name">${t}</span><span class="weight-row-range">${weightRange(t)}</span></div>
+     <div class="weight-track"><div class="weight-mass" style="width:${massPct}%"></div><div class="weight-fill" style="width:${fillPct}%"></div></div>
+     <div class="weight-row-foot">${done}/${list.length} modules · ${Math.round(frac*100)}% done</div>
+   </div>`;
+ });
+ box.innerHTML=rows.join("");
+}
+function render(){renderTabs();renderModules();renderPlan();loadDaily();updateSummary();renderMocks();renderHistory();renderApplications();renderWeightings();renderErrors()}
+["today","startDate","examDate"].forEach(id=>document.getElementById(id).addEventListener("change",()=>{planEditMode=false;renderPlan();loadDaily();updateSummary();updateExamCountdown()}));
+initTheme();
+initSettings();
+initMockInputs();
+initErrorLog();
+initCollapsibles();
+initBackupImport();
+document.getElementById("historySearch").addEventListener("input",renderHistory);
+document.getElementById("historyMinHours").addEventListener("input",renderHistory);
+render();
+updateExamCountdown();
+initPomodoro();
+updateLiveClock();
+setInterval(()=>{updateLiveClock();updateExamCountdown()},1000);
+</script></body></html>
