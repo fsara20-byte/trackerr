@@ -287,6 +287,18 @@ linear-gradient(145deg,color-mix(in srgb,var(--accent) 6%,var(--card)),var(--car
 @media(max-width:1000px){.schedule-grid{grid-template-columns:repeat(3,1fr)}.weak-list{grid-template-columns:1fr}.error-form{grid-template-columns:1fr 1fr}.error-summary{grid-template-columns:1fr 1fr}}
 @media(max-width:650px){.schedule-grid,.error-form,.error-summary{grid-template-columns:1fr}.error-wide{grid-column:auto}.module{grid-template-columns:1fr 1fr}.review-row{grid-column:1/-1}}
 
+
+/* Separate two-day execution checklist */
+.sprint-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin-top:14px}
+.sprint-day{background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:15px}
+.sprint-task{display:flex;gap:11px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--line)}
+.sprint-task input{width:18px;height:18px;flex-shrink:0;margin-top:3px;accent-color:var(--accent)}
+.sprint-task label{cursor:pointer;flex:1;font-size:13px;line-height:1.5}
+.sprint-task small{display:block;color:var(--muted);margin:3px 0 0}
+.sprint-task.completed label{text-decoration:line-through;opacity:.65}
+.sprint-track{height:9px;border-radius:30px;background:var(--line);overflow:hidden;margin-top:9px}
+.sprint-track div{height:100%;background:var(--accent);transition:width .2s}
+@media(max-width:740px){.sprint-grid{grid-template-columns:1fr}}
 </style></head>
 <body>
 <header><div class="header-row"><div class="header-title-area">
@@ -313,7 +325,7 @@ linear-gradient(145deg,color-mix(in srgb,var(--accent) 6%,var(--card)),var(--car
 <nav class="top-nav" aria-label="Dashboard sections">
   <a href="#focus">Focus timer</a>
   <a href="#overview">Overview</a>
-  <a href="#plan">Daily plan</a>
+  <a href="#sprintChecklist">29–30 Oct checklist</a><a href="#plan">Daily plan</a>
   <a href="#curriculum">Curriculum</a>
   <a href="#mockExams">Mock exams</a><a href="#errorLog">Error log</a><a href="#mifApplications">MiF deadlines</a><a href="#history">History</a><a href="#sync">Backup & sync</a><a href="#resources">News & jobs</a>
 </nav>
@@ -391,37 +403,39 @@ linear-gradient(145deg,color-mix(in srgb,var(--accent) 6%,var(--card)),var(--car
 
           <div class="stat-card">
             <div class="stat-label">Focus rule</div>
-            <div class="tiny focus-rule">Work only on the module shown in Today’s exact plan. No switching topics, no random checking, no extra tabs.</div>
+            <div class="tiny focus-rule">Work on the next unfinished module. No switching topics, no random checking, no extra tabs.</div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div><div class="toolbar card" id="overview">
-<div><label>Plan start date</label><input id="startDate" type="date" value="2026-07-21"/></div>
-<div><label>Exam date (set your exact date)</label><input id="examDate" type="date" value="2026-11-18"/></div>
+<div><label>Plan start date</label><input id="startDate" type="date" value="2026-10-29"/></div>
+<div><label>Exam date (set your exact date)</label><input id="examDate" type="date" value="2027-02-24"/></div>
 <div><label>View / log date</label><input id="today" type="date"/><div class="auto-note">Automatically opens on the real Dubai date.</div></div>
 <div class="toolbar-actions"><button onclick="jumpToToday()">Go to today</button><button class="secondary" onclick="rebuildPlan()">Rebuild plan</button></div>
 </div>
-<div class="card schedule-settings">
-  <div class="mock-header"><div><h2 style="margin:0">Study Schedule Settings</h2><div class="tiny">Controls the automatic plan and the on-track calculation.</div></div><span class="pill">Editable</span></div>
-  <div class="schedule-grid">
-    <div><label>Curriculum complete by</label><input id="curriculumDeadline" type="date" value="2026-09-30"/></div>
-    <div><label>July hours / study day</label><input id="julyHours" type="number" min="0" max="12" step=".25" value="5"/></div>
-    <div><label>Weekday hours</label><input id="weekdayHours" type="number" min="0" max="12" step=".25" value="4"/></div>
-    <div><label>Weekend hours</label><input id="weekendHours" type="number" min="0" max="12" step=".25" value="4"/></div>
-    <div><label>Weekly rest day</label><select id="restDay"><option value="none">No fixed rest day</option><option value="0">Sunday</option><option value="1">Monday</option><option value="2">Tuesday</option><option value="3">Wednesday</option><option value="4">Thursday</option><option value="5">Friday</option><option value="6">Saturday</option></select></div>
-    <div><label>Question target</label><input id="questionTarget" type="number" min="500" max="10000" step="100" value="3000"/></div>
-  </div>
-</div>
 <div class="grid" style="margin-top:12px">
 <div class="card"><label>Curriculum modules</label><div class="metric" id="totalModules">—</div><div class="tiny" id="moduleBreakdown"></div></div>
+<div class="card"><label>Modules finished / total</label><div class="metric" id="moduleXofY">0 / 102</div><div class="tiny" id="moduleRemainingText">Modules left and daily target</div></div>
 <div class="card"><label>Overall progress</label><div class="metric" id="completed">—</div><progress id="overallProgress" max="100" value="0"></progress><div class="progressrow"><span class="lefttext" id="overallDonePct">0% complete</span><span class="lefttext" id="overallLeftPct">100% left</span></div></div>
 <div class="card"><label>Hours logged</label><div class="metric" id="hoursLogged">0</div><div class="tiny">Uses Daily completion log only • module time is not double-counted</div></div>
-<div class="card"><label>On-track status</label><div class="metric" id="trackStatus">—</div><div class="tiny" id="trackDetail"></div></div>
+<div class="card"><label>On-track status</label><div class="metric" id="trackStatus">—</div><div class="tiny" id="trackDetail"></div><div style="border-top:1px solid var(--line);margin-top:12px;padding-top:12px"><label>Estimated completion date</label><div class="metric" id="projectedFinish">—</div><div class="tiny" id="projectedFinishDetail">Required daily pace appears until enough real module-completion history exists.</div></div></div>
 <div class="card"><label>Current readiness</label><div class="metric readiness-score" id="readinessScore">0%</div><progress id="readinessProgress" max="100" value="0"></progress><div class="readiness-breakdown" id="readinessBreakdown">Complete modules and questions to build readiness.</div></div>
-<div class="card"><label>Projected curriculum finish</label><div class="metric" id="projectedFinish">—</div><div class="tiny" id="projectedFinishDetail">Based on remaining modules and your schedule settings.</div></div>
+
 </div>
+<section class="card" id="studyIntelligence" style="margin-top:12px"><h2 style="margin-top:0">Review queue & weak topics</h2><div class="tiny" id="reviewQueueSummary" style="margin-bottom:10px">Loading reviews…</div><div class="tiny" id="weakTopicAlerts">Loading QBank alerts…</div></section>
+<section class="card" id="revisionRoadmap" style="margin-top:12px">
+<h2 style="margin-top:0">Syllabus → Review & Mocks</h2>
+<div class="tiny" style="margin-bottom:12px">30 November is the normal syllabus deadline. 2 December is the hard stop. Everything after is reserved for question banks, revision, and mock exams.</div>
+<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(185px,1fr))">
+<div><strong>29 Oct – 30 Nov</strong><div class="tiny">Finish every outstanding learning module. Track your required daily pace above.</div></div>
+<div><strong>1 – 2 Dec</strong><div class="tiny">Emergency catch-up only, if needed. Otherwise begin revision immediately.</div></div>
+<div><strong>3 Dec – 31 Dec</strong><div class="tiny">First full review, topic questions, formula practice and error log; mocks 1–2.</div></div>
+<div><strong>1 – 31 Jan</strong><div class="tiny">Mixed timed QBank, repair weakest topics; mocks 3–6.</div></div>
+<div><strong>1 – 21 Feb</strong><div class="tiny">Mocks 7–8, review every mistake, Ethics and formulas. Aim for consistent timed scores.</div></div>
+<div><strong>22 – 24 Feb</strong><div class="tiny">Light review, formulas, logistics and sleep. No new curriculum.</div></div>
+</div></section>
 <section id="curriculum"><div class="section-heading"><div><h2>Curriculum</h2><p>Select a topic and update each module as you progress.</p></div></div><div class="tabs" id="tabs"></div>
 <div class="two">
 <section class="card">
@@ -438,7 +452,7 @@ linear-gradient(145deg,color-mix(in srgb,var(--accent) 6%,var(--card)),var(--car
 
 <div class="card" id="plan">
 <div class="plan-topline">
-<div><h2 style="margin:0">Daily exact plan</h2><div class="today-badge" id="selectedDateLabel">Live date</div></div>
+<div><h2 style="margin:0">Next module priorities</h2><div class="today-badge" id="selectedDateLabel">Live date</div></div>
 <div class="plan-actions">
 <button class="secondary" id="editPlanBtn" onclick="beginPlanEdit()">Edit plan</button>
 <button hidden="" id="savePlanBtn" onclick="savePlanEdit()">Save edits</button>
@@ -583,28 +597,35 @@ linear-gradient(145deg,color-mix(in srgb,var(--accent) 6%,var(--card)),var(--car
 </section>
 
 
+
+<section class="card focus-hide" id="sprintChecklist" style="margin-bottom:14px">
+ <div class="mock-header"><div><h2 style="margin:0">29–30 October · Two-day checklist</h2><div class="tiny">Separate from the 2027 syllabus completion tally. Tick tasks as you finish; progress saves locally.</div></div><span class="pill" id="sprintCount">0 / 10 complete</span></div>
+ <div class="sprint-track"><div id="sprintBar" style="width:0%"></div></div>
+ <div class="sprint-grid" id="sprintTaskGrid"></div>
+ <p class="tiny" style="margin-top:12px">Study blocks are suggested, not scheduled appointments. Thursday: Derivatives consolidation. Friday: Derivatives testing and Economics. These tasks do not double-count completed curriculum modules.</p>
+</section>
 <section class="card applications-section focus-hide" id="mifApplications">
   <div class="mock-header">
     <div>
-      <h2 style="margin:0">2027 MiF Application Deadlines</h2>
-      <div class="tiny">Your target European finance programmes. Every field is editable and stored with the rest of the dashboard.</div>
+      <h2 style="margin:0">2027 & 2028 Finance / Consulting Applications</h2>
+      <div class="tiny">European programmes for 2027 and 2028 entry. Every field is editable and saved with your dashboard.</div>
     </div>
     <span class="pill" id="applicationCountPill">9 programmes</span>
   </div>
 
   <div class="application-summary">
     <div class="application-stat"><label>Total programmes</label><div class="metric" id="applicationTotal">0</div></div>
-    <div class="application-stat"><label>Confirmed upcoming dates</label><div class="metric" id="applicationConfirmed">0</div></div>
+    <div class="application-stat"><label>Upcoming dates entered</label><div class="metric" id="applicationConfirmed">0</div></div>
     <div class="application-stat"><label>Submitted</label><div class="metric" id="applicationSubmitted">0</div></div>
     <div class="application-stat"><label>Offers</label><div class="metric" id="applicationOffers">0</div></div>
   </div>
 
   <div class="application-note">
-    Official dates were checked on 22 July 2026. Only published dates are pre-filled. “TBC” means the school has not yet published its 2027 deadline. HEC’s listed date is a pre-registration deadline, not the final application deadline.
+    Reference dates compiled 29 October 2026; not live-verified automatically. Bocconi international and HEC April 2027 dates cross-checked on official pages. Other 2027 dates require rechecking. 2028 dates are intentionally blank pending publication. Rolling admissions have no fixed deadline. Programme eligibility and scholarships may have separate rules.
   </div>
 
-  <div class="application-toolbar">
-    <div class="tiny">Use the date column for the school deadline or your own earlier target date.</div>
+  <div class="application-toolbar"><label>Entry year <select id="entryYearFilter" onchange="renderApplications()"><option value="all">All</option><option value="2027">2027</option><option value="2028">2028</option></select></label>
+    <div class="tiny">Official deadlines and personal targets are separate. Dates are not automatically verified; always check the official admissions page.</div>
     <button onclick="addApplication()">Add programme</button>
   </div>
 
@@ -664,21 +685,92 @@ linear-gradient(145deg,color-mix(in srgb,var(--accent) 6%,var(--card)),var(--car
 
 </div>
 <script>
-const TOPICS={"Ethical and Professional Standards": ["Ethics and Trust in the Investment Profession", "Code of Ethics and Standards of Professional Conduct", "Guidance for Standards I–VII", "Introduction to the Global Investment Performance Standards (GIPS)", "Ethics Application"], "Quantitative Methods": ["Rates and Returns", "Time Value of Money in Finance", "Statistical Measures of Asset Returns", "Probability Trees and Conditional Expectations", "Portfolio Mathematics", "Simulation Methods", "Estimation and Inference", "Hypothesis Testing", "Parametric and Non-Parametric Tests of Independence", "Simple Linear Regression", "Introduction to Big Data Techniques"], "Economics": ["The Firm and Market Structures", "Understanding Business Cycles", "Fiscal Policy", "Monetary Policy", "Introduction to Geopolitics", "International Trade", "Capital Flows and the FX Market", "Exchange Rate Calculations"], "Corporate Issuers": ["Organizational Forms, Corporate Issuer Features, and Ownership", "Investors and Other Stakeholders", "Corporate Governance: Conflicts, Mechanisms, Risks, and Benefits", "Working Capital and Liquidity", "Capital Investments and Capital Allocation", "Capital Structure", "Business Models"], "Financial Statement Analysis": ["Introduction to Financial Statement Analysis", "Analyzing Income Statements", "Analyzing Balance Sheets", "Analyzing Statements of Cash Flows I", "Analyzing Statements of Cash Flows II", "Analysis of Inventories", "Analysis of Long-Term Assets", "Topics in Long-Term Liabilities and Equity", "Analysis of Income Taxes", "Financial Reporting Quality", "Financial Analysis Techniques", "Introduction to Financial Statement Modeling"], "Equity Investments": ["Market Organization and Structure", "Security Market Indexes", "Market Efficiency", "Overview of Equity Securities", "Company Analysis: Past and Present", "Industry and Competitive Analysis", "Company Analysis: Forecasting", "Equity Valuation: Concepts and Basic Tools"], "Fixed Income": ["Fixed-Income Instrument Features", "Fixed-Income Cash Flows and Types", "Fixed-Income Issuance and Trading", "Fixed-Income Markets for Corporate Issuers", "Fixed-Income Markets for Government Issuers", "Fixed-Income Bond Valuation: Prices and Yields", "Yield and Yield Spread Measures for Fixed-Rate Bonds", "Yield and Yield Spread Measures for Floating-Rate Instruments", "The Term Structure of Interest Rates: Spot, Par, and Forward Curves", "Interest Rate Risk and Return", "Yield-Based Bond Duration Measures and Properties", "Yield-Based Bond Convexity and Portfolio Properties", "Curve-Based and Empirical Fixed-Income Risk Measures", "Credit Risk", "Credit Analysis for Government Issuers", "Credit Analysis for Corporate Issuers", "Fixed-Income Securitization", "Asset-Backed Security (ABS) Instrument and Market Features", "Mortgage-Backed Security (MBS) Instrument and Market Features"], "Derivatives": ["Derivative Instrument and Derivative Market Features", "Forward Commitment and Contingent Claim Features and Instruments", "Derivative Benefits, Risks, and Issuer and Investor Uses", "Arbitrage, Replication, and the Cost of Carry in Pricing Derivatives", "Pricing and Valuation of Forward Contracts and for an Underlying with Varying Maturities", "Pricing and Valuation of Futures Contracts", "Pricing and Valuation of Interest Rates and Other Swaps", "Pricing and Valuation of Options", "Option Replication Using Put–Call Parity", "Valuing a Derivative Using a One-Period Binomial Model"], "Alternative Investments": ["Alternative Investment Features, Methods, and Structures", "Alternative Investment Performance and Returns", "Investments in Private Capital: Equity and Debt", "Real Estate and Infrastructure", "Natural Resources", "Hedge Funds", "Introduction to Digital Assets"], "Portfolio Management": ["Portfolio Risk and Return: Part I", "Portfolio Risk and Return: Part II", "Portfolio Management: An Overview", "Basics of Portfolio Planning and Construction", "The Behavioral Biases of Individuals", "Introduction to Risk Management"]};
-const ORDER=["Ethical and Professional Standards","Financial Statement Analysis","Alternative Investments","Quantitative Methods","Economics","Corporate Issuers","Equity Investments","Fixed Income","Derivatives","Portfolio Management"];
-const EST={"Ethical and Professional Standards":3,"Financial Statement Analysis":4,"Alternative Investments":3,"Quantitative Methods":4,"Economics":3.5,"Corporate Issuers":3,"Equity Investments":3.5,"Fixed Income":4,"Derivatives":3.5,"Portfolio Management":3.5};
-// Official CFA Institute Level I topic weight ranges, 2026 curriculum (unchanged from 2025).
-const WEIGHTS={"Ethical and Professional Standards":[15,20],"Financial Statement Analysis":[11,14],"Equity Investments":[11,14],"Fixed Income":[11,14],"Portfolio Management":[8,12],"Alternative Investments":[7,10],"Quantitative Methods":[6,9],"Economics":[6,9],"Corporate Issuers":[6,9],"Derivatives":[5,8]};
+const TOPICS={"Ethical and Professional Standards": ["Ethics and Trust in the Investment Profession", "Code of Ethics and Standards of Professional Conduct", "Guidance for Standard I: Professionalism", "Guidance for Standard II: Integrity of Capital Markets", "Guidance for Standard III: Duties to Clients", "Guidance for Standard IV: Duties to Employers", "Guidance for Standard V: Investment Analysis, Recommendations, and Actions", "Guidance for Standard VI: Conflicts of Interest", "Guidance for Standard VII: Responsibilities as a CFA Institute Member or CFA Candidate", "Application of the Code and Standards: Level I"], "Quantitative Methods": ["Returns of Financial Assets and Instruments", "Types of Financial Returns", "Benchmarking Returns", "The Time Value of Money in Finance", "Statistical Characteristics of Asset Returns", "Statistical Distributions for Financial Asset Prices and Returns", "Estimation and Hypothesis Testing", "The Return and Risk of a Financial Portfolio", "Simulation of Financial Asset Prices and Returns", "Applications of Simple Linear Regression in Finance", "Introduction to Financial Data Science"], "Economics": ["The Firm and Market Structures", "Understanding Business Cycles", "Fiscal Policy", "Monetary Policy", "Introduction to Geopolitics", "International Trade", "Capital Flows and the FX Market", "Exchange Rate Calculations"], "Financial Statement Analysis": ["Introduction to Financial Statement Analysis", "Analyzing Income Statements", "Analyzing Balance Sheets", "Analyzing Statements of Cash Flows I", "Analyzing Statements of Cash Flows II", "Analysis of Inventories", "Analysis of Long-Term Assets", "Topics in Long-Term Liabilities and Equity", "Analysis of Income Taxes", "Financial Reporting Quality", "Financial Analysis Techniques", "Introduction to Financial Statement Modeling"], "Fixed Income": ["Fixed-Income Instrument Features", "Fixed-Income Cash Flows and Types", "Fixed-Income Issuance and Trading", "Fixed-Income Markets for Corporate Issuers", "Fixed-Income Markets for Government Issuers", "Fixed-Income Bond Valuation: Prices and Yields", "Yield and Yield Spread Measures for Fixed-Rate Bonds", "Yield and Yield Spread Measures for Floating-Rate Instruments", "The Term Structure of Interest Rates: Spot, Par, and Forward Curves", "Interest Rate Risk and Return", "Yield-Based Bond Duration Measures and Properties", "Yield-Based Bond Convexity and Portfolio Properties", "Curve-Based and Empirical Fixed-Income Risk Measures", "Credit Risk", "Credit Analysis for Government Issuers", "Credit Analysis for Corporate Issuers", "Fixed-Income Securitization", "Asset-Backed Security (ABS) Instrument and Market Features", "Mortgage-Backed Security (MBS) Instrument and Market Features"], "Alternative Investments": ["Alternative Investment Features, Methods, and Structures", "Alternative Investment Performance and Returns", "Investments in Private Capital: Equity and Debt", "Real Estate and Infrastructure", "Natural Resources", "Hedge Funds", "Introduction to Digital Assets"], "Equities": ["Equity Instrument Features", "Equity Jurisdictions, Classes, and the Voting Process", "Equity Issuance and Trading", "Sources of Equity Returns", "Introduction to Equity Valuation", "Discounted Cash Flow (DCF) and Growth Models", "Relative Value Equity Valuation Approaches", "Financial Statement Forecasting in Equity Valuation", "Industry and Competitive Analysis", "Company Analysis: Past, Present, and Future", "Equity Analyst Research Reports", "The Capital Asset Pricing Model, Market Model, and Other Factor-Based Equity Models"], "Corporate Finance": ["Organizational Forms, Corporate Issuer Features, and Ownership", "Investors and Other Stakeholders", "Corporate Governance: Conflicts, Mechanisms, Risks, and Benefits", "Working Capital and Liquidity", "Capital Investments and Capital Allocation", "Capital Structure", "Business Models"], "Derivatives and Risk Management": ["Derivative Instrument and Derivative Market Features", "Forward Commitment and Contingent Claim Features and Instruments", "Derivative Benefits, Risks, and Issuer and Investor Uses", "Arbitrage, Replication, and the Cost of Carry in Pricing Derivatives", "Pricing and Valuation of Forward Contracts and for an Underlying with Varying Maturities", "Pricing and Valuation of Futures Contracts", "Pricing and Valuation of Interest Rates and Other Swaps", "Pricing and Valuation of Options", "Option Replication Using Put–Call Parity", "Valuing a Derivative Using a One-Period Binomial Model"], "Portfolio Construction": ["Portfolio Risk and Return: Part I", "Portfolio Risk and Return: Part II", "Portfolio Management: An Overview", "Basics of Portfolio Planning and Construction", "The Behavioral Biases of Individuals", "Introduction to Risk Management"]};
+const ORDER=["Ethical and Professional Standards","Financial Statement Analysis","Alternative Investments","Quantitative Methods","Economics","Corporate Finance","Equities","Fixed Income","Derivatives and Risk Management","Portfolio Construction"];
+const EST={"Ethical and Professional Standards":3,"Financial Statement Analysis":4,"Alternative Investments":3,"Quantitative Methods":4,"Economics":3.5,"Corporate Finance":3,"Equities":3.5,"Fixed Income":4,"Derivatives and Risk Management":3.5,"Portfolio Construction":3.5};
+// Official CFA Institute Level I topic weight ranges, 2027 curriculum.
+const WEIGHTS={"Ethical and Professional Standards":[10,15],"Financial Statement Analysis":[11,14],"Equities":[11,14],"Fixed Income":[11,14],"Portfolio Construction":[8,12],"Alternative Investments":[6,9],"Quantitative Methods":[11,14],"Economics":[6,9],"Corporate Finance":[6,9],"Derivatives and Risk Management":[6,9]};
 function weightRange(t){const w=WEIGHTS[t];return w?w[0]+"–"+w[1]+"%":"—"}
 function weightMid(t){const w=WEIGHTS[t];return w?(w[0]+w[1])/2:0}
 let state=JSON.parse(localStorage.getItem("cfaSpecificV2")||"{}");
+// 2027 syllabus migration: preserve only old entries that map to identical curriculum modules.
+if(!state.syllabus2027Migrated){
+ const oldModules=state.modules||{}, mapped={};
+ const rename={'Corporate Issuers':'Corporate Finance','Equity Investments':'Equities','Derivatives':'Derivatives and Risk Management','Portfolio Management':'Portfolio Construction'};
+ const safeTopics=['Economics','Corporate Issuers','Financial Statement Analysis','Fixed Income','Derivatives','Alternative Investments','Portfolio Management'];
+ safeTopics.forEach(oldName=>{const dest=rename[oldName]||oldName; TOPICS[dest].forEach((name,i)=>{const record=oldModules[oldName+"::"+i];if(record)mapped[dest+"::"+i]=record;});});
+ // The first two Ethics modules are unchanged; old aggregate Standards/GIPS are not equivalent to the new modules.
+ [0,1].forEach(i=>{const r=oldModules["Ethical and Professional Standards::"+i];if(r)mapped["Ethical and Professional Standards::"+i]=r;});
+ state.modules=mapped; state.syllabus2027Migrated=true;
+ state.active=rename[state.active]||state.active;
+ localStorage.setItem("cfaSpecificV2",JSON.stringify(state));
+}
 state.modules=state.modules||{}; state.daily=state.daily||{}; state.customPlans=state.customPlans||{}; state.mocks=Array.isArray(state.mocks)?state.mocks:[]; state.active=state.active||"Financial Statement Analysis";
-state.settings=Object.assign({curriculumDeadline:"2026-09-30",julyHours:5,weekdayHours:4,weekendHours:4,restDay:"none",questionTarget:3000},state.settings||{});
+state.settings=Object.assign({curriculumDeadline:"2026-11-30",julyHours:5,weekdayHours:6,weekendHours:6,restDay:"none",questionTarget:3000},state.settings||{});
+// Upgrade the calendar only. Keep module checks, scores, questions, mocks and study logs.
+if(!state.feb2027Migration){state.feb2027Migration=true;state.settings.curriculumDeadline="2026-11-30";state.settings.weekdayHours=6;state.settings.weekendHours=6;state.startDate="2026-10-29";state.examDate="2027-02-24";state.paceBaseline={date:"2026-10-29",done:Object.entries(state.modules).filter(([k,v])=>v&&v.done).length};localStorage.setItem("cfaSpecificV2",JSON.stringify(state));}
+state.examDate="2027-02-24";
 state.errors=Array.isArray(state.errors)?state.errors:[];
+state.moduleCompletionHistory=state.moduleCompletionHistory||{};
 state.sectionOpen=state.sectionOpen||{};
 
-const DEFAULT_MIF_APPLICATIONS=[{"id": "hec-mif", "school": "HEC Paris", "program": "Master in International Finance", "priority": "High", "round": "2027 pre-registration", "deadline": "2026-08-24", "status": "Waiting for opening", "notes": "Pre-register by 24 Aug 2026. Final 2027 application rounds not published yet.", "url": "https://www.hec.edu/en/master-s-programs/master-international-finance"}, {"id": "bocconi-fin", "school": "Bocconi", "program": "MSc Finance", "priority": "High", "round": "International Round 1", "deadline": "2026-10-29", "status": "Preparing", "notes": "Round 1 application window: 1–29 Oct 2026.", "url": "https://www.unibocconi.it/en/applying-bocconi/master-science-and-ma-programs/application-and-admissions/admissions"}, {"id": "lse-fin", "school": "LSE", "program": "MSc Finance", "priority": "High", "round": "Rolling — 2027 dates TBC", "deadline": "", "status": "Waiting for opening", "notes": "No fixed 2027 date published yet. Apply early once applications open.", "url": "https://www.lse.ac.uk/study-at-lse/graduate/msc-finance-full-time"}, {"id": "lbs-mfa", "school": "London Business School", "program": "Masters in Financial Analysis", "priority": "High", "round": "2027 rounds TBC", "deadline": "", "status": "Waiting for opening", "notes": "Relevant pre-experience finance programme; 2027 round dates not yet published.", "url": "https://www.london.edu/masters-degrees/masters-in-financial-analysis/apply"}, {"id": "imperial-fin", "school": "Imperial College London", "program": "MSc Finance", "priority": "High", "round": "2027 rounds TBC", "deadline": "", "status": "Waiting for opening", "notes": "2027 dates are not yet published on the official admissions page.", "url": "https://www.imperial.ac.uk/business-school/masters/finance/admissions/"}, {"id": "escp-fin", "school": "ESCP Business School", "program": "MSc Finance", "priority": "High", "round": "2027 calendar TBC", "deadline": "", "status": "Waiting for opening", "notes": "Monitor the official admissions calendar; apply in an early round.", "url": "https://escp.eu/programmes/specialised-masters-MSc/MSc-finance"}, {"id": "esade-fin", "school": "ESADE", "program": "MSc Finance", "priority": "Medium", "round": "2027 deadlines TBC", "deadline": "", "status": "Waiting for opening", "notes": "2027 deadline calendar has not yet been published.", "url": "https://www.esade.edu/master-of-science/en/admissions"}, {"id": "edhec-fin", "school": "EDHEC", "program": "MSc Finance / Financial Markets", "priority": "Medium", "round": "2027 deadlines TBC", "deadline": "", "status": "Waiting for opening", "notes": "2027 application rounds are not yet published.", "url": "https://www.edhec.edu/en/programmes/masters-degree/msc-finance"}, {"id": "ie-fin", "school": "IE Business School", "program": "Master in Finance", "priority": "High", "round": "Rolling admissions", "deadline": "", "status": "Researching", "notes": "No fixed deadline. Set an earlier personal target because places are limited.", "url": "https://www.ie.edu/business-school/programs/masters/master-in-finance/admissions-fees/"}];
+const DEFAULT_MIF_APPLICATIONS=[{"id":"hec-mif","school":"HEC Paris","program":"Master in International Finance","priority":"High","round":"2027 entry · Round 4 (final)","deadline":"2027-04-28","status":"Researching","notes":"Official HEC MSc International Finance final round deadline 28 April 2027 at noon CEST. Round 3 closed 17 Feb; recommend GMAT/GRE and references ready in advance.","url":"https://www.hec.edu/en/masters-programs/msc-international-finance/admissions","lastVerified":"2026-10-29"},{"id":"bocconi-fin","school":"Bocconi","program":"MSc Finance","priority":"High","round":"2027 entry · international Round 3","deadline":"2027-03-11","status":"Researching","notes":"Official international MSc admissions: Round 3 closes 11 March 2027 (15:00 Italy); Round 4 closes 29 April 2027. Finance Global Experience may have separate procedures. Earlier rounds Oct 29 and Jan 26. Slots and scholarships more available earlier.","url":"https://www.unibocconi.it/en/applying-bocconi/master-science-and-ma-programs/application-and-admissions/admissions","lastVerified":"2026-10-29"},{"id":"lse-fin","school":"LSE","program":"MSc Finance","priority":"High","round":"Rolling (2027/28 entry)","deadline":"","status":"Researching","notes":"2027/28 applications open. No fixed deadline; closes when places fill. Apply early.","url":"https://www.lse.ac.uk/study-at-lse/graduate/msc-finance-full-time","lastVerified":"2026-10-29"},{"id":"lbs-mfa","school":"London Business School","program":"Masters in Financial Analysis","priority":"High","round":"2027 rounds: verify live calendar","deadline":"","status":"Researching","notes":"Official admissions page lists staged rounds; specific next 2027 date could not be verified. Confirm eligibility: GMAT/GRE or completed CFA Level I before application.","url":"https://www.london.edu/masters-degrees/masters-in-financial-analysis/apply","lastVerified":"2026-10-29"},{"id":"imperial-fin","school":"Imperial College London","program":"MSc Finance","priority":"High","round":"2027 entry · March round","deadline":"2027-03-10","status":"Researching","notes":"2027 MSc Finance rounds noted as 10 March and 28 April 2027. Verify on programme-specific page before submitting.","url":"https://www.imperial.ac.uk/business-school/masters/finance/admissions/","lastVerified":"2026-10-29"},{"id":"escp-fin","school":"ESCP Business School","program":"MSc Finance","priority":"High","round":"2027 entry · March session","deadline":"2027-03-30","status":"Researching","notes":"MSc Finance sessions noted as 30 March and 2 June 2027; confirm campus-specific requirements and deadlines.","url":"https://escp.eu/programmes/specialised-masters-MSc/MSc-finance","lastVerified":"2026-10-29"},{"id":"esade-fin","school":"Esade","program":"MSc Finance","priority":"Medium","round":"Round 2 (2027 entry)","deadline":"2026-11-18","status":"Researching","notes":"Round 2: 18 Nov 2026. Next: 13 Jan and 17 Feb 2027. Earlier listed deadline is before your exam; verify whether later spring 2027 rounds exist.","url":"https://www.esade.edu/master-of-science/en/program/masters-in-finance/admissions","lastVerified":"2026-10-29"},{"id":"edhec-fin","school":"EDHEC","program":"MSc Finance / Financial Markets","priority":"Medium","round":"2027 entry · March round","deadline":"2027-03-09","status":"Researching","notes":"2027 admission rounds reported as 9 March, 20 April, 1 June; confirm target MSc programme and nationality track.","url":"https://www.edhec.edu/en/programmes/masters-degree/apply-online","lastVerified":"2026-10-29"},{"id":"ie-fin","school":"IE Business School","program":"Master in Finance","priority":"High","round":"Rolling admissions","deadline":"","status":"Researching","notes":"IE uses rolling admissions; no fixed deadline. Aim early; verify programme intake and test requirements.","url":"https://www.ie.edu/admissions/masters/admissions-process/","lastVerified":"2026-10-29"},{"id":"stgallen-mbf","school":"University of St. Gallen","program":"MSc Banking and Finance","priority":"High","round":"2027 entry · Round 4","deadline":"2027-03-31","status":"Researching","notes":"Official St Gallen MBF rounds: 28 Feb, 31 Mar and 30 Apr 2027; next AFTER Feb exam is 31 March. Round 5 is 30 April. GMAT/GRE and accounting knowledge required. Confirm eligibility.","url":"https://www.unisg.ch/en/studying/admission/admission-master/banking-and-finance/","lastVerified":"2026-10-29"},{"id":"rsm-fin","school":"Rotterdam School of Management","program":"MSc Finance & Investments","priority":"High","round":"2027 entry · deadline BEFORE CFA","deadline":"2026-10-31","status":"Researching","notes":"Reported closing 31 October 2026; not part of your post-February application plan. Verify whether any extended rounds open.","url":"https://www.rsm.nl/education/master/msc-programmes/msc-finance-investments/","lastVerified":"2026-10-29"},{"id":"sse-fin","school":"Stockholm School of Economics","program":"MSc Finance","priority":"High","round":"Early application, August 2027","deadline":"2026-11-15","status":"Researching","notes":"Early deadline 15 Nov 2026; final deadline 15 Jan 2027. Earlier listed deadline is before your exam; verify whether later spring 2027 rounds exist.","url":"https://www.hhs.se/education/master/finance/mfin-application/","lastVerified":"2026-10-29"},{"id":"essec-mif","school":"ESSEC Business School","program":"Master in Finance","priority":"High","round":"2027 entry · April round","deadline":"2027-04-26","status":"Researching","notes":"Reported 26 April 2027 round; recheck programme-specific ESSEC MSc Finance admissions calendar.","url":"https://www.essec.edu/en/program/master-in-finance/","lastVerified":"2026-10-29"},{"id":"oxford-mfe","school":"University of Oxford (Saïd)","program":"MSc Financial Economics","priority":"High","round":"2027 entry · March stage","deadline":"2027-03-03","status":"Researching","notes":"Reported March stage 3 March 2027; tight after 24 February CFA exam. Check scholarship status and full admission requirements.","url":"https://www.sbs.ox.ac.uk/programmes/degrees/msc-financial-economics","lastVerified":"2026-10-29"},{"id":"cambridge-mfin","school":"University of Cambridge (Judge)","program":"Master of Finance (post-experience)","priority":"Medium","round":"2027 entry · next round TBC","deadline":"","status":"Researching","notes":"Requires >=2 years postgraduate finance work; ensure eligibility and verify current rolling availability. Do not treat former 31 May estimate as confirmed.","url":"https://www.jbs.cam.ac.uk/masters-degrees/master-of-finance/apply/","lastVerified":"2026-10-29"},{"id":"warwick-fin","school":"Warwick Business School","program":"MSc Finance","priority":"Medium","round":"September 2027","deadline":"2027-08-02","status":"Researching","notes":"Verified 2027 published on-time deadline 2 Aug; apply earlier for scholarships, visa and available places.","url":"https://www.wbs.ac.uk/courses/masters/finance/","lastVerified":"2026-10-29"},{"id":"emlyon-fin","school":"emlyon business school","program":"Master in Finance","priority":"Medium","round":"Rolling, September 2027","deadline":"","status":"Researching","notes":"September 2027 entry open; rolling until seats fill, may close earlier than Aug 2027. No firm earlier cutoff listed.","url":"https://em-lyon.com/en/student/master/master-in-finance","lastVerified":"2026-10-29"},{"id":"skema-fin","school":"SKEMA Business School","program":"MSc Financial Markets & Investments","priority":"Medium","round":"2027 intake: verify round","deadline":"","status":"Researching","notes":"Programme verified; 2027 intake-specific final application deadline not independently confirmed. Check Paris track vs other campuses.","url":"https://www.skema.edu/en/masters-degree-financial-markets","lastVerified":"2026-10-29"},{"id":"insead-mif-2027","school":"INSEAD","program":"Master in Finance (new 2027 programme)","priority":"High","round":"2027 entry · Round 4","deadline":"2027-04-27","status":"Researching","notes":"New inaugural MiF: no graduate placement record yet. Designed primarily for 0-2 years experience; ask admissions about 2.5 years. Reported R4 deadline Apr 27; verify official live admissions page. GMAT/GRE required.","url":"https://www.insead.edu/master-programmes/master-finance/admissions","lastVerified":"2026-10-29"},{"id":"insead-mim-2027","school":"INSEAD","program":"Master in Management","priority":"High","round":"2027 entry · Round 4","deadline":"2027-04-27","status":"Researching","notes":"Consulting-oriented alternative but cohort is less experienced than your profile. Reported R4 deadline Apr 27; verify admissions and experience fit.","url":"https://www.insead.edu/master-programmes/master-management/admissions","lastVerified":"2026-10-29"},{"id":"stgallen-sim-2027","school":"University of St. Gallen","program":"MSc Strategy and International Management","priority":"High","round":"2027 entry · autumn application window","deadline":"2027-04-30","status":"Researching","notes":"Consulting-oriented alternative to MBF. Programme application window Oct 1-Apr 30; programme-specific selection rules apply.","url":"https://www.unisg.ch/en/studying/admission/application-deadlines/","lastVerified":"2026-10-29"},{"id":"hec-mif-2028","school":"HEC Paris","program":"Master in International Finance","priority":"High","round":"2028 entry · admissions calendar not yet announced","deadline":"","status":"Researching","notes":"2028 entry: application dates unannounced or unverified; check official programme admissions page when the cycle opens. Eligibility and scholarship dates must be checked separately. Official HEC MSc International Finance final round deadline 28 April 2027 at noon CEST.","url":"https://www.hec.edu/en/masters-programs/msc-international-finance/admissions","lastVerified":"2026-10-29"},{"id":"bocconi-fin-2028","school":"Bocconi","program":"MSc Finance","priority":"High","round":"2028 entry · admissions calendar not yet announced","deadline":"","status":"Researching","notes":"2028 entry: application dates unannounced or unverified; check official programme admissions page when the cycle opens. Eligibility and scholarship dates must be checked separately. Official international MSc admissions: Round 3 closes 11 March 2027 (15:00 Italy); Round 4 closes 29 April 2027.","url":"https://www.unibocconi.it/en/applying-bocconi/master-science-and-ma-programs/application-and-admissions/admissions","lastVerified":"2026-10-29"},{"id":"lse-fin-2028","school":"LSE","program":"MSc Finance","priority":"High","round":"2028 entry · admissions calendar not yet announced","deadline":"","status":"Researching","notes":"2028 entry: application dates unannounced or unverified; check official programme admissions page when the cycle opens. Eligibility and scholarship dates must be checked separately. 2027/28 applications open.","url":"https://www.lse.ac.uk/study-at-lse/graduate/msc-finance-full-time","lastVerified":"2026-10-29"},{"id":"lbs-mfa-2028","school":"London Business School","program":"Masters in Financial Analysis","priority":"High","round":"2028 entry · admissions calendar not yet announced","deadline":"","status":"Researching","notes":"2028 entry: application dates unannounced or unverified; check official programme admissions page when the cycle opens. Eligibility and scholarship dates must be checked separately. Official admissions page lists staged rounds; specific next 2027 date could not be verified.","url":"https://www.london.edu/masters-degrees/masters-in-financial-analysis/apply","lastVerified":"2026-10-29"},{"id":"imperial-fin-2028","school":"Imperial College London","program":"MSc Finance","priority":"High","round":"2028 entry · admissions calendar not yet announced","deadline":"","status":"Researching","notes":"2028 entry: application dates unannounced or unverified; check official programme admissions page when the cycle opens. Eligibility and scholarship dates must be checked separately. 2027 MSc Finance rounds noted as 10 March and 28 April 2027.","url":"https://www.imperial.ac.uk/business-school/masters/finance/admissions/","lastVerified":"2026-10-29"},{"id":"escp-fin-2028","school":"ESCP Business School","program":"MSc Finance","priority":"High","round":"2028 entry · admissions calendar not yet announced","deadline":"","status":"Researching","notes":"2028 entry: application dates unannounced or unverified; check official programme admissions page when the cycle opens. Eligibility and scholarship dates must be checked separately. MSc Finance sessions noted as 30 March and 2 June 2027; confirm campus-specific requirements and deadlines.","url":"https://escp.eu/programmes/specialised-masters-MSc/MSc-finance","lastVerified":"2026-10-29"},{"id":"esade-fin-2028","school":"Esade","program":"MSc Finance","priority":"Medium","round":"2028 entry · admissions calendar not yet announced","deadline":"","status":"Researching","notes":"2028 entry: application dates unannounced or unverified; check official programme admissions page when the cycle opens. Eligibility and scholarship dates must be checked separately. Round 2: 18 Nov 2026.","url":"https://www.esade.edu/master-of-science/en/program/masters-in-finance/admissions","lastVerified":"2026-10-29"},{"id":"edhec-fin-2028","school":"EDHEC","program":"MSc Finance / Financial Markets","priority":"Medium","round":"2028 entry · admissions calendar not yet announced","deadline":"","status":"Researching","notes":"2028 entry: application dates unannounced or unverified; check official programme admissions page when the cycle opens. Eligibility and scholarship dates must be checked separately. 2027 admission rounds reported as 9 March, 20 April, 1 June; confirm target MSc programme and nationality track.","url":"https://www.edhec.edu/en/programmes/masters-degree/apply-online","lastVerified":"2026-10-29"},{"id":"ie-fin-2028","school":"IE Business School","program":"Master in Finance","priority":"High","round":"2028 entry · admissions calendar not yet announced","deadline":"","status":"Researching","notes":"2028 entry: application dates unannounced or unverified; check official programme admissions page when the cycle opens. Eligibility and scholarship dates must be checked separately. IE uses rolling admissions; no fixed deadline.","url":"https://www.ie.edu/admissions/masters/admissions-process/","lastVerified":"2026-10-29"},{"id":"stgallen-mbf-2028","school":"University of St. Gallen","program":"MSc Banking and Finance","priority":"High","round":"2028 entry · admissions calendar not yet announced","deadline":"","status":"Researching","notes":"2028 entry: application dates unannounced or unverified; check official programme admissions page when the cycle opens. Eligibility and scholarship dates must be checked separately. Official St Gallen MBF rounds: 28 Feb, 31 Mar and 30 Apr 2027; next AFTER Feb exam is 31 March.","url":"https://www.unisg.ch/en/studying/admission/admission-master/banking-and-finance/","lastVerified":"2026-10-29"},{"id":"rsm-fin-2028","school":"Rotterdam School of Management","program":"MSc Finance & Investments","priority":"High","round":"2028 entry · admissions calendar not yet announced","deadline":"","status":"Researching","notes":"2028 entry: application dates unannounced or unverified; check official programme admissions page when the cycle opens. Eligibility and scholarship dates must be checked separately. Reported closing 31 October 2026; not part of your post-February application plan.","url":"https://www.rsm.nl/education/master/msc-programmes/msc-finance-investments/","lastVerified":"2026-10-29"},{"id":"sse-fin-2028","school":"Stockholm School of Economics","program":"MSc Finance","priority":"High","round":"2028 entry · admissions calendar not yet announced","deadline":"","status":"Researching","notes":"2028 entry: application dates unannounced or unverified; check official programme admissions page when the cycle opens. Eligibility and scholarship dates must be checked separately. Early deadline 15 Nov 2026; final deadline 15 Jan 2027.","url":"https://www.hhs.se/education/master/finance/mfin-application/","lastVerified":"2026-10-29"},{"id":"essec-mif-2028","school":"ESSEC Business School","program":"Master in Finance","priority":"High","round":"2028 entry · admissions calendar not yet announced","deadline":"","status":"Researching","notes":"2028 entry: application dates unannounced or unverified; check official programme admissions page when the cycle opens. Eligibility and scholarship dates must be checked separately. Reported 26 April 2027 round; recheck programme-specific ESSEC MSc Finance admissions calendar.","url":"https://www.essec.edu/en/program/master-in-finance/","lastVerified":"2026-10-29"},{"id":"oxford-mfe-2028","school":"University of Oxford (Saïd)","program":"MSc Financial Economics","priority":"High","round":"2028 entry · admissions calendar not yet announced","deadline":"","status":"Researching","notes":"2028 entry: application dates unannounced or unverified; check official programme admissions page when the cycle opens. Eligibility and scholarship dates must be checked separately. Reported March stage 3 March 2027; tight after 24 February CFA exam.","url":"https://www.sbs.ox.ac.uk/programmes/degrees/msc-financial-economics","lastVerified":"2026-10-29"},{"id":"cambridge-mfin-2028","school":"University of Cambridge (Judge)","program":"Master of Finance (post-experience)","priority":"Medium","round":"2028 entry · admissions calendar not yet announced","deadline":"","status":"Researching","notes":"2028 entry: application dates unannounced or unverified; check official programme admissions page when the cycle opens. Eligibility and scholarship dates must be checked separately. Requires >=2 years postgraduate finance work; ensure eligibility and verify current rolling availability.","url":"https://www.jbs.cam.ac.uk/masters-degrees/master-of-finance/apply/","lastVerified":"2026-10-29"},{"id":"warwick-fin-2028","school":"Warwick Business School","program":"MSc Finance","priority":"Medium","round":"2028 entry · admissions calendar not yet announced","deadline":"","status":"Researching","notes":"2028 entry: application dates unannounced or unverified; check official programme admissions page when the cycle opens. Eligibility and scholarship dates must be checked separately. Verified 2027 published on-time deadline 2 Aug; apply earlier for scholarships, visa and available places.","url":"https://www.wbs.ac.uk/courses/masters/finance/","lastVerified":"2026-10-29"},{"id":"emlyon-fin-2028","school":"emlyon business school","program":"Master in Finance","priority":"Medium","round":"2028 entry · admissions calendar not yet announced","deadline":"","status":"Researching","notes":"2028 entry: application dates unannounced or unverified; check official programme admissions page when the cycle opens. Eligibility and scholarship dates must be checked separately. September 2027 entry open; rolling until seats fill, may close earlier than Aug 2027.","url":"https://em-lyon.com/en/student/master/master-in-finance","lastVerified":"2026-10-29"},{"id":"skema-fin-2028","school":"SKEMA Business School","program":"MSc Financial Markets & Investments","priority":"Medium","round":"2028 entry · admissions calendar not yet announced","deadline":"","status":"Researching","notes":"2028 entry: application dates unannounced or unverified; check official programme admissions page when the cycle opens. Eligibility and scholarship dates must be checked separately. Programme verified; 2027 intake-specific final application deadline not independently confirmed.","url":"https://www.skema.edu/en/masters-degree-financial-markets","lastVerified":"2026-10-29"},{"id":"insead-mif-2027-2028","school":"INSEAD","program":"Master in Finance (new 2027 programme)","priority":"High","round":"2028 entry · admissions calendar not yet announced","deadline":"","status":"Researching","notes":"2028 entry: application dates unannounced or unverified; check official programme admissions page when the cycle opens. Eligibility and scholarship dates must be checked separately. New inaugural MiF: no graduate placement record yet.","url":"https://www.insead.edu/master-programmes/master-finance/admissions","lastVerified":"2026-10-29"},{"id":"insead-mim-2027-2028","school":"INSEAD","program":"Master in Management","priority":"High","round":"2028 entry · admissions calendar not yet announced","deadline":"","status":"Researching","notes":"2028 entry: application dates unannounced or unverified; check official programme admissions page when the cycle opens. Eligibility and scholarship dates must be checked separately. Consulting-oriented alternative but cohort is less experienced than your profile.","url":"https://www.insead.edu/master-programmes/master-management/admissions","lastVerified":"2026-10-29"},{"id":"stgallen-sim-2027-2028","school":"University of St. Gallen","program":"MSc Strategy and International Management","priority":"High","round":"2028 entry · admissions calendar not yet announced","deadline":"","status":"Researching","notes":"2028 entry: application dates unannounced or unverified; check official programme admissions page when the cycle opens. Eligibility and scholarship dates must be checked separately. Consulting-oriented alternative to MBF.","url":"https://www.unisg.ch/en/studying/admission/application-deadlines/","lastVerified":"2026-10-29"}];
 state.applications=Array.isArray(state.applications)&&state.applications.length?state.applications:JSON.parse(JSON.stringify(DEFAULT_MIF_APPLICATIONS));
+// One-time admissions refresh: preserve user status, personal target, checklists, added schools.
+if(!state.mif2027OctRefresh){
+ for(const fresh of DEFAULT_MIF_APPLICATIONS){
+   const existing=state.applications.find(a=>a.id===fresh.id);
+   if(existing){for(const key of ["round","deadline","notes","url","lastVerified"]) existing[key]=fresh[key];}
+   else state.applications.push({...fresh});
+ }
+ state.mif2027OctRefresh=true;
+ localStorage.setItem("cfaSpecificV2",JSON.stringify(state));
+}
+// Expanded European finance-school shortlist (2027): preserve individual application status, checklist and notes entered by user.
+if(!state.mifTop20Europe2027){
+ for(const fresh of DEFAULT_MIF_APPLICATIONS){
+  const current=state.applications.find(a=>a.id===fresh.id);
+  if(!current) state.applications.push({...fresh});
+  else if(!current.lastVerified || current.lastVerified<"2026-10-29"){
+    for(const k of ["round","deadline","url","lastVerified"])current[k]=fresh[k];
+  }
+ }
+ state.mifTop20Europe2027=true;
+ localStorage.setItem("cfaSpecificV2",JSON.stringify(state));
+}
+// 2027 post-CFA + separate 2028 admissions refresh, preserving personal notes and statuses.
+if(!state.mifPostExam2027And2028V1){
+ for(const fresh of DEFAULT_MIF_APPLICATIONS){
+  let existing=state.applications.find(a=>a.id===fresh.id);
+  if(!existing){state.applications.push({...fresh});continue;}
+  if(!fresh.id.endsWith('-2028')){
+   for(const key of ['round','deadline','url','lastVerified'])existing[key]=fresh[key];
+   const oldNotes=(existing.notes||'').trim();
+   existing.notes=fresh.notes+(oldNotes && oldNotes!==fresh.notes?' | Previous personal notes: '+oldNotes:'');
+  }
+ }
+ state.mifPostExam2027And2028V1=true;
+ localStorage.setItem('cfaSpecificV2',JSON.stringify(state));
+}
+// Asia shortlist update: remove Germany/Portugal and include Asian programmes for BOTH admissions cycles.
+if(!state.asiaShortlist2027_2028V1){
+ const removedIds=new Set(['nova-fin','frankfurt-fin','nova-fin-2028','frankfurt-fin-2028']);
+ state.applications=state.applications.filter(a=>!removedIds.has(a.id));
+ for(const fresh of DEFAULT_MIF_APPLICATIONS){
+   if(!['nus-fin','hkust-mfin','hku-mfin','smu-mwm','ntu-mfe'].some(id=>fresh.id===id||fresh.id===id+'-2028'))continue;
+   if(!state.applications.some(a=>a.id===fresh.id)) state.applications.push({...fresh});
+ }
+ state.asiaShortlist2027_2028V1=true;
+ localStorage.setItem('cfaSpecificV2',JSON.stringify(state));
+}
+// Remove the Asian additions from both default and previously saved applications.
+// Keep prior European statuses, personal targets and notes unchanged.
+if(!state.europeOnly2027_2028V1){
+ const excludedSchools=new Set(['National University of Singapore (NUS)','HKUST','University of Hong Kong (HKU)','Singapore Management University (SMU)','Nanyang Technological University (NTU)','Frankfurt School','Nova SBE']);
+ state.applications=state.applications.filter(a=>!excludedSchools.has(a.school));
+ state.europeOnly2027_2028V1=true;
+ localStorage.setItem('cfaSpecificV2',JSON.stringify(state));
+}
 state.applications.forEach(app=>Object.assign(app,{personalTarget:app.personalTarget||"",eligibility:app.eligibility||"Not checked",gmat:app.gmat||"TBC",english:app.english||"TBC",transcript:Boolean(app.transcript),cv:Boolean(app.cv),essayProgress:Number(app.essayProgress)||0,rec1:Boolean(app.rec1),rec2:Boolean(app.rec2),fee:app.fee||"",interview:app.interview||"Not started",lastVerified:app.lastVerified||"2026-07-22"}));
 
 let planEditMode=false;
@@ -766,7 +858,7 @@ function updateLiveClock(){
 }
 document.getElementById("today").value=dubaiDateKey();
 if(state.startDate)document.getElementById("startDate").value=state.startDate;
-if(state.examDate)document.getElementById("examDate").value=state.examDate;
+document.getElementById("examDate").value="2027-02-24";
 
 
 
@@ -779,7 +871,8 @@ function weightedCompletion(){const denom=ORDER.reduce((s,t)=>s+weightMid(t),0);
 function latestMockAverage(){const scores=[...(state.mocks||[])].sort((a,b)=>a.date.localeCompare(b.date)).slice(-3).map(x=>Number(x.score)).filter(Number.isFinite);return scores.length?scores.reduce((a,b)=>a+b,0)/scores.length:0}
 function calculateReadiness(){let total=0,done=0;ORDER.forEach(t=>TOPICS[t].forEach((_,i)=>{total++;if(getM(t,i).done)done++}));const curriculum=total?done/total:0;const weighted=weightedCompletion();const questions=Math.min(1,totalLoggedQuestions()/Math.max(1,Number(state.settings.questionTarget)||3000));const score=Math.min(1,averageModuleScore()/75);const mock=Math.min(1,latestMockAverage()/75);const value=Math.round(100*(.30*curriculum+.25*weighted+.15*questions+.15*score+.15*mock));return {value,curriculum,weighted,questions,score,mock}}
 function initSettings(){const map={curriculumDeadline:"curriculumDeadline",julyHours:"julyHours",weekdayHours:"weekdayHours",weekendHours:"weekendHours",restDay:"restDay",questionTarget:"questionTarget"};Object.entries(map).forEach(([id,key])=>{const el=document.getElementById(id);if(!el)return;el.value=state.settings[key];el.addEventListener("change",()=>{state.settings[key]=["julyHours","weekdayHours","weekendHours","questionTarget"].includes(key)?Number(el.value):el.value;save();renderPlan();updateSummary()})})}
-function plannedHoursBetween(startKey,endKey){if(!startKey||!endKey||endKey<startKey)return 0;let total=0,d=new Date(startKey+"T12:00:00+04:00"),end=new Date(endKey+"T12:00:00+04:00");while(d<=end){total+=availableHours(d);d.setDate(d.getDate()+1)}return total}function expectedModuleProgress(dateKey=dubaiDateKey()){const start=document.getElementById("startDate").value,deadline=state.settings.curriculumDeadline;if(!start||!deadline)return 0;const capped=dateKey>deadline?deadline:dateKey;const total=Math.max(.01,plannedHoursBetween(start,deadline));const elapsed=Math.max(0,plannedHoursBetween(start,capped));return Math.min(1,elapsed/total)}function projectedFinishDate(){const schedule=buildSchedule(),keys=Object.keys(schedule).filter(k=>(schedule[k]||[]).length);return keys.length?keys[keys.length-1]:dubaiDateKey()}
+// Legacy hour-based scheduling intentionally disabled: all dashboard pace uses module counts.
+function projectedFinishDate(){return document.getElementById("projectedFinish").textContent || "Not measured"}
 function moduleReviewInfo(m){if(!m.done)return "Not completed";if(!m.nextReview)return "Review date not set";const days=daysBetweenKeys(dubaiDateKey(),m.nextReview);if(days<0)return `Review overdue ${Math.abs(days)}d`;if(days===0)return "Review due today";return `Next review in ${days}d`}
 function reviewModule(topic,index){const m=getM(topic,index),today=dubaiDateKey();m.done=true;m.lastReviewed=today;m.reviewStage=Math.min(REVIEW_INTERVALS.length,(Number(m.reviewStage)||0)+1);const interval=REVIEW_INTERVALS[Math.min(m.reviewStage,REVIEW_INTERVALS.length-1)];m.nextReview=addDaysKey(today,interval);state.modules[key(topic,index)]=m;save();renderModules();renderPlan();renderWeightings()}
 function dueModuleReviews(dateKey){const out=[];ORDER.forEach(t=>TOPICS[t].forEach((n,i)=>{const m=getM(t,i);if(m.done&&m.nextReview&&m.nextReview<=dateKey)out.push({topic:t,module:n,index:i,nextReview:m.nextReview})}));return out}
@@ -809,22 +902,29 @@ function renderModules(){
  c.appendChild(d)})
 }
 function esc(s){return s.replaceAll("'","\\'")}
-function setM(t,i,f,v){let m=getM(t,i),wasDone=m.done;m[f]=f==="done"?v:(v===""?"":Number(v));if(f==="done"&&v&&!wasDone){m.lastReviewed=dubaiDateKey();m.reviewStage=0;m.nextReview=addDaysKey(dubaiDateKey(),1)}if(f==="done"&&!v){m.lastReviewed="";m.nextReview="";m.reviewStage=0}state.modules[key(t,i)]=m;save();renderModules();renderPlan();renderWeightings()}
-function availableHours(date){const rest=String(state.settings.restDay);if(rest!=="none"&&String(date.getDay())===rest)return 0;if(date.getMonth()===6)return Number(state.settings.julyHours)||0;return (date.getDay()===0||date.getDay()===6)?(Number(state.settings.weekendHours)||0):(Number(state.settings.weekdayHours)||0)}
-function unfinished(){let a=[];ORDER.forEach(t=>TOPICS[t].forEach((n,i)=>{if(!getM(t,i).done)a.push({t,n,i,need:Math.max(.75,EST[t]-(Number(getM(t,i).hours)||0))})}));return a}
-function buildSchedule(){
- let queue=unfinished(), schedule={}, configuredStart=document.getElementById("startDate").value, liveStart=dubaiDateKey(), effectiveStart=configuredStart>liveStart?configuredStart:liveStart, d=new Date(effectiveStart+"T12:00:00+04:00"), end=new Date(document.getElementById("examDate").value+"T12:00:00+04:00");
- let q=0, remaining=queue[0]?queue[0].need:0;
- while(d<=end && q<queue.length){let cap=availableHours(d), tasks=[];while(cap>.01 && q<queue.length){
-   let use=Math.min(cap,remaining); tasks.push({t:queue[q].t,n:queue[q].n,i:queue[q].i,h:+use.toFixed(2),finish:use>=remaining-.01});
-   cap-=use;remaining-=use;if(remaining<=.01){q++;remaining=queue[q]?queue[q].need:0}
- } schedule[d.toISOString().slice(0,10)]=tasks;d.setDate(d.getDate()+1)}
- return schedule
-}
+function setM(t,i,f,v){let m=getM(t,i),wasDone=m.done;m[f]=f==="done"?v:(v===""?"":Number(v));if(f==="done"&&v&&!wasDone){m.lastReviewed=dubaiDateKey();m.reviewStage=0;m.nextReview=addDaysKey(dubaiDateKey(),1)}if(f==="done"&&!v){m.lastReviewed="";m.nextReview="";m.reviewStage=0}state.modules[key(t,i)]=m;
+ if(f==="done"){
+  state.moduleCompletionHistory=state.moduleCompletionHistory||{};
+  if(v&&!wasDone)state.moduleCompletionHistory[key(t,i)]=dubaiDateKey();
+  if(!v)delete state.moduleCompletionHistory[key(t,i)];
+ }
+ save();renderModules();renderPlan();renderWeightings()}
+function unfinished(){const items=[];ORDER.forEach(t=>TOPICS[t].forEach((n,i)=>{if(!getM(t,i).done)items.push({t,n,i})}));return items}
 function automaticPlanText(date){
- const s=buildSchedule()[date]||[],moduleReviews=dueModuleReviews(date),errorReviews=dueErrorReviews(date),parts=[];
- if(moduleReviews.length||errorReviews.length){const lines=[...moduleReviews.slice(0,3).map(x=>`• Module review: ${x.topic} — ${x.module}`),...errorReviews.slice(0,3).map(x=>`• Error review: ${x.topic} — ${x.concept}`)];parts.push(`REVIEW QUEUE — 30 MIN\n${lines.join("\\n")}`)}
- if(!s.length)parts.push("No scheduled curriculum work. Use today for mixed questions, error-log review or a mock.");else parts.push(s.map(x=>{const learn=Math.round(x.h*60*.58),qs=Math.round(x.h*60*.30),rev=Math.max(10,Math.round(x.h*60*.12));return `${x.t} — Module ${x.i+1}\n${x.n}\n${x.h} h total: ${learn} min LES content • ${qs} min LES questions • ${rev} min error review ${x.finish?"• Finish module today":"• Continue next day"}`}).join("\n\n"));
+ const reviews=dueModuleReviews(date),errors=dueErrorReviews(date),parts=[];
+ const due=[...reviews.slice(0,3).map(x=>`• ${x.topic}: ${x.module}`),...errors.slice(0,2).map(x=>`• Error: ${x.topic}: ${x.concept}`)];
+ if(due.length)parts.push(`REVIEW QUEUE (${due.length} items)\n${due.join("\n")}`);
+ const remaining=unfinished();
+ if(date>"2026-12-02"){
+   if(remaining.length)parts.push(`SYLLABUS OVERDUE\n${remaining.length} modules outstanding. Prioritize the first unfinished modules below.`);
+   else parts.push("REVISION PHASE\nMixed QBank, error reviews and mock exams. No new modules required.");
+ }
+ if(remaining.length){
+  const left=Math.max(1,daysBetweenKeys(date,"2026-11-30")+1);
+  const target=Math.max(1,Math.ceil(remaining.length/left));
+  const focus=remaining.slice(0,Math.min(target,5));
+  parts.push(`NEXT MODULE PRIORITIES — ${focus.length} shown\n${focus.map((x,i)=>`${i+1}. ${x.t} · Module ${x.i+1}: ${x.n}`).join("\n")}\n\nRequired average: ${(remaining.length/left).toFixed(2)} modules/day for 30 Nov. This is a priority list, NOT an hours-based schedule. Work on one module at a time; module difficulty varies.`);
+ }else if(!parts.length)parts.push("CURRICULUM COMPLETE\nReview weak topics, complete mixed questions and mocks.");
  return parts.join("\n\n");
 }
 function displayedPlanText(date){
@@ -878,12 +978,64 @@ function updateSummary(){
  document.getElementById("totalModules").textContent=total;
  document.getElementById("moduleBreakdown").textContent=ORDER.map(t=>t.split(" ")[0]+": "+TOPICS[t].length).join(" • ");
  document.getElementById("completed").textContent=done+" / "+total;
- const overallPct=Math.round(done/total*100);document.getElementById("overallProgress").value=overallPct;document.getElementById("overallDonePct").textContent=overallPct+"% complete";document.getElementById("overallLeftPct").textContent=(100-overallPct)+"% left";document.getElementById("hoursLogged").textContent=h.toFixed(1);
- const now=new Date(dubaiDateKey()+"T12:00:00+04:00"),start=new Date(document.getElementById("startDate").value+"T12:00:00+04:00");let expectedHours=0,d=new Date(start);while(d<=now){expectedHours+=availableHours(d);d.setDate(d.getDate()+1)}
- const expectedModules=Math.round(total*expectedModuleProgress()),hoursDelta=h-expectedHours,moduleDelta=done-expectedModules;const status=hoursDelta>=-2&&moduleDelta>=-1?"ON TRACK":"BEHIND";document.getElementById("trackStatus").textContent=status;document.getElementById("trackStatus").style.color=status==="ON TRACK"?"var(--good)":"var(--bad)";document.getElementById("trackDetail").textContent=`Hours ${hoursDelta>=0?"+":""}${hoursDelta.toFixed(1)} • Modules ${moduleDelta>=0?"+":""}${moduleDelta} versus plan`;
- const r=calculateReadiness();document.getElementById("readinessScore").textContent=r.value+"%";document.getElementById("readinessProgress").value=r.value;document.getElementById("readinessBreakdown").textContent=`Curriculum ${Math.round(r.curriculum*100)}% • Weighted completion ${Math.round(r.weighted*100)}% • Questions ${Math.round(r.questions*100)}% • Scores ${Math.round(r.score*100)}% • Mocks ${Math.round(r.mock*100)}%`;
- const finish=projectedFinishDate(),deadline=state.settings.curriculumDeadline,finishEl=document.getElementById("projectedFinish");finishEl.textContent=new Intl.DateTimeFormat("en-GB",{day:"numeric",month:"short",year:"numeric"}).format(new Date(finish+"T12:00:00+04:00"));finishEl.style.color=finish<=deadline?"var(--good)":"var(--bad)";document.getElementById("projectedFinishDetail").textContent=finish<=deadline?`On or before your ${deadline} target`:`After your ${deadline} target — increase hours or reduce rest days`;
+ document.getElementById("moduleXofY").textContent=done+" / "+total;
+ const today=dubaiDateKey(), target=state.settings.curriculumDeadline||"2026-11-30", hardStop="2026-12-02";
+ const daysToTarget=Math.max(0,daysBetweenKeys(today,target)+1), daysToHard=Math.max(0,daysBetweenKeys(today,hardStop)+1);
+ const remain=total-done, dailyNeeded=daysToTarget?remain/daysToTarget:remain;
+ document.getElementById("moduleRemainingText").textContent=`${remain} remaining • ${dailyNeeded.toFixed(2)} modules/day needed by ${target} • ${daysToTarget} calendar days left`;
+ const overallPct=total?Math.round(done/total*100):0;document.getElementById("overallProgress").value=overallPct;document.getElementById("overallDonePct").textContent=overallPct+"% complete";document.getElementById("overallLeftPct").textContent=(100-overallPct)+"% left";document.getElementById("hoursLogged").textContent=h.toFixed(1);
+ // Pacing baseline: preserved between upgrades, and updated only when the user checks modules.
+ const baseline=state.paceBaseline||{date:"2026-10-29",done:done};
+ const baseDone=Math.max(0,Math.min(total,Number(baseline.done)||0));
+ const baseDate=baseline.date||"2026-10-29";
+ const fullDays=Math.max(1,daysBetweenKeys(baseDate,target)+1);
+ const elapsed=Math.max(0,Math.min(fullDays,daysBetweenKeys(baseDate,today)+1));
+ const expected=Math.min(total,baseDone+Math.ceil((total-baseDone)*elapsed/fullDays));
+ const gap=Math.max(0,expected-done);
+ const daysRemaining=Math.max(1,daysToTarget);
+ const normal=Math.max(1,Math.ceil(remain/daysRemaining));
+ let status,detail;
+ if(!remain){status="SYLLABUS COMPLETE";detail="All curriculum modules completed. Start revision and mocks."}
+ else if(today>hardStop){status="BEHIND";detail=`${remain} modules remain past the 2 December final deadline. Prioritize unfinished syllabus immediately.`}
+ else if(today>target){status="BEHIND";detail=`30 November target missed. ${remain} unfinished; approximately ${Math.ceil(remain/Math.max(1,daysToHard))} per day needed by 2 December.`}
+ else if(gap){
+  status="BEHIND";
+  const threeDay=Math.min(remain,Math.ceil(gap/3));
+  const tomorrow=Math.min(remain,normal+gap);
+  detail=`${done} done vs ${expected} planned today: ${gap} behind. One-day recovery: ${tomorrow} modules tomorrow (includes ${Math.max(0,tomorrow-normal)} extra). More manageable: spread the gap over 3 days, adding about ${threeDay} extra module${threeDay===1?"":"s"}/day. Required average from now: ${dailyNeeded.toFixed(2)}/day. Module difficulties vary.`;
+ }else{
+  status="ON TRACK";
+  detail=`${done} completed vs ${expected} planned today (${Math.max(0,done-expected)} ahead). Required remaining pace: ${dailyNeeded.toFixed(2)} modules/day by 30 November. This status reflects module progress, not QBank readiness.`;
+ }
+ const statusEl=document.getElementById("trackStatus");statusEl.textContent=status;statusEl.style.color=status==="BEHIND"?"var(--bad)":"var(--good)";
+ document.getElementById("trackDetail").textContent=detail;
+ const r=calculateReadiness();document.getElementById("readinessScore").textContent=r.value+"%";document.getElementById("readinessProgress").value=r.value;
+ document.getElementById("readinessBreakdown").textContent=`Curriculum ${Math.round(r.curriculum*100)}% • Weighted ${Math.round(r.weighted*100)}% • Questions ${Math.round(r.questions*100)}% • Scores ${Math.round(r.score*100)}% • Mocks ${Math.round(r.mock*100)}%`;
+ const finishEl=document.getElementById("projectedFinish"),detailEl=document.getElementById("projectedFinishDetail");
+ const recorded=state.moduleCompletionHistory||{};
+ const history=Object.entries(recorded).filter(([k,v])=>v&&v>=baseDate&&v<=today);
+ const newCount=history.length;
+ const distinctDays=new Set(history.map(([,v])=>v)).size;
+ const windowDays=Math.max(1,daysBetweenKeys(baseDate,today)+1);
+ const observed=windowDays>=3&&distinctDays>=2&&newCount>=3;
+ const pace=newCount/windowDays;
+ if(!remain){finishEl.textContent="Complete";finishEl.style.color="var(--good)";detailEl.textContent="All modules finished. Time for review and mocks."}
+ else if(observed&&pace>0){
+  const daysNeeded=Math.ceil(remain/pace);
+  const date=addDaysKey(today,daysNeeded);
+  finishEl.textContent=new Intl.DateTimeFormat("en-GB",{day:"numeric",month:"short",year:"numeric",timeZone:"Asia/Dubai"}).format(new Date(date+"T12:00:00+04:00"));
+  finishEl.style.color=date>target?"var(--bad)":"var(--good)";
+  detailEl.textContent=`Observed projection: ${newCount} modules recorded across ${windowDays} calendar days (${pace.toFixed(2)}/day). Needed: ${dailyNeeded.toFixed(2)}/day by 30 Nov. Estimate changes with progress and is not a guarantee.`;
+ }else{
+  finishEl.textContent="Not yet measurable";finishEl.style.color="inherit";
+  detailEl.textContent=`To finish by 30 Nov: ${dailyNeeded.toFixed(2)} modules/day for ${remain} remaining. This is a required pace, not a projected finish. Measured projection begins after 3 newly checked modules across at least 2 distinct study days over 3+ calendar days.`;
+ }
+ const weak=ORDER.map(t=>{const scores=TOPICS[t].map((_,i)=>Number(getM(t,i).score)).filter(n=>n>0&&n<=100);return {t,scores,avg:scores.length?scores.reduce((a,b)=>a+b,0)/scores.length:null}}).filter(x=>x.avg!==null&&x.avg<70).sort((a,b)=>a.avg-b.avg);
+ const weakEl=document.getElementById("weakTopicAlerts");if(weakEl)weakEl.textContent=weak.length?`QBank scores below 70%: ${weak.map(x=>`${x.t} (${Math.round(x.avg)}%, ${x.scores.length} scored module${x.scores.length===1?"":"s"})`).join(" • ")}. Review these topics.`:"No low-scoring topic flagged yet. Add module QBank scores to activate alerts.";
+ const queueEl=document.getElementById("reviewQueueSummary");if(queueEl){const q=dueModuleReviews(today);queueEl.textContent=q.length?`${q.length} module review(s) due: ${q.slice(0,3).map(x=>`${x.topic}: ${x.module}`).join(" • ")}`:"No module reviews due today. Completing modules starts a 1/7/21/45-day review sequence.";}
+
 }
+
 function saveDaily(){let d=document.getElementById("today").value;state.daily[d]={hours:Number(document.getElementById("dailyHours").value)||0,questions:Number(document.getElementById("dailyQuestions").value)||0,note:document.getElementById("dailyNote").value};save();renderHistory();document.getElementById("savedMsg").textContent="Saved for "+d}
 function loadDaily(){let x=state.daily[document.getElementById("today").value]||{};document.getElementById("dailyHours").value=x.hours||"";document.getElementById("dailyQuestions").value=x.questions||"";document.getElementById("dailyNote").value=x.note||""}
 function rebuildPlan(){state.startDate=document.getElementById("startDate").value;state.examDate=document.getElementById("examDate").value;save();renderPlan();updateSummary()}
@@ -956,7 +1108,7 @@ function initPomodoro(){
 
 
 const MOCK_TOPIC_LABELS={
- "Ethical and Professional Standards":"Ethics","Financial Statement Analysis":"FSA","Alternative Investments":"Alternative Investments","Quantitative Methods":"Quant","Economics":"Economics","Corporate Issuers":"Corporate Issuers","Equity Investments":"Equity","Fixed Income":"Fixed Income","Derivatives":"Derivatives","Portfolio Management":"Portfolio Management"
+ "Ethical and Professional Standards":"Ethics","Financial Statement Analysis":"FSA","Alternative Investments":"Alternative Investments","Quantitative Methods":"Quant","Economics":"Economics","Corporate Finance":"Corporate Finance","Equities":"Equity","Fixed Income":"Fixed Income","Derivatives and Risk Management":"Derivatives and Risk Management","Portfolio Construction":"Portfolio Construction"
 };
 function safeText(value){return String(value??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[ch]))}
 function initMockInputs(){
@@ -1137,6 +1289,34 @@ function initBackupImport(){
 }
 
 
+
+const SPRINT_TASKS=[
+ {day:"Thursday 29 October",items:[
+ ["09:00–10:30","Derivatives: forward pricing and valuation","No-arbitrage, cost of carry, long / short forward values"],
+ ["10:45–12:15","Derivatives: FX forwards and interest rates","FX forward calculations, zero rates, implied forwards"],
+ ["13:15–14:45","Derivatives: options","Calls, puts, payoffs, profits and breakeven"],
+ ["15:00–16:00","Derivatives QBank","30–40 questions, check and explain misses"],
+ ["16:00–16:30","Error log","Write corrections, formulas, calculator steps"]]},
+ {day:"Friday 30 October",items:[
+ ["09:00–10:00","Derivatives: reinforcement","Redo missed questions without notes"],
+ ["10:00–11:30","Derivatives: timed practice","35–45 mixed questions; 75% target"],
+ ["11:45–13:15","Economics: first outstanding module","Use the 2027 curriculum and solve its questions"],
+ ["14:00–15:30","Economics: next module","Proceed if first is understood"],
+ ["15:30–16:00","Review and plan","Record Economics QBank performance and next targets"]]}
+];
+state.sprintTasks=state.sprintTasks||{};
+function toggleSprint(key,checked){state.sprintTasks[key]=checked;save();renderSprint()}
+function renderSprint(){
+ const root=document.getElementById("sprintTaskGrid");if(!root)return;
+ let count=0,total=0;
+ root.innerHTML=SPRINT_TASKS.map((d,di)=>`<div class="sprint-day"><strong>${d.day}</strong><div class="tiny" style="margin:5px 0 10px">${di===0?'Derivatives consolidation':'Finish Derivatives and begin Economics'}</div>${d.items.map((task,ti)=>{
+ const key=`${di}-${ti}`,done=!!state.sprintTasks[key];total++;if(done)count++;
+ return `<div class="sprint-task ${done?'completed':''}"><input aria-label="Mark ${task[1]} completed" type="checkbox" ${done?'checked':''} onchange="toggleSprint('${key}',this.checked)"><label onclick="const x=this.previousElementSibling;x.checked=!x.checked;toggleSprint('${key}',x.checked)"><strong>${task[0]} · ${task[1]}</strong><small>${task[2]}</small></label></div>`;
+ }).join('')}</div>`).join('');
+ document.getElementById('sprintCount').textContent=`${count} / ${total} complete`;
+ document.getElementById('sprintBar').style.width=(100*count/Math.max(1,total))+'%';
+}
+
 const APPLICATION_STATUSES=["Researching","Waiting for opening","Preparing","Submitted","Interview","Offer","Rejected","Withdrawn"];
 const APPLICATION_PRIORITIES=["High","Medium","Low"];
 
@@ -1159,7 +1339,8 @@ function applicationCountdown(app){
 function renderApplications(){
  const body=document.getElementById("applicationTableBody");
  if(!body)return;
- const apps=[...state.applications].sort((a,b)=>{
+ const yearChoice=document.getElementById("entryYearFilter")?.value||"all";
+ const apps=[...state.applications].filter(a=>yearChoice==="all"||(yearChoice==="2028"?/2028/.test(a.round||"")||/2028/.test(a.id||""):/2027/.test(a.round||"")&&!/2028/.test(a.round||""))).sort((a,b)=>{
    if(a.deadline&&b.deadline)return a.deadline.localeCompare(b.deadline);
    if(a.deadline)return -1;if(b.deadline)return 1;
    return (a.school||"").localeCompare(b.school||"");
@@ -1241,7 +1422,7 @@ function renderWeightings(){
  });
  box.innerHTML=rows.join("");
 }
-function render(){renderTabs();renderModules();renderPlan();loadDaily();updateSummary();renderMocks();renderHistory();renderApplications();renderWeightings();renderErrors()}
+function render(){renderTabs();renderModules();renderPlan();loadDaily();updateSummary();renderMocks();renderHistory();renderApplications();renderSprint();renderWeightings();renderErrors()}
 ["today","startDate","examDate"].forEach(id=>document.getElementById(id).addEventListener("change",()=>{planEditMode=false;renderPlan();loadDaily();updateSummary();updateExamCountdown()}));
 initTheme();
 initSettings();
