@@ -373,7 +373,9 @@ header{position:relative;padding:12px 23px}header h1{font-size:18px;font-weight:
 .today-footer{display:flex;align-items:center;gap:8px;padding:16px 32px;margin:0;border-top:1px solid var(--line);flex-wrap:wrap}.today-footer a{font-size:11px;border-radius:8px;padding:10px 14px;text-decoration:none;font-weight:800}.today-footer a:first-child{background:var(--accent);color:var(--button-text);border:1px solid var(--accent)}.today-footer a:nth-child(2){background:transparent;color:var(--text);border:1px solid var(--line)}.today-footer .tiny{margin-left:auto;flex:initial}
 @media(max-width:900px){.today-grid{grid-template-columns:1fr}.today-side{border:0;border-top:1px solid var(--line)}}@media(max-width:640px){.today-command{border-radius:13px}.today-heading{padding:22px 18px;flex-direction:column;align-items:stretch}.today-summary{width:100%}.today-meter{margin:0 18px 16px}.today-stat,.today-carry{margin-left:18px;margin-right:18px}.today-work,.today-side{padding:23px 18px}.today-footer{padding:16px 18px}.today-footer .tiny{width:100%;margin-top:5px}.today-carry .carry-list{grid-template-columns:1fr}}
 
-</style></head>
+</style>
+<link rel="stylesheet" href="./workspace.css?v=20261104"/>
+</head>
 <body>
 <header><div class="header-row"><div class="header-title-area">
   <h1>CFA Level I Study Dashboard</h1>
@@ -1469,7 +1471,7 @@ function renderTodayCommand(){
  if(overdue.length){
   carry.hidden=false;
   const recent=overdue.sort((a,b)=>(a.t.type==="module"?0:1)-(b.t.type==="module"?0:1)||b.d.date.localeCompare(a.d.date)),display=recent.slice(0,6);
-  carry.innerHTML=`<h3>Carry-over · ${overdue.length} unchecked earlier task${overdue.length===1?"":"s"}</h3><p>First clear unfinished learning, then proceed with today’s modules. ${overdueModules} are curriculum modules. Showing the ${display.length} most recent; open the 30-day plan for the complete backlog.</p><div class="carry-list">${display.map(({d,t})=>commandTaskHTML(d,t,true)).join("")}</div>`;
+  carry.innerHTML=`<details class="carry-disclosure"><summary><span><strong>${overdueModules} unfinished module${overdueModules===1?"":"s"}</strong> · ${overdue.length} study/review task${overdue.length===1?"":"s"} carried over</span><span class="carry-open-label">Show backlog +</span></summary><p>Prioritize unfinished modules, then practice and error review. The latest ${display.length} tasks are shown; the study plan contains all older items.</p><div class="carry-list">${display.map(({d,t})=>commandTaskHTML(d,t,true)).join("")}</div></details>`;
   advice.textContent=`${overdueModules} unfinished module${overdueModules===1?"":"s"} from earlier dates plus ${view.modules.filter(m=>!roadmapChecked(m)).length} on the current plan. Prioritize the carry-over modules; defer newer modules if the workload exceeds your available study hours. Do not automatically mark any item done.`;
   status.textContent="Catch-up needed";
  }else{
@@ -1619,4 +1621,6 @@ updateExamCountdown();
 initPomodoro();
 updateLiveClock();
 setInterval(()=>{updateLiveClock();updateExamCountdown()},1000);
-</script></body></html>
+</script>
+<script src="./workspace.js?v=20261104"></script>
+</body></html>
