@@ -238,3 +238,255 @@ body>.wrap{max-width:1400px;padding:26px 20px 50px;margin:0 auto}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}
 }
+
+
+/* 2026-11-04: softer tinted workspace, near-black copy, larger top controls.
+   Cosmetic-only overrides; preserve all tracker functionality. */
+:root:not([data-theme="dark"]){
+  --bg:#e7ebf3;
+  --card:#f0f3f9;
+  --card2:#e0e6f0;
+  --line:#c9d1df;
+  --text:#0b101a;
+  --muted:#252c39;
+  --accent:#2f458d;
+  --accent2:#465da3;
+  --good:#145a47;
+  --warn:#815517;
+  --bad:#8c303a;
+  --soft:#cdd6e5;
+  --body-bg:#e7ebf3;
+  --header-bg:#dce3ee;
+  --input-bg:#f3f5fa;
+  --shadow:0 3px 16px rgba(17,30,57,.045);
+  --button-text:#fff;
+}
+body{font-size:14px;line-height:1.6}
+:root:not([data-theme="dark"]) body{color:#0b101a}
+:root:not([data-theme="dark"]) .tiny,
+:root:not([data-theme="dark"]) .lefttext,
+:root:not([data-theme="dark"]) label,
+:root:not([data-theme="dark"]) .workspace-heading p,
+:root:not([data-theme="dark"]) .today-task small,
+:root:not([data-theme="dark"]) .today-sub,
+:root:not([data-theme="dark"]) .today-stat p,
+:root:not([data-theme="dark"]) .today-advice p,
+:root:not([data-theme="dark"]) .today-side .roadmap-line time,
+:root:not([data-theme="dark"]) .roadmap-note,
+:root:not([data-theme="dark"]) .roadmap-timetable,
+:root:not([data-theme="dark"]) .workspace-navbtn,
+:root:not([data-theme="dark"]) .workspace-subbtn,
+:root:not([data-theme="dark"]) .countdown-date,
+:root:not([data-theme="dark"]) .countdown-name,
+:root:not([data-theme="dark"]) #liveDay,
+:root:not([data-theme="dark"]) #liveZoneLabel,
+:root:not([data-theme="dark"]) .clock-zone-btn{
+  color:#1d2532;
+}
+:root:not([data-theme="dark"]) .today-task.complete,
+:root:not([data-theme="dark"]) .module.done{
+  opacity:.94;
+}
+:root:not([data-theme="dark"]) input::placeholder,
+:root:not([data-theme="dark"]) textarea::placeholder{color:#505a6a;opacity:1}
+:root:not([data-theme="dark"]) .today-count,
+:root:not([data-theme="dark"]) .pill{color:#17223b}
+:root:not([data-theme="dark"]) .today-summary>span,
+:root:not([data-theme="dark"]) .today-summary-top span{color:#182334}
+:root:not([data-theme="dark"]) .today-footer .tiny{color:#1d2532}
+
+/* A visible, slightly larger header, countdown, clock and nav. */
+body>header{
+  background:var(--header-bg);
+  padding:21px 30px 19px;
+  border-bottom:1px solid var(--line);
+}
+body>header .header-row{
+  max-width:1400px;
+  align-items:center;
+  gap:36px;
+}
+body>header h1{
+  font-size:clamp(23px,2.15vw,28px);
+  line-height:1.17;
+  letter-spacing:-.052em;
+  font-weight:820;
+  color:var(--text);
+}
+body>header .sub{
+  font-size:12.5px;
+  font-weight:600;
+  margin-top:10px;
+  color:var(--text);
+  opacity:1;
+}
+body>header .exam-countdown{
+  margin-top:15px;
+  gap:10px;
+  align-items:center;
+}
+body>header .countdown-label{
+  font-size:11px;
+  letter-spacing:.06em;
+  font-weight:800;
+  color:var(--text);
+  margin-right:6px;
+}
+body>header .countdown-unit{
+  padding:9px 13px;
+  border-radius:10px;
+  background:var(--card2);
+  border:1px solid var(--line);
+  gap:6px;
+}
+body>header .countdown-value{
+  font-size:21px;
+  font-weight:800;
+  color:var(--text);
+  letter-spacing:-.04em;
+}
+body>header .countdown-name{
+  font-size:10px;
+  font-weight:750;
+  color:var(--text);
+  letter-spacing:0;
+}
+body>header .countdown-date{
+  font-size:11.5px;
+  font-weight:650;
+  margin-left:8px;
+  color:var(--text);
+}
+body>header .theme-area{
+  gap:16px;
+  align-items:center;
+}
+body>header .theme-toggle{
+  font-size:12.5px;
+  font-weight:750;
+  border-radius:10px;
+  padding:12px 15px;
+  min-width:135px;
+  border:1px solid var(--line);
+  color:var(--text);
+  background:var(--card2);
+}
+body>header .live-clock{
+  min-width:290px;
+}
+body>header .live-clock #liveDay{
+  font-size:13px;
+  font-weight:700;
+  color:var(--text);
+  margin-top:9px;
+}
+body>header .live-clock strong{
+  font-size:23px;
+  font-weight:800;
+  line-height:1.3;
+  letter-spacing:-.035em;
+  color:var(--text);
+}
+body>header .live-clock>span{
+  font-size:10.5px;
+  color:var(--text);
+  font-weight:700;
+  letter-spacing:.025em;
+}
+body>header .clock-switcher{
+  gap:5px;
+}
+body>header .clock-zone-btn{
+  font-size:11.5px;
+  font-weight:750;
+  padding:8px 12px;
+  border-radius:8px;
+  background:var(--card2);
+  border:1px solid var(--line);
+  color:var(--text);
+}
+body>header .clock-zone-btn:hover,
+body>header .clock-zone-btn.active{
+  border:1px solid var(--accent);
+  color:var(--accent);
+  background:var(--card);
+}
+.workspace-nav{
+  max-width:1400px;
+  gap:27px;
+  min-height:67px;
+  padding:0 15px;
+  border-bottom:1px solid var(--line);
+  background:var(--header-bg);
+}
+.workspace-navbtn{
+  min-height:65px;
+  font-size:15px;
+  font-weight:750;
+  padding:20px 5px 18px;
+  letter-spacing:-.015em;
+  color:var(--text);
+}
+.workspace-navbtn.active{
+  font-weight:850;
+  color:var(--accent);
+  border-bottom:3px solid var(--accent);
+}
+.workspace-navbtn:hover{
+  color:var(--accent);
+  border-color:var(--accent);
+}
+body>.wrap{
+  max-width:1440px;
+  padding:25px 24px 48px;
+}
+.workspace-subbtn{
+  font-size:13px;
+  font-weight:750;
+  color:var(--text);
+}
+.workspace-heading h2{
+  color:var(--text);
+}
+.workspace-pane .today-command,
+.workspace-pane .card,
+.workspace-pane .sprint-day,
+.workspace-subnav{
+  background:var(--card);
+}
+.workspace-pane .today-command .today-side{
+  background:var(--card2);
+}
+.workspace-pane .today-command .today-summary,
+.workspace-pane .today-command .today-stat,
+.workspace-pane .today-extras .today-task{
+  background:var(--card2);
+}
+/* Do not allow huge countdown/header overflow on phones. */
+@media(max-width:1000px){
+  body>header .header-row{gap:18px;align-items:flex-start}
+  body>header .theme-area{flex-wrap:wrap;justify-content:flex-end}
+  body>header .exam-countdown{flex-wrap:wrap}
+  body>header .live-clock{min-width:235px}
+  .workspace-nav{gap:19px}
+  .workspace-navbtn{font-size:14px}
+}
+@media(max-width:680px){
+  body>header{padding:17px 16px 15px}
+  body>header .header-row{gap:18px}
+  body>header h1{font-size:23px}
+  body>header .sub{font-size:11.5px}
+  body>header .countdown-unit{padding:7px 9px}
+  body>header .countdown-value{font-size:17px}
+  body>header .countdown-name{font-size:9px}
+  body>header .countdown-date{width:100%;margin-left:0}
+  body>header .theme-area{justify-content:flex-start;align-items:flex-start}
+  body>header .theme-toggle{padding:10px 12px;min-width:115px;font-size:11.5px}
+  body>header .live-clock{min-width:0;width:100%;text-align:left}
+  body>header .clock-switcher{justify-content:flex-start}
+  body>header .clock-zone-btn{font-size:10.5px;padding:7px 9px}
+  body>header .live-clock strong{font-size:20px}
+  .workspace-nav{gap:17px;min-height:57px;padding:0 12px}
+  .workspace-navbtn{min-height:55px;padding:17px 2px 15px;font-size:13px}
+  body>.wrap{padding:17px 12px 36px}
+}
