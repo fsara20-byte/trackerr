@@ -9,9 +9,13 @@
   let mode="days";
   try{const saved=localStorage.getItem("cfaCountdownDisplayV1");if(modes.has(saved))mode=saved}catch(_){}
   const clockZone="Asia/Dubai";
-  const formatDay=(date)=>new Intl.DateTimeFormat("en-CA",{
-    timeZone:clockZone,year:"numeric",month:"2-digit",day:"2-digit"
-  }).format(date);
+  const formatDay=(date)=>{
+    const parts=new Intl.DateTimeFormat("en-GB",{
+      timeZone:clockZone,year:"numeric",month:"2-digit",day:"2-digit"
+    }).formatToParts(date);
+    const obj=Object.fromEntries(parts.filter(x=>x.type!=="literal").map(x=>[x.type,x.value]));
+    return obj.year+"-"+obj.month+"-"+obj.day;
+  };
   function remainingDays(dateString){
     if(!dateString)return 0;
     const end=new Date(dateString+"T00:00:00+04:00").getTime();
@@ -50,6 +54,14 @@
       setText(node,(labels[next.topic]||next.topic)+" · Module "+next.num);
     }catch(_){setText(node,"Open today's checklist")}
   }
+  function highlightNextTask(){
+    let found=false;
+    document.querySelectorAll("#commandTasks .today-task").forEach(node=>{
+      const next=!found&&!node.classList.contains("complete");
+      node.classList.toggle("is-next",next);
+      if(next)found=true;
+    });
+  }
   function refresh(){
     const input=$("examDate"),dateString=input?.value||"2027-02-24";
     const remaining=remainingDays(dateString);
@@ -68,6 +80,7 @@
     const urgent=$("syllabusFocus");
     if(urgent)urgent.classList.toggle("is-overdue",syllabus<0);
     updateHeaderNext();
+    highlightNextTask();
   }
   function activate(next){
     if(!modes.has(next))return;
@@ -85,7 +98,7 @@
   });
   $("examDate")?.addEventListener("change",refresh);
   document.addEventListener("change",event=>{
-    if(event.target?.matches?.('input[type="checkbox"]'))Promise.resolve().then(updateHeaderNext);
+    if(event.target?.matches?.('input[type="checkbox"]'))Promise.resolve().then(()=>{updateHeaderNext();highlightNextTask()});
   });
   activate(mode);
   // The original dashboard continues updating its countdown once per second.
