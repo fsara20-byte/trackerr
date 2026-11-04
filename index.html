@@ -299,6 +299,62 @@ linear-gradient(145deg,color-mix(in srgb,var(--accent) 6%,var(--card)),var(--car
 .sprint-track{height:9px;border-radius:30px;background:var(--line);overflow:hidden;margin-top:9px}
 .sprint-track div{height:100%;background:var(--accent);transition:width .2s}
 @media(max-width:740px){.sprint-grid{grid-template-columns:1fr}}
+
+/* 3 Nov - 2 Dec 2026 execution checklist */
+.roadmap-controls{display:flex;gap:12px;align-items:end;justify-content:space-between;flex-wrap:wrap;margin:14px 0}
+.roadmap-controls select{min-width:195px}.roadmap-actions{display:flex;gap:8px;flex-wrap:wrap}
+.roadmap-note,.roadmap-warning{padding:12px;background:var(--card2);border:1px solid var(--line);border-radius:9px;font-size:11.5px;line-height:1.6}
+.roadmap-warning{margin-top:10px;border-color:var(--warn)}.roadmap-meta{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.roadmap-day{scroll-margin-top:120px;min-width:0}.roadmap-day h3{font-size:17px;margin:5px 0 9px}
+.roadmap-today{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.roadmap-day-head{display:flex;flex-wrap:wrap;gap:6px;align-items:center;justify-content:space-between}
+.roadmap-timetable{border:1px solid var(--line);background:var(--card);border-radius:9px;padding:10px;margin:12px 0}
+.roadmap-timetable summary{font-size:11px;font-weight:700;cursor:pointer}
+.roadmap-line{display:grid;grid-template-columns:95px 1fr;gap:8px;padding:6px 0;border-bottom:1px solid var(--line);font-size:11px}
+.roadmap-line time{font-family:var(--mono);color:var(--accent)}
+.roadmap-check-label{font-size:10px;letter-spacing:.05em;font-weight:800;color:var(--muted);margin:14px 0 4px}
+.roadmap-stretch{color:var(--warn);font-size:10px}
+#sprintTaskGrid .sprint-task span{min-width:0;cursor:pointer}
+#sprintTaskGrid .sprint-task strong{display:block;font-size:12px}
+#sprintTaskGrid .sprint-task small{font-size:11px}
+@media(max-width:650px){.roadmap-controls select{width:100%}.roadmap-controls>div{width:100%}.roadmap-line{grid-template-columns:85px 1fr}}
+
+
+/* Daily command center opens above the rest of the dashboard */
+.today-command{max-width:1450px;margin:16px auto 16px;border:1px solid color-mix(in srgb,var(--accent) 28%,var(--line));box-shadow:0 10px 30px rgba(14,25,36,.08);scroll-margin-top:116px}
+.today-heading{display:flex;align-items:start;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.today-kicker{font:600 10px var(--mono);letter-spacing:1.5px;text-transform:uppercase;color:var(--accent)}
+.today-heading h2{font-size:28px;margin:6px 0 1px}
+.today-sub{font-size:12px;color:var(--muted);margin:4px 0 0}
+.today-stat{border:1px solid var(--line);border-radius:9px;padding:11px 13px;background:var(--card2);margin-top:13px;line-height:1.5}
+.today-stat strong{display:block;margin-bottom:3px;font-size:12.5px}
+.today-stat p{margin:0;font-size:11.5px;color:var(--muted)}
+.today-grid{display:grid;grid-template-columns:1.35fr .85fr;gap:16px;margin-top:13px}
+.today-grid h3{font-size:16px;margin:0 0 6px}
+.today-list,.carry-list{display:grid;gap:7px}
+.today-task{display:flex;align-items:flex-start;gap:9px;background:var(--card2);border:1px solid var(--line);padding:9px 10px;border-radius:8px;cursor:pointer}
+.today-task input{flex:none;width:18px;height:18px;margin:1px 0 0;accent-color:var(--accent)}
+.today-task strong{display:block;font-size:12px;line-height:1.45}
+.today-task small{display:block;color:var(--muted);font-size:10.5px;margin-top:2px;line-height:1.5}
+.today-task.complete{opacity:.72}
+.today-task.complete strong{text-decoration:line-through}
+.today-meter{height:9px;background:var(--soft);border-radius:99px;overflow:hidden;margin-top:10px}
+.today-meter span{display:block;background:var(--accent);height:100%;width:0%;transition:width .2s}
+.today-side{background:var(--card2);border-radius:9px;padding:14px;border:1px solid var(--line)}
+.today-side .tiny{line-height:1.6}
+.today-side details{border-top:1px solid var(--line);padding-top:10px;margin-top:12px}
+.today-side summary{cursor:pointer;font-weight:700;font-size:12px}
+.today-side .roadmap-line{background:none;border-bottom-color:var(--line)}
+.today-carry{margin-top:12px;border:1px solid color-mix(in srgb,var(--warn) 40%,var(--line));border-radius:9px;padding:12px;background:color-mix(in srgb,var(--warn) 5%,var(--card))}
+.today-carry h3{font-size:15px;margin:0 0 4px}
+.today-carry p{font-size:11px;color:var(--muted);margin:0 0 10px}
+.today-carry .carry-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+.today-footer{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-top:13px}
+.today-footer a{display:inline-block;border:1px solid var(--accent);background:var(--accent);color:var(--button-text);border-radius:7px;text-decoration:none;font-size:11px;font-weight:700;padding:9px 12px}
+.today-footer .tiny{flex:1}
+@media(max-width:800px){.today-grid{grid-template-columns:1fr}.today-carry .carry-list{grid-template-columns:1fr}}
+@media(max-width:560px){.today-heading h2{font-size:22px}.today-command{padding:14px}.today-list{gap:6px}}
+
 </style></head>
 <body>
 <header><div class="header-row"><div class="header-title-area">
@@ -323,28 +379,113 @@ linear-gradient(145deg,color-mix(in srgb,var(--accent) 6%,var(--card)),var(--car
 </div></div></div>
 </header>
 <nav class="top-nav" aria-label="Dashboard sections">
-  <a href="#focus">Focus timer</a>
-  <a href="#overview">Overview</a>
-  <a href="#sprintChecklist">29–30 Oct checklist</a><a href="#plan">Daily plan</a>
-  <a href="#curriculum">Curriculum</a>
+  <a href="#todayCommand">Today</a>
+  <a href="#sprintChecklist">3 Nov – 2 Dec checklist</a><a href="#overview">Overview</a>
+  <a href="#curriculum">Curriculum</a><a href="#focus">Focus timer</a><a href="#plan">Daily notes</a>
   <a href="#mockExams">Mock exams</a><a href="#errorLog">Error log</a><a href="#mifApplications">MiF deadlines</a><a href="#history">History</a><a href="#sync">Backup & sync</a><a href="#resources">News & jobs</a>
 </nav>
-<section class="finance-hero">
-  <div class="finance-hero-card">
-    <div class="finance-hero-content">
-      <div class="finance-eyebrow">CFA LEVEL I • STUDY CONTROL</div>
-      <div class="finance-title">One dashboard for focused daily execution.</div>
-      <div class="finance-copy">Track modules, study hours, practice questions and mock performance without turning the site into another distraction.</div>
-      <div class="finance-badges">
-        <span class="finance-badge">Dubai · Europe · Singapore</span>
-        <span class="finance-badge">Daily study plan</span>
-        <span class="finance-badge">Mock analytics</span>
-      </div>
-    </div>
-  </div>
+<div class="wrap">
+
+<section class="card today-command" id="todayCommand" aria-label="Today's study tasks">
+ <div class="today-heading">
+   <div><div class="today-kicker">YOUR CFA DAILY BRIEF • DUBAI TIME</div><h2 id="commandDate">Loading your day…</h2><p class="today-sub" id="commandFocus">Your study priorities will appear here automatically.</p></div>
+   <div><span class="pill" id="commandProgress">—</span><span class="pill" id="commandStatus">—</span></div>
+ </div>
+ <div class="today-meter" aria-label="Today's checklist completion"><span id="commandBar"></span></div>
+ <div class="today-stat" id="commandYesterday" aria-live="polite"><strong>Previous-day status</strong><p>Checking your progress…</p></div>
+ <div id="commandCarry" class="today-carry" hidden></div>
+ <div class="today-grid"><div><h3 id="commandTasksTitle">Today’s checklist</h3><div id="commandTasks" class="today-list"></div></div>
+ <aside class="today-side"><h3>Daily focus & recovery</h3><p class="tiny" id="commandAdvice">Preparing priorities…</p><div class="tiny" id="commandPractice"></div><details open><summary>Study timetable</summary><div id="commandTimetable"></div></details></aside></div>
+ <div class="today-footer"><a href="#sprintChecklist">Open complete 30-day plan</a><a href="#curriculum">Curriculum progress</a><span class="tiny">Checkboxes sync with the monthly checklist and main curriculum on this browser.</span></div>
 </section>
 
-<div class="wrap">
+<div class="toolbar card" id="overview">
+<div><label>Plan start date</label><input id="startDate" type="date" value="2026-11-03"/></div>
+<div><label>Exam date (set your exact date)</label><input id="examDate" type="date" value="2027-02-24"/></div>
+<div><label>View / log date</label><input id="today" type="date"/><div class="auto-note">Automatically opens on the real Dubai date.</div></div>
+<div class="toolbar-actions"><button onclick="jumpToToday()">Go to today</button><button class="secondary" onclick="rebuildPlan()">Rebuild plan</button></div>
+</div>
+<div class="grid" style="margin-top:12px">
+<div class="card"><label>Curriculum modules</label><div class="metric" id="totalModules">—</div><div class="tiny" id="moduleBreakdown"></div></div>
+<div class="card"><label>Modules finished / total</label><div class="metric" id="moduleXofY">0 / 102</div><div class="tiny" id="moduleRemainingText">Modules left and daily target</div></div>
+<div class="card"><label>Overall progress</label><div class="metric" id="completed">—</div><progress id="overallProgress" max="100" value="0"></progress><div class="progressrow"><span class="lefttext" id="overallDonePct">0% complete</span><span class="lefttext" id="overallLeftPct">100% left</span></div></div>
+<div class="card"><label>Hours logged</label><div class="metric" id="hoursLogged">0</div><div class="tiny">Uses Daily completion log only • module time is not double-counted</div></div>
+<div class="card"><label>On-track status</label><div class="metric" id="trackStatus">—</div><div class="tiny" id="trackDetail"></div><div style="border-top:1px solid var(--line);margin-top:12px;padding-top:12px"><label>Estimated completion date</label><div class="metric" id="projectedFinish">—</div><div class="tiny" id="projectedFinishDetail">Required daily pace appears until enough real module-completion history exists.</div></div></div>
+<div class="card"><label>Current readiness</label><div class="metric readiness-score" id="readinessScore">0%</div><progress id="readinessProgress" max="100" value="0"></progress><div class="readiness-breakdown" id="readinessBreakdown">Complete modules and questions to build readiness.</div></div>
+
+</div>
+<section class="card" id="studyIntelligence" style="margin-top:12px"><h2 style="margin-top:0">Review queue & weak topics</h2><div class="tiny" id="reviewQueueSummary" style="margin-bottom:10px">Loading reviews…</div><div class="tiny" id="weakTopicAlerts">Loading QBank alerts…</div></section>
+<section class="card" id="revisionRoadmap" style="margin-top:12px">
+<h2 style="margin-top:0">Syllabus → Review & Mocks</h2>
+<div class="tiny" style="margin-bottom:12px">30 November is the normal syllabus deadline. 2 December is the hard stop. Everything after is reserved for question banks, revision, and mock exams.</div>
+<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(185px,1fr))">
+<div><strong>29 Oct – 30 Nov</strong><div class="tiny">Finish every outstanding learning module. Track your required daily pace above.</div></div>
+<div><strong>1 – 2 Dec</strong><div class="tiny">Emergency catch-up only, if needed. Otherwise begin revision immediately.</div></div>
+<div><strong>3 Dec – 31 Dec</strong><div class="tiny">First full review, topic questions, formula practice and error log; mocks 1–2.</div></div>
+<div><strong>1 – 31 Jan</strong><div class="tiny">Mixed timed QBank, repair weakest topics; mocks 3–6.</div></div>
+<div><strong>1 – 21 Feb</strong><div class="tiny">Mocks 7–8, review every mistake, Ethics and formulas. Aim for consistent timed scores.</div></div>
+<div><strong>22 – 24 Feb</strong><div class="tiny">Light review, formulas, logistics and sleep. No new curriculum.</div></div>
+</div></section>
+<section class="card focus-hide" id="sprintChecklist" style="margin-bottom:14px">
+ <div class="mock-header"><div><h2 style="margin:0">Daily CFA checklist · 3 November – 2 December 2026</h2><div class="tiny">30 detailed days, a timetable for every day, and checkboxes. Module checks update the main 102-module curriculum automatically.</div></div><span class="pill" id="sprintCount">0 complete</span></div>
+ <div class="roadmap-meta"><span class="pill" id="roadmapModules">—</span><span class="pill" id="roadmapPace">—</span><span class="pill" id="roadmapHours">—</span><span class="pill">Exam 24 Feb 2027</span></div>
+ <div class="sprint-track"><div id="sprintBar" style="width:0%"></div></div>
+ <div class="roadmap-controls"><div><label for="roadmapWeek">View week</label><select id="roadmapWeek" onchange="roadmapWeekChange(this.value)"><option value="auto">Current week</option><option value="0">3–9 November</option><option value="1">10–16 November</option><option value="2">17–23 November</option><option value="3">24–30 November</option><option value="4">1–2 December</option><option value="all">Entire 30-day plan</option></select></div><div class="roadmap-actions"><button class="secondary" onclick="roadmapJump()">Jump to today</button><button class="secondary" onclick="roadmapWeekChange('all')">Show all days</button></div></div>
+ <div class="roadmap-note">Start at <strong>Derivatives Module 6 on Tuesday 3 November</strong>, then Fixed Income → Economics → Quantitative Methods → Equities → remaining FSA and Corporate Finance. Ethics is distributed throughout the month. Target 30 November, with 1–2 December for catch-up. Sundays are lighter. Three- or four-module days are ambitious stretch targets, not guaranteed six-hour workloads. This plan assumes AI, Portfolio Construction and some FSA/Corporate Finance/Ethics modules were previously completed; the tracker will flag any mismatches without automatically changing them.</div>
+ <div class="roadmap-warning" id="roadmapBacklog" hidden></div>
+ <div class="sprint-grid" id="sprintTaskGrid"></div>
+ <p class="tiny" style="margin-top:12px">Only module checkboxes affect the official syllabus percentage. QBank, error-log and personal tasks are separate. Use your Daily completion log for actual hours and question totals. No old module checks, mock scores or study logs are overwritten.</p>
+</section>
+
+
+<section id="curriculum"><div class="section-heading"><div><h2>Curriculum</h2><p>Select a topic and update each module as you progress.</p></div></div><div class="tabs" id="tabs"></div>
+<div class="two">
+<section class="card">
+<div class="topichead"><div><h2 id="topicTitle" style="margin:0"></h2><div class="tiny" id="topicMeta"></div></div><span class="pill" id="topicPct"></span></div><progress id="topicProgress" max="100" value="0"></progress><div class="progressrow"><span class="lefttext" id="topicDoneText">0% complete</span><span class="lefttext" id="topicLeftText">100% left</span></div>
+<div id="modules"></div>
+</section>
+<aside>
+
+<div class="card" id="weightings">
+<h2 style="margin-top:0">Exam Weightings</h2>
+<div class="tiny">Official CFA Institute topic weights, ranked by priority.</div>
+<div id="weightList"></div>
+</div>
+
+<div class="card" id="plan">
+<div class="plan-topline">
+<div><h2 style="margin:0">Next module priorities</h2><div class="today-badge" id="selectedDateLabel">Live date</div></div>
+<div class="plan-actions">
+<button class="secondary" id="editPlanBtn" onclick="beginPlanEdit()">Edit plan</button>
+<button hidden="" id="savePlanBtn" onclick="savePlanEdit()">Save edits</button>
+<button class="secondary" hidden="" id="cancelPlanBtn" onclick="cancelPlanEdit()">Cancel</button>
+<button class="secondary" hidden="" id="autoPlanBtn" onclick="resetCustomPlan()">Use automatic</button>
+</div>
+</div>
+<div class="custom-plan-note" hidden="" id="customPlanNote">Custom plan saved for this date.</div>
+<textarea aria-label="Edit daily plan" hidden="" id="planEditor"></textarea>
+<div id="dailyPlan"></div>
+<button class="secondary" onclick="copyToday()" style="width:100%;margin-top:8px">Copy today’s plan</button>
+</div>
+<div class="card">
+<h2 style="margin-top:0">Daily completion log</h2>
+<label>Actual study hours</label><input id="dailyHours" max="12" min="0" step=".25" type="number"/>
+<label style="display:block;margin-top:8px">Questions completed</label><input id="dailyQuestions" min="0" type="number"/>
+<label style="display:block;margin-top:8px">Main note / obstacle</label><textarea id="dailyNote" rows="3"></textarea>
+<button onclick="saveDaily()" style="width:100%;margin-top:9px">Save today</button>
+<div class="tiny" id="savedMsg" style="margin-top:7px"></div>
+</div>
+<div class="card">
+<h2 style="margin-top:0">Rules</h2>
+<div class="tiny">
+1. Finish the scheduled module before opening another.<br/><br/>
+2. For every module: learn → LES questions → review errors.<br/><br/>
+3. Do not make long notes. Save only formulas, rules and errors.<br/><br/>
+4. A module is complete only after its LES questions are attempted.
+</div>
+</div>
+</aside></div></section>
+<section class="section-heading" style="margin-top:24px"><h2>Focus timer</h2></section>
 <div class="card" id="focus" style="margin-bottom:12px">
   <h2 style="margin-top:0">Pomodoro Focus Timer</h2>
   <div class="pomodoro-shell">
@@ -409,80 +550,7 @@ linear-gradient(145deg,color-mix(in srgb,var(--accent) 6%,var(--card)),var(--car
       </div>
     </div>
   </div>
-</div><div class="toolbar card" id="overview">
-<div><label>Plan start date</label><input id="startDate" type="date" value="2026-10-29"/></div>
-<div><label>Exam date (set your exact date)</label><input id="examDate" type="date" value="2027-02-24"/></div>
-<div><label>View / log date</label><input id="today" type="date"/><div class="auto-note">Automatically opens on the real Dubai date.</div></div>
-<div class="toolbar-actions"><button onclick="jumpToToday()">Go to today</button><button class="secondary" onclick="rebuildPlan()">Rebuild plan</button></div>
 </div>
-<div class="grid" style="margin-top:12px">
-<div class="card"><label>Curriculum modules</label><div class="metric" id="totalModules">—</div><div class="tiny" id="moduleBreakdown"></div></div>
-<div class="card"><label>Modules finished / total</label><div class="metric" id="moduleXofY">0 / 102</div><div class="tiny" id="moduleRemainingText">Modules left and daily target</div></div>
-<div class="card"><label>Overall progress</label><div class="metric" id="completed">—</div><progress id="overallProgress" max="100" value="0"></progress><div class="progressrow"><span class="lefttext" id="overallDonePct">0% complete</span><span class="lefttext" id="overallLeftPct">100% left</span></div></div>
-<div class="card"><label>Hours logged</label><div class="metric" id="hoursLogged">0</div><div class="tiny">Uses Daily completion log only • module time is not double-counted</div></div>
-<div class="card"><label>On-track status</label><div class="metric" id="trackStatus">—</div><div class="tiny" id="trackDetail"></div><div style="border-top:1px solid var(--line);margin-top:12px;padding-top:12px"><label>Estimated completion date</label><div class="metric" id="projectedFinish">—</div><div class="tiny" id="projectedFinishDetail">Required daily pace appears until enough real module-completion history exists.</div></div></div>
-<div class="card"><label>Current readiness</label><div class="metric readiness-score" id="readinessScore">0%</div><progress id="readinessProgress" max="100" value="0"></progress><div class="readiness-breakdown" id="readinessBreakdown">Complete modules and questions to build readiness.</div></div>
-
-</div>
-<section class="card" id="studyIntelligence" style="margin-top:12px"><h2 style="margin-top:0">Review queue & weak topics</h2><div class="tiny" id="reviewQueueSummary" style="margin-bottom:10px">Loading reviews…</div><div class="tiny" id="weakTopicAlerts">Loading QBank alerts…</div></section>
-<section class="card" id="revisionRoadmap" style="margin-top:12px">
-<h2 style="margin-top:0">Syllabus → Review & Mocks</h2>
-<div class="tiny" style="margin-bottom:12px">30 November is the normal syllabus deadline. 2 December is the hard stop. Everything after is reserved for question banks, revision, and mock exams.</div>
-<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(185px,1fr))">
-<div><strong>29 Oct – 30 Nov</strong><div class="tiny">Finish every outstanding learning module. Track your required daily pace above.</div></div>
-<div><strong>1 – 2 Dec</strong><div class="tiny">Emergency catch-up only, if needed. Otherwise begin revision immediately.</div></div>
-<div><strong>3 Dec – 31 Dec</strong><div class="tiny">First full review, topic questions, formula practice and error log; mocks 1–2.</div></div>
-<div><strong>1 – 31 Jan</strong><div class="tiny">Mixed timed QBank, repair weakest topics; mocks 3–6.</div></div>
-<div><strong>1 – 21 Feb</strong><div class="tiny">Mocks 7–8, review every mistake, Ethics and formulas. Aim for consistent timed scores.</div></div>
-<div><strong>22 – 24 Feb</strong><div class="tiny">Light review, formulas, logistics and sleep. No new curriculum.</div></div>
-</div></section>
-<section id="curriculum"><div class="section-heading"><div><h2>Curriculum</h2><p>Select a topic and update each module as you progress.</p></div></div><div class="tabs" id="tabs"></div>
-<div class="two">
-<section class="card">
-<div class="topichead"><div><h2 id="topicTitle" style="margin:0"></h2><div class="tiny" id="topicMeta"></div></div><span class="pill" id="topicPct"></span></div><progress id="topicProgress" max="100" value="0"></progress><div class="progressrow"><span class="lefttext" id="topicDoneText">0% complete</span><span class="lefttext" id="topicLeftText">100% left</span></div>
-<div id="modules"></div>
-</section>
-<aside>
-
-<div class="card" id="weightings">
-<h2 style="margin-top:0">Exam Weightings</h2>
-<div class="tiny">Official CFA Institute topic weights, ranked by priority.</div>
-<div id="weightList"></div>
-</div>
-
-<div class="card" id="plan">
-<div class="plan-topline">
-<div><h2 style="margin:0">Next module priorities</h2><div class="today-badge" id="selectedDateLabel">Live date</div></div>
-<div class="plan-actions">
-<button class="secondary" id="editPlanBtn" onclick="beginPlanEdit()">Edit plan</button>
-<button hidden="" id="savePlanBtn" onclick="savePlanEdit()">Save edits</button>
-<button class="secondary" hidden="" id="cancelPlanBtn" onclick="cancelPlanEdit()">Cancel</button>
-<button class="secondary" hidden="" id="autoPlanBtn" onclick="resetCustomPlan()">Use automatic</button>
-</div>
-</div>
-<div class="custom-plan-note" hidden="" id="customPlanNote">Custom plan saved for this date.</div>
-<textarea aria-label="Edit daily plan" hidden="" id="planEditor"></textarea>
-<div id="dailyPlan"></div>
-<button class="secondary" onclick="copyToday()" style="width:100%;margin-top:8px">Copy today’s plan</button>
-</div>
-<div class="card">
-<h2 style="margin-top:0">Daily completion log</h2>
-<label>Actual study hours</label><input id="dailyHours" max="12" min="0" step=".25" type="number"/>
-<label style="display:block;margin-top:8px">Questions completed</label><input id="dailyQuestions" min="0" type="number"/>
-<label style="display:block;margin-top:8px">Main note / obstacle</label><textarea id="dailyNote" rows="3"></textarea>
-<button onclick="saveDaily()" style="width:100%;margin-top:9px">Save today</button>
-<div class="tiny" id="savedMsg" style="margin-top:7px"></div>
-</div>
-<div class="card">
-<h2 style="margin-top:0">Rules</h2>
-<div class="tiny">
-1. Finish the scheduled module before opening another.<br/><br/>
-2. For every module: learn → LES questions → review errors.<br/><br/>
-3. Do not make long notes. Save only formulas, rules and errors.<br/><br/>
-4. A module is complete only after its LES questions are attempted.
-</div>
-</div>
-</aside></div></section>
 <section class="card mock-section" id="mockExams">
 <div class="mock-header"><div><h2 style="margin:0">Mock Exams</h2><div class="tiny">Record each mock, compare scores and identify weak topics.</div></div><span class="pill" id="mockCountPill">0 mocks</span></div>
 <div class="mock-summary">
@@ -598,12 +666,7 @@ linear-gradient(145deg,color-mix(in srgb,var(--accent) 6%,var(--card)),var(--car
 
 
 
-<section class="card focus-hide" id="sprintChecklist" style="margin-bottom:14px">
- <div class="mock-header"><div><h2 style="margin:0">29–30 October · Two-day checklist</h2><div class="tiny">Separate from the 2027 syllabus completion tally. Tick tasks as you finish; progress saves locally.</div></div><span class="pill" id="sprintCount">0 / 10 complete</span></div>
- <div class="sprint-track"><div id="sprintBar" style="width:0%"></div></div>
- <div class="sprint-grid" id="sprintTaskGrid"></div>
- <p class="tiny" style="margin-top:12px">Study blocks are suggested, not scheduled appointments. Thursday: Derivatives consolidation. Friday: Derivatives testing and Economics. These tasks do not double-count completed curriculum modules.</p>
-</section>
+
 <section class="card applications-section focus-hide" id="mifApplications">
   <div class="mock-header">
     <div>
@@ -853,7 +916,7 @@ function updateLiveClock(){
  document.getElementById("liveZoneLabel").textContent=cfg.label+" time";
  updateClockButtons();
  const realToday=dubaiDateKey(now);
- if(window._lastDubaiDate && window._lastDubaiDate!==realToday){jumpToToday();}
+ if(window._lastDubaiDate && window._lastDubaiDate!==realToday){jumpToToday();renderSprint();}
  window._lastDubaiDate=realToday;
 }
 document.getElementById("today").value=dubaiDateKey();
@@ -908,9 +971,10 @@ function setM(t,i,f,v){let m=getM(t,i),wasDone=m.done;m[f]=f==="done"?v:(v===""?
   if(v&&!wasDone)state.moduleCompletionHistory[key(t,i)]=dubaiDateKey();
   if(!v)delete state.moduleCompletionHistory[key(t,i)];
  }
- save();renderModules();renderPlan();renderWeightings()}
+ save();renderModules();renderPlan();renderWeightings();renderSprint()}
 function unfinished(){const items=[];ORDER.forEach(t=>TOPICS[t].forEach((n,i)=>{if(!getM(t,i).done)items.push({t,n,i})}));return items}
 function automaticPlanText(date){
+ const planned=planTextFromRoadmap(date);if(planned)return planned;
  const reviews=dueModuleReviews(date),errors=dueErrorReviews(date),parts=[];
  const due=[...reviews.slice(0,3).map(x=>`• ${x.topic}: ${x.module}`),...errors.slice(0,2).map(x=>`• Error: ${x.topic}: ${x.concept}`)];
  if(due.length)parts.push(`REVIEW QUEUE (${due.length} items)\n${due.join("\n")}`);
@@ -1009,6 +1073,7 @@ function updateSummary(){
  }
  const statusEl=document.getElementById("trackStatus");statusEl.textContent=status;statusEl.style.color=status==="BEHIND"?"var(--bad)":"var(--good)";
  document.getElementById("trackDetail").textContent=detail;
+  if(typeof roadmapPace==="function")roadmapPace();
  const r=calculateReadiness();document.getElementById("readinessScore").textContent=r.value+"%";document.getElementById("readinessProgress").value=r.value;
  document.getElementById("readinessBreakdown").textContent=`Curriculum ${Math.round(r.curriculum*100)}% • Weighted ${Math.round(r.weighted*100)}% • Questions ${Math.round(r.questions*100)}% • Scores ${Math.round(r.score*100)}% • Mocks ${Math.round(r.mock*100)}%`;
  const finishEl=document.getElementById("projectedFinish"),detailEl=document.getElementById("projectedFinishDetail");
@@ -1290,31 +1355,127 @@ function initBackupImport(){
 
 
 
-const SPRINT_TASKS=[
- {day:"Thursday 29 October",items:[
- ["09:00–10:30","Derivatives: forward pricing and valuation","No-arbitrage, cost of carry, long / short forward values"],
- ["10:45–12:15","Derivatives: FX forwards and interest rates","FX forward calculations, zero rates, implied forwards"],
- ["13:15–14:45","Derivatives: options","Calls, puts, payoffs, profits and breakeven"],
- ["15:00–16:00","Derivatives QBank","30–40 questions, check and explain misses"],
- ["16:00–16:30","Error log","Write corrections, formulas, calculator steps"]]},
- {day:"Friday 30 October",items:[
- ["09:00–10:00","Derivatives: reinforcement","Redo missed questions without notes"],
- ["10:00–11:30","Derivatives: timed practice","35–45 mixed questions; 75% target"],
- ["11:45–13:15","Economics: first outstanding module","Use the 2027 curriculum and solve its questions"],
- ["14:00–15:30","Economics: next module","Proceed if first is understood"],
- ["15:30–16:00","Review and plan","Record Economics QBank performance and next targets"]]}
-];
+
+const ROADMAP_CODES={"D": "Derivatives and Risk Management", "FI": "Fixed Income", "E": "Economics", "Q": "Quantitative Methods", "EQ": "Equities", "FSA": "Financial Statement Analysis", "CI": "Corporate Finance", "ETH": "Ethical and Professional Standards"};
+const SPRINT_DAYS=[["2026-11-03", "Derivatives · Modules 6–7", [["D", 6], ["D", 7]], "Distinguish futures from forwards, calculate swap values, and check BA II Plus inputs.", "Shortlist banking roles for 45 minutes.", "20-minute walk."], ["2026-11-04", "Derivatives · Modules 8–9", [["D", 8], ["D", 9]], "Call and put payoff/profit diagrams, arbitrage, and put–call parity examples.", "No applications today.", "Pilates or gym."], ["2026-11-05", "Finish Derivatives", [["D", 10], ["ETH", 3]], "Binomial option valuation, all Derivatives formulas and 30–40 mixed practice questions.", "Prepare one eligible, time-sensitive banking application.", "Rest in the evening."], ["2026-11-06", "Fixed Income · Instruments", [["FI", 1], ["FI", 2]], "Bond features, coupon structures, fixed vs floating payments and cash flow examples.", "Follow up on applications for 30 minutes.", "Free evening."], ["2026-11-07", "Fixed Income · Issuers and markets", [["FI", 3], ["FI", 4], ["FI", 5]], "Primary/secondary markets and sovereign versus corporate issuance; check definitions.", "Strengthen consulting CV with measured results and deal examples.", "Gym."], ["2026-11-08", "Fixed Income · Bond valuation", [["FI", 6]], "Price-yield relationships, accrued interest, PV calculations and BA II Plus practice.", "No applications on recovery day.", "Walk and proper rest."], ["2026-11-09", "Fixed Income · Yield curves", [["FI", 7], ["FI", 8], ["FI", 9], ["ETH", 4]], "YTM, spreads, floaters, spot/par/forward curves; redo difficult questions.", "Shortlist two relevant applications.", "Rest."], ["2026-11-10", "Fixed Income · Duration", [["FI", 10], ["FI", 11]], "Macaulay and modified duration; effect of yield movements on price.", "No applications today.", "Pilates or gym."], ["2026-11-11", "Fixed Income · Convexity", [["FI", 12], ["FI", 13]], "Convexity, key rate duration and yield-curve exposures; solve calculation questions.", "Complete one carefully selected application.", "Short walk."], ["2026-11-12", "Fixed Income · Credit risk", [["FI", 14], ["FI", 15], ["FI", 16], ["ETH", 5]], "Credit spreads, issuer ratios, sovereign and corporate credit analysis.", "No applications: heavy study load.", "Rest."], ["2026-11-13", "Fixed Income · Securitization", [["FI", 17], ["FI", 18], ["FI", 19]], "ABS and MBS cash flow waterfalls and risks; 30 mixed FI questions.", "Brief application follow-up.", "Rest."], ["2026-11-14", "Economics · Markets and policy", [["E", 1], ["E", 2], ["E", 3], ["ETH", 6]], "Market structure, cycles, fiscal policy and ethical obligations.", "Review strategy-consulting shortlist for 30 minutes.", "Gym."], ["2026-11-15", "Economics · Monetary policy", [["E", 4]], "Monetary transmission and central-bank actions, followed by 15–20 questions.", "No applications.", "Walk and personal time."], ["2026-11-16", "Economics · International", [["E", 5], ["E", 6], ["E", 7], ["ETH", 7]], "Trade policy, geopolitics, capital flows, FX markets, ethics concepts.", "Check targeted vacancy alerts.", "Rest."], ["2026-11-17", "Economics → Quantitative Methods", [["E", 8], ["Q", 1], ["Q", 2]], "FX conversions, financial returns and benchmark comparisons.", "One tailored application or targeted CV work.", "Free evening."], ["2026-11-18", "Quant · Time value and statistics", [["Q", 3], ["Q", 4], ["Q", 5], ["ETH", 8]], "Time value, probability and descriptive statistics; BA II Plus practice.", "No applications: heavy study load.", "Pilates or gym."], ["2026-11-19", "Quant · Distributions and risk", [["Q", 6], ["Q", 7], ["Q", 8]], "Probability distributions, confidence intervals, hypothesis tests, portfolio risk.", "Review CV and check priorities for 30 minutes.", "Rest."], ["2026-11-20", "Quant · Regression and simulation", [["Q", 9], ["Q", 10], ["Q", 11], ["ETH", 9]], "Simulation, OLS regression and financial data science; timed questions.", "One target-role application if eligible.", "Short walk."], ["2026-11-21", "Equities · Instruments and markets", [["EQ", 1], ["EQ", 2], ["EQ", 3]], "Share classes, investor rights, issuance, trading and equity market mechanisms.", "No applications today.", "Gym."], ["2026-11-22", "Equities + Ethics", [["EQ", 4], ["ETH", 10]], "Equity return components, final Ethics module and Standards examples.", "No applications.", "Walk and recovery."], ["2026-11-23", "Equities · Valuation", [["EQ", 5], ["EQ", 6], ["EQ", 7]], "Dividend discount, Gordon growth and comparable valuation; timed questions.", "30-minute check of new openings.", "Rest."], ["2026-11-24", "Equities · Forecasting", [["EQ", 8], ["EQ", 9]], "Financial forecasting and industry analysis; ensure model drivers make sense.", "One focused application.", "Pilates or gym."], ["2026-11-25", "Equities · Company analysis", [["EQ", 10], ["EQ", 11], ["EQ", 12]], "Company research, CAPM, market model and factor model concepts.", "No applications: heavy study load.", "Rest."], ["2026-11-26", "FSA · Long-term assets and liabilities", [["FSA", 7], ["FSA", 8]], "Long-lived assets, liabilities and equity. Compare accounting treatments.", "Review one application.", "Short walk."], ["2026-11-27", "FSA · Tax and quality", [["FSA", 9], ["FSA", 10], ["FSA", 11]], "Deferred taxes, reporting quality, key ratios and analytical techniques.", "Check vacancy alerts for 20 minutes.", "Rest."], ["2026-11-28", "FSA → Corporate Finance", [["FSA", 12], ["CI", 4], ["CI", 5]], "Financial modeling, working capital, capital budgeting and NPV/IRR.", "No applications today.", "Gym."], ["2026-11-29", "Corporate Finance · Capital structure", [["CI", 6]], "Cost of capital, leverage and financing decisions; short QBank.", "No applications.", "Walk and recovery."], ["2026-11-30", "Syllabus target day", [["CI", 7]], "Finish outstanding scheduled modules and complete 40–50 mixed questions.", "Review week ahead and urgent career deadlines.", "Rest."], ["2026-12-01", "Catch-up buffer", [], "Work through overdue modules; fix weak calculations and review formula list.", "Optional 30-minute CV follow-up.", "Optional exercise."], ["2026-12-02", "Final catch-up / revision launch", [], "Audit all 102 module checks; complete remaining modules if feasible, plan December QBank and mocks.", "No career distractions today.", "Sleep and recovery."]].map(([date,title,modules,practice,career,exercise])=>({date,title,modules:modules.map(([code,num])=>({topic:ROADMAP_CODES[code],num})),practice,career,exercise}));
 state.sprintTasks=state.sprintTasks||{};
-function toggleSprint(key,checked){state.sprintTasks[key]=checked;save();renderSprint()}
+state.roadmapWeek=state.roadmapWeek||"auto";
+// Move the obsolete October plan-start date, but preserve any deliberate user date.
+if(state.startDate==="2026-10-29"){state.startDate="2026-11-03";document.getElementById("startDate").value="2026-11-03";}
+const ROADMAP_FIRST="2026-11-03",ROADMAP_END="2026-12-02";
+function roadmapDate(d){return new Intl.DateTimeFormat("en-GB",{weekday:"short",day:"numeric",month:"short",timeZone:"Asia/Dubai"}).format(new Date(d+"T12:00:00+04:00"))}
+function roadmapWeekNumber(d){return Math.min(4,Math.floor(daysBetweenKeys(ROADMAP_FIRST,d)/7))}
+function roadmapChecked(m){return !!getM(m.topic,m.num-1).done}
+function roadmapModules(){return SPRINT_DAYS.flatMap(d=>d.modules)}
+function roadmapExtra(d,k){return !!state.sprintTasks[d+"::"+k]}
+function roadmapCareerRequired(d){return !/^(no applications|no career|none|free|optional)/i.test(d.career.trim())}
+function roadmapExerciseRequired(d){return !/^(rest|free evening|personal time|free time|sleep|no exercise)/i.test(d.exercise.trim())}
+function roadmapExtras(d){const list=[{k:"q",title:"QBank and calculations",detail:d.practice},{k:"e",title:"Review mistakes and error log",detail:"Record incorrect answers, formulas and calculator steps"}];if(roadmapCareerRequired(d))list.push({k:"c",title:"Career task",detail:d.career});if(roadmapExerciseRequired(d))list.push({k:"w",title:"Exercise and recovery",detail:d.exercise});return list}
+function roadmapAllTasks(d){return [...d.modules.map(m=>({type:"module",m})),...roadmapExtras(d).map(x=>({...x,type:"extra"}))]}
+function roadmapTaskChecked(d,t){return t.type==="module"?roadmapChecked(t.m):roadmapExtra(d.date,t.k)}
+function roadmapProgress(d){const a=roadmapAllTasks(d);return {done:a.filter(t=>roadmapTaskChecked(d,t)).length,total:a.length}}
+
+function roadmapEscape(s){return String(s||"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;")}
+function roadmapIsSunday(d){return new Date(d.date+"T12:00:00+04:00").getUTCDay()===0}
+function roadmapTimes(d){
+ const mods=d.modules, desc=m=>m?m.topic+" M"+m.num+" — "+TOPICS[m.topic][m.num-1]:null;
+ if(roadmapIsSunday(d))return [["10:00–12:00",desc(mods[0])||"Overdue modules / revision"],["12:15–13:15","15–20 QBank questions and explanations"],["13:15–14:30","Lunch and recovery"],["15:00–16:00",d.exercise]];
+ let slots=[["09:00–11:00",desc(mods[0])||"Overdue syllabus modules"],["11:15–12:45",desc(mods[1])||"Examples and active recall"],["12:45–13:45","Lunch and proper break"],["13:45–15:15",desc(mods[2])||"Worked examples and corrections"]];
+ if(mods[3]){slots.push(["15:30–16:20",desc(mods[3])+" (stretch)"],["16:20–17:00","QBank and corrections (extend if required)"]);}
+ else slots.push(["15:30–16:30","20–30 QBank questions, error log and corrections"]);
+ slots.push(["17:15–18:00",d.career],["18:15–19:00",d.exercise]);return slots;
+}
+function planTextFromRoadmap(date){
+ const d=SPRINT_DAYS.find(x=>x.date===date);if(!d)return "";
+ return `CURRICULUM TARGETS\n${d.modules.length?d.modules.map(m=>(roadmapChecked(m)?"✓":"□")+" "+m.topic+" M"+m.num+": "+TOPICS[m.topic][m.num-1]).join("\n"):"Catch up on unfinished modules or begin revision"}\n\nDAILY TIMETABLE\n${roadmapTimes(d).map(([t,s])=>t+" · "+s).join("\n")}\n\nPRACTICE\n${d.practice}\nQuestions and error logging are separate daily checklist items.\n\nCAREER AND RECOVERY\n${d.career}\n${d.exercise}\n\nCurriculum target 30 Nov; hard-stop 2 Dec. Do not tick a module until you complete content plus practice questions.`.replaceAll("\\n","\n");
+}
+function toggleSprintTask(date,k,val){state.sprintTasks[date+"::"+k]=val;save();renderSprint()}
+function toggleSprintModule(topic,num,val){setM(topic,num-1,"done",val);renderSprint()}
+function roadmapWeekChange(v){state.roadmapWeek=v;localStorage.setItem("cfaSpecificV2",JSON.stringify(state));renderSprint()}
+function roadmapJump(){roadmapWeekChange("auto");const today=dubaiDateKey(),d=today<ROADMAP_FIRST?ROADMAP_FIRST:today>ROADMAP_END?ROADMAP_END:today;document.getElementById("roadmap-"+d)?.scrollIntoView({behavior:"smooth",block:"start"})}
+function roadmapBacklog(){const seen=new Set(roadmapModules().map(m=>key(m.topic,m.num-1))),out=[];ORDER.forEach(t=>TOPICS[t].forEach((n,i)=>{if(!seen.has(key(t,i))&&!getM(t,i).done)out.push(t+" M"+(i+1))}));return out}
+function roadmapPace(){
+ const today=dubaiDateKey(),overdue=SPRINT_DAYS.filter(d=>d.date<today).flatMap(d=>d.modules).filter(m=>!roadmapChecked(m)),current=(SPRINT_DAYS.find(d=>d.date===today)?.modules||[]).filter(m=>!roadmapChecked(m));
+ const backlog=roadmapBacklog(),done=ORDER.reduce((n,t)=>n+TOPICS[t].filter((_,i)=>getM(t,i).done).length,0),remain=102-done;
+ const daysLeft=Math.max(1,daysBetweenKeys(today,ROADMAP_END)+1);
+ const firstPassHours=ORDER.reduce((h,t)=>h+TOPICS[t].filter((_,i)=>!getM(t,i).done).length*EST[t],0);
+ const hours=document.getElementById("roadmapHours");
+ if(hours)hours.textContent=firstPassHours.toFixed(0)+"h first-pass estimate · "+(firstPassHours/daysLeft).toFixed(1)+"h/day needed, excluding QBank";
+ const alert=document.getElementById("roadmapBacklog"),pill=document.getElementById("roadmapPace");
+ if(pill)pill.textContent=overdue.length+" overdue module(s) • "+current.length+" due today";
+ if(alert){alert.hidden=!backlog.length;if(backlog.length)alert.textContent=backlog.length+" unfinished module(s) outside the provisional calendar based on your earlier progress. Check the Curriculum tab and use buffer slots: "+backlog.slice(0,8).join(", ")+(backlog.length>8?" …":"")+". No modules were automatically checked.";}
+ const status=document.getElementById("trackStatus"),detail=document.getElementById("trackDetail");if(!status||!detail)return;
+ if(remain===0){status.textContent="SYLLABUS COMPLETE";status.style.color="var(--good)";detail.textContent="All 102 modules completed. Switch to QBank and mocks.";}
+ else if(today>ROADMAP_END){status.textContent="BEHIND";status.style.color="var(--bad)";detail.textContent=remain+" modules incomplete after 2 December.";}
+ else if(overdue.length){status.textContent="BEHIND";status.style.color="var(--bad)";detail.textContent=overdue.length+" scheduled module(s) overdue ("+overdue.slice(0,3).map(m=>m.topic+" M"+m.num).join(", ")+"). Catch-up target: roughly "+Math.ceil(overdue.length/3)+" extra modules/day for 3 days if feasible; account for module difficulty. "+remain+" incomplete overall.";}
+ else{status.textContent=today<ROADMAP_FIRST?"PLAN STARTS 3 NOV":"ON TRACK";status.style.color="var(--good)";detail.textContent="No overdue scheduled modules. "+current.length+" scheduled today; "+remain+" incomplete overall. Target 30 Nov, final catch-up 2 Dec."+(backlog.length?" Verify "+backlog.length+" unscheduled modules.":"");}
+}
+function roadmapItem(d,k,title,description){const v=roadmapExtra(d.date,k);return `<label class="sprint-task ${v?"completed":""}"><input type="checkbox" ${v?"checked":""} onchange="toggleSprintTask('${d.date}','${k}',this.checked)"><span><strong>${roadmapEscape(title)}</strong><small>${roadmapEscape(description)}</small></span></label>`}
+function roadmapModuleItem(m){const v=roadmapChecked(m);return `<label class="sprint-task ${v?"completed":""}"><input type="checkbox" ${v?"checked":""} aria-label="Mark module ${m.num} complete" onchange="toggleSprintModule('${esc(m.topic)}',${m.num},this.checked)"><span><strong>${roadmapEscape(m.topic)} · M${m.num}</strong><small>${roadmapEscape(TOPICS[m.topic][m.num-1])} · tick after learning and LES questions</small></span></label>`}
+
+function commandTaskHTML(d,t,isCarry=false){
+ const checked=roadmapTaskChecked(d,t);
+ const title=t.type==="module"?t.m.topic+" · Module "+t.m.num:t.title;
+ const detail=t.type==="module"?TOPICS[t.m.topic][t.m.num-1]+" · finish reading and LES questions":t.detail;
+ const action=t.type==="module"?`toggleSprintModule('${esc(t.m.topic)}',${t.m.num},this.checked)`:`toggleSprintTask('${d.date}','${t.k}',this.checked)`;
+ return `<label class="today-task ${checked?"complete":""}"><input type="checkbox" ${checked?"checked":""} onchange="${action}" aria-label="${roadmapEscape(title)}"><span><strong>${isCarry?roadmapDate(d.date)+" · ":""}${roadmapEscape(title)}</strong><small>${roadmapEscape(detail)}</small></span></label>`;
+}
+function renderTodayCommand(){
+ const root=document.getElementById("todayCommand");if(!root)return;
+ const today=dubaiDateKey();
+ const view=today<ROADMAP_FIRST?SPRINT_DAYS[0]:today>ROADMAP_END?SPRINT_DAYS.at(-1):SPRINT_DAYS.find(d=>d.date===today);
+ const dateEl=document.getElementById("commandDate"),sub=document.getElementById("commandFocus"),status=document.getElementById("commandStatus");
+ const fullDate=new Intl.DateTimeFormat("en-GB",{timeZone:"Asia/Dubai",weekday:"long",day:"numeric",month:"long",year:"numeric"}).format(new Date(today+"T12:00:00+04:00"));
+ dateEl.textContent=fullDate;
+ sub.textContent=today<ROADMAP_FIRST?"Plan starts Tuesday 3 November · tomorrow’s tasks below":today>ROADMAP_END?"30-day plan completed or overdue · check remaining modules below":view.title;
+ const all=roadmapAllTasks(view),done=roadmapProgress(view);
+ const active=today>=ROADMAP_FIRST&&today<=ROADMAP_END;
+ document.getElementById("commandTasksTitle").textContent=active?"Today’s tasks":today<ROADMAP_FIRST?"First study day · Tuesday 3 November":"Last scheduled day · 2 December";
+ document.getElementById("commandTasks").innerHTML=all.map(t=>commandTaskHTML(view,t)).join("")||'<p class="tiny">Buffer day: clear overdue modules and begin full-syllabus revision.</p>';
+ document.getElementById("commandProgress").textContent=done.done+" / "+done.total+" tasks checked";
+ document.getElementById("commandBar").style.width=(100*done.done/Math.max(1,done.total))+"%";
+ document.getElementById("commandPractice").textContent="Practice focus: "+view.practice;
+ document.getElementById("commandTimetable").innerHTML=roadmapTimes(view).map(([time,activity])=>`<div class="roadmap-line"><time>${roadmapEscape(time)}</time><span>${roadmapEscape(activity)}</span></div>`).join("");
+ const yesterday=addDaysKey(today,-1),prior=SPRINT_DAYS.find(d=>d.date===yesterday),prev=document.getElementById("commandYesterday");
+ if(!prior){prev.innerHTML='<strong>Previous day</strong><p>No scheduled day to assess yet. The first plan day is Tuesday 3 November.</p>'}
+ else {
+  const progress=roadmapProgress(prior),missing=progress.total-progress.done;
+  prev.innerHTML=`<strong>Yesterday · ${roadmapDate(prior.date)} · ${progress.done}/${progress.total} checked</strong><p>${missing===0?"All yesterday’s tasks are checked. Continue with today’s schedule.":missing+" task"+(missing===1?"":"s")+" from yesterday remain unchecked. They are included in your catch-up list below."} Checkmarks indicate what you recorded, not proof of how many hours you studied.</p>`;
+ }
+ const overdue=SPRINT_DAYS.filter(d=>d.date<today).flatMap(d=>roadmapAllTasks(d).filter(t=>!roadmapTaskChecked(d,t)).map(t=>({d,t})));
+ const overdueModules=overdue.filter(({t})=>t.type==="module").length;
+ const carry=document.getElementById("commandCarry"),advice=document.getElementById("commandAdvice");
+ if(overdue.length){
+  carry.hidden=false;
+  const recent=overdue.sort((a,b)=>b.d.date.localeCompare(a.d.date)),display=recent.slice(0,10);
+  carry.innerHTML=`<h3>Carry-over · ${overdue.length} unchecked earlier task${overdue.length===1?"":"s"}</h3><p>First clear unfinished learning, then proceed with today’s modules. ${overdueModules} are curriculum modules. Showing the ${display.length} most recent; open the 30-day plan for the complete backlog.</p><div class="carry-list">${display.map(({d,t})=>commandTaskHTML(d,t,true)).join("")}</div>`;
+  advice.textContent=`${overdueModules} unfinished module${overdueModules===1?"":"s"} from earlier dates plus ${view.modules.filter(m=>!roadmapChecked(m)).length} on the current plan. Prioritize the carry-over modules; defer newer modules if the workload exceeds your available study hours. Do not automatically mark any item done.`;
+  status.textContent="Catch-up needed";
+ }else{
+  carry.hidden=true;carry.innerHTML="";
+  advice.textContent=today<ROADMAP_FIRST?"Your schedule starts tomorrow. No overdue study days in this plan.":"No earlier planned tasks are unchecked. Work through today’s modules, do QBank, and log mistakes before checking them off.";
+  status.textContent=done.done===done.total?"Daily tasks checked":today<ROADMAP_FIRST?"Begins tomorrow":"On schedule so far";
+ }
+ const unscheduled=roadmapBacklog();
+ if(unscheduled.length){advice.textContent+=" Also verify "+unscheduled.length+" other incomplete modules not assigned to this provisional timetable under Curriculum.";if(!overdue.length)status.textContent="Verify baseline";}
+}
+
 function renderSprint(){
  const root=document.getElementById("sprintTaskGrid");if(!root)return;
- let count=0,total=0;
- root.innerHTML=SPRINT_TASKS.map((d,di)=>`<div class="sprint-day"><strong>${d.day}</strong><div class="tiny" style="margin:5px 0 10px">${di===0?'Derivatives consolidation':'Finish Derivatives and begin Economics'}</div>${d.items.map((task,ti)=>{
- const key=`${di}-${ti}`,done=!!state.sprintTasks[key];total++;if(done)count++;
- return `<div class="sprint-task ${done?'completed':''}"><input aria-label="Mark ${task[1]} completed" type="checkbox" ${done?'checked':''} onchange="toggleSprint('${key}',this.checked)"><label onclick="const x=this.previousElementSibling;x.checked=!x.checked;toggleSprint('${key}',x.checked)"><strong>${task[0]} · ${task[1]}</strong><small>${task[2]}</small></label></div>`;
- }).join('')}</div>`).join('');
- document.getElementById('sprintCount').textContent=`${count} / ${total} complete`;
- document.getElementById('sprintBar').style.width=(100*count/Math.max(1,total))+'%';
+ let visible=SPRINT_DAYS,filter=state.roadmapWeek;
+ if(filter!=="all"){const date=dubaiDateKey(),c=date<ROADMAP_FIRST?ROADMAP_FIRST:date>ROADMAP_END?ROADMAP_END:date,w=filter==="auto"?roadmapWeekNumber(c):Number(filter);visible=SPRINT_DAYS.filter(d=>roadmapWeekNumber(d.date)===w)}
+ root.innerHTML=visible.map(d=>{
+  const {done:achieved,total}=roadmapProgress(d);
+  const lines=roadmapTimes(d).map(([t,s])=>`<div class="roadmap-line"><time>${roadmapEscape(t)}</time><span>${roadmapEscape(s)}</span></div>`).join("");
+  return `<article class="sprint-day roadmap-day ${d.date===dubaiDateKey()?"roadmap-today":""}" id="roadmap-${d.date}"><div class="roadmap-day-head"><div class="tiny">${roadmapDate(d.date)} · ${d.date<dubaiDateKey()?"Past":d.date===dubaiDateKey()?"Today":"Upcoming"}</div><span class="pill">${achieved}/${total} done</span></div><h3>${roadmapEscape(d.title)}</h3><div class="sprint-track"><div style="width:${100*achieved/total}%"></div></div><details class="roadmap-timetable"><summary>Full daily timetable</summary>${lines}<p class="tiny">${roadmapEscape(d.practice)}</p>${d.modules.length>=3?'<p class="roadmap-stretch">High-load stretch day. The modules can take more than six hours; carry unfinished items forward rather than rushing.</p>':""}</details><div class="roadmap-check-label">CURRICULUM MODULES (SYNCED)</div>${d.modules.map(roadmapModuleItem).join("")||'<p class="tiny">Catch-up buffer: work from overdue modules in the curriculum.</p>'}<div class="roadmap-check-label">EXECUTION CHECKLIST</div>${roadmapExtras(d).map(x=>roadmapItem(d,x.k,x.title,x.detail)).join("")}</article>`;
+ }).join("");
+ const done=SPRINT_DAYS.reduce((n,d)=>n+roadmapProgress(d).done,0),total=SPRINT_DAYS.reduce((n,d)=>n+roadmapProgress(d).total,0);
+ document.getElementById("sprintCount").textContent=done+" / "+total+" checked";
+ document.getElementById("sprintBar").style.width=(100*done/total)+"%";
+ document.getElementById("roadmapModules").textContent=roadmapModules().filter(roadmapChecked).length+" / "+roadmapModules().length+" scheduled modules done";
+ document.getElementById("roadmapWeek").value=state.roadmapWeek;
+ roadmapPace();
+ renderTodayCommand();
 }
 
 const APPLICATION_STATUSES=["Researching","Waiting for opening","Preparing","Submitted","Interview","Offer","Rejected","Withdrawn"];
