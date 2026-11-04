@@ -1,0 +1,332 @@
+/* Countdown spotlight — high-salience, low-noise visual hierarchy.
+   Pure presentation. Complements the existing tabbed CFA Tracker. */
+
+body>header.dashboard-top{
+  padding:22px 26px 23px;
+  background:linear-gradient(118deg,#d6deed 0%,#c9d4e9 52%,#e1dcec 100%);
+  border-bottom:1px solid #bdc9e0;
+}
+html[data-theme="dark"] body>header.dashboard-top{
+  background:linear-gradient(118deg,#1b2539 0%,#25314d 57%,#282944 100%);
+  border-color:#39445c;
+}
+.dashboard-top .header-row{
+  display:grid;
+  grid-template-columns:minmax(206px,.76fr) minmax(420px,1.45fr) minmax(228px,.8fr);
+  align-items:center;
+  gap:22px;
+  max-width:1510px;
+  margin:0 auto;
+}
+.dashboard-top .header-title-area{min-width:0;align-self:center}
+.dashboard-top .header-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  color:#263d8c;font:850 10px/1.3 'Inter',system-ui,sans-serif;letter-spacing:.11em;
+  text-transform:uppercase;
+}
+.dashboard-top .header-eyebrow::before{
+  content:"";display:block;width:9px;height:9px;border-radius:50%;
+  background:#435cbe;box-shadow:0 0 0 5px rgba(63,90,192,.13);
+}
+.dashboard-top .header-title-area h1{
+  color:#0f172a;font-family:'Inter',system-ui,sans-serif;
+  font-size:clamp(23px,2.1vw,30px);
+  font-weight:880;line-height:1.13;letter-spacing:-.055em;margin:13px 0 10px;
+}
+.dashboard-top .header-title-area h1 span{display:block}
+.dashboard-top .sub{
+  color:#202a3e!important;opacity:1;
+  font-size:12.5px;font-weight:650;line-height:1.5;
+  max-width:235px;margin:0;
+}
+.dashboard-top .header-next{
+  display:flex;align-items:center;gap:11px;max-width:245px;
+  margin-top:21px;padding:11px 13px;text-decoration:none;
+  color:#111d40;background:rgba(255,255,255,.32);
+  border:1px solid rgba(52,76,131,.22);border-radius:12px;
+  transition:background .18s ease,transform .18s ease;
+}
+.dashboard-top .header-next:hover{background:rgba(255,255,255,.5);transform:translateY(-1px)}
+.dashboard-top .header-next-icon{
+  display:grid;place-items:center;flex:none;width:31px;height:31px;
+  background:#2f478d;color:#fff;font-size:15px;border-radius:10px;
+}
+.dashboard-top .header-next-label{
+  color:#364359;font-size:9px;font-weight:850;letter-spacing:.1em;
+}
+.dashboard-top #headerNextModule{
+  display:block;color:#111d40;font-size:12px;font-weight:800;
+  letter-spacing:-.02em;margin-top:2px;
+}
+
+/* Main countdown card — one number owns the visual emphasis. */
+.dashboard-top .countdown-spotlight{
+  min-width:0;display:flex;flex-direction:column;gap:0;
+  padding:0;overflow:hidden;margin:0;min-height:212px;
+  background:linear-gradient(133deg,#aabcf5 0%,#c5d0fa 54%,#ddd8f6 100%);
+  color:#131a35;
+  border:1px solid rgba(57,77,157,.27);
+  border-radius:21px;
+  box-shadow:0 13px 36px rgba(38,54,123,.13),inset 0 1px rgba(255,255,255,.4);
+}
+.dashboard-top .cd-head{
+  display:flex;align-items:center;justify-content:space-between;gap:13px;
+  padding:16px 22px 0;
+}
+.dashboard-top .cd-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  white-space:nowrap;color:#24376b;font-size:10px;font-weight:850;
+  letter-spacing:.11em;
+}
+.dashboard-top .cd-signal{
+  width:8px;height:8px;flex:none;border-radius:50%;
+  background:#2d4cae;box-shadow:0 0 0 5px rgba(45,76,174,.12);
+}
+.dashboard-top #countdownDateLabel{
+  color:#17234b;white-space:nowrap;font-size:10.5px;
+  font-weight:800;letter-spacing:0;
+}
+.dashboard-top .cd-hero{
+  display:flex;align-items:end;justify-content:space-between;
+  gap:14px;min-width:0;padding:4px 22px 11px;
+}
+.dashboard-top .cd-primary{
+  display:flex;align-items:baseline;min-width:0;gap:14px;
+}
+.dashboard-top #countdownHeroValue{
+  color:#16296d;display:inline-block;min-width:1.5ch;
+  font-family:'Inter',system-ui,sans-serif;font-weight:900;
+  font-variant-numeric:tabular-nums;letter-spacing:-.09em;
+  font-size:clamp(62px,7.3vw,96px);line-height:1;
+}
+.dashboard-top #countdownHeroUnit{
+  color:#172650;font-size:11px;font-weight:850;
+  line-height:1.35;letter-spacing:.04em;
+  max-width:113px;text-transform:uppercase;
+}
+.dashboard-top .cd-mode{
+  display:flex;flex-direction:column;align-items:flex-end;gap:7px;
+  padding-bottom:9px;flex:none;
+}
+.dashboard-top .cd-mode-label{
+  color:#354477;font-size:9px;letter-spacing:.1em;font-weight:800;
+}
+.dashboard-top .cd-mode-switch{
+  display:flex;align-items:center;gap:3px;
+  padding:4px;background:rgba(33,56,130,.1);
+  border:1px solid rgba(36,54,121,.1);border-radius:10px;
+}
+.dashboard-top .cd-mode-switch button{
+  appearance:none;border:0;background:transparent;
+  color:#1d2d6a;border-radius:7px;
+  padding:8px 10px;font-size:10px;font-weight:850;
+  cursor:pointer;text-transform:none;letter-spacing:0;
+  min-width:45px;transition:background .15s,color .15s,box-shadow .15s;
+}
+.dashboard-top .cd-mode-switch button:hover{background:rgba(255,255,255,.35)}
+.dashboard-top .cd-mode-switch button.active{
+  color:#fff;background:#2b4390;box-shadow:0 2px 8px rgba(24,42,112,.18);
+}
+.dashboard-top .cd-base{
+  display:grid;grid-template-columns:minmax(0,1fr) auto;
+  gap:13px;align-items:center;
+  padding:14px 20px 16px;
+  background:rgba(231,235,254,.42);
+  border-top:1px solid rgba(44,61,121,.13);
+}
+.dashboard-top .cd-secondary-caption{
+  font-size:9px;font-weight:800;letter-spacing:.09em;color:#283b70;
+  margin-bottom:7px;
+}
+.dashboard-top .cd-secondary{
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+}
+.dashboard-top .countdown-unit{
+  display:inline-flex;align-items:baseline;gap:5px;
+  padding:0;border:0;background:transparent;box-shadow:none;
+  border-radius:0;color:#1a2852;
+}
+.dashboard-top .countdown-value{
+  color:#12246a;font:900 21px/1 'Inter',sans-serif;letter-spacing:-.04em;
+}
+.dashboard-top .countdown-name{
+  color:#1e2e5b;font-size:10px;font-weight:750;letter-spacing:0;text-transform:none;
+}
+.dashboard-top .cd-secondary .countdown-unit+.countdown-unit{
+  border-left:1px solid rgba(41,59,128,.23);padding-left:11px;
+}
+.dashboard-top .cd-syllabus{
+  min-width:158px;display:flex;flex-direction:column;justify-content:center;
+  padding:10px 13px;color:#3f260c;text-decoration:none;
+  border-radius:11px;border:1px solid #d4ad7d;
+  background:linear-gradient(125deg,#f0d5a7,#e9c28b);
+  box-shadow:0 2px 6px rgba(100,66,29,.07);
+  transition:transform .16s ease,box-shadow .16s ease;
+}
+.dashboard-top .cd-syllabus:hover{transform:translateY(-2px);box-shadow:0 6px 13px rgba(96,60,20,.13)}
+.dashboard-top .cd-syllabus-caption{
+  font-size:8.5px;letter-spacing:.08em;font-weight:850;
+}
+.dashboard-top .cd-syllabus-value{
+  display:flex;align-items:baseline;gap:8px;margin-top:4px;
+}
+.dashboard-top #syllabusRemaining{
+  font:900 27px/1 'Inter',sans-serif;letter-spacing:-.05em;color:#56340a;
+}
+.dashboard-top #syllabusRemainingUnit{
+  font-size:9px;line-height:1.22;font-weight:800;
+  max-width:95px;text-transform:uppercase;
+}
+.dashboard-top .cd-syllabus.is-overdue{
+  background:#ecd0ce;border-color:#dca29f;color:#732a27;
+}
+.dashboard-top .cd-syllabus.is-overdue #syllabusRemaining{color:#7d252c}
+.dashboard-top .theme-area{
+  display:flex;flex-direction:column;align-items:stretch;justify-content:center;
+  min-width:0;gap:12px;
+}
+.dashboard-top .theme-toggle{
+  width:100%;min-width:0;min-height:42px;
+  justify-content:center;background:rgba(255,255,255,.29);
+  border:1px solid rgba(50,70,114,.24);
+  color:#14203b;border-radius:10px;font-weight:800;font-size:12px;
+}
+.dashboard-top .theme-toggle:hover{background:rgba(255,255,255,.48)}
+.dashboard-top .live-clock{
+  min-width:0;width:100%;text-align:center;
+  background:rgba(255,255,255,.26);
+  border:1px solid rgba(50,70,114,.22);border-radius:13px;
+  padding:13px 8px 12px;
+}
+.dashboard-top .clock-switcher{display:flex;justify-content:center;gap:4px}
+.dashboard-top .clock-zone-btn{
+  min-width:0;background:transparent;border:1px solid transparent;
+  color:#202d4b;padding:7px 9px;font-size:10px;border-radius:7px;
+  font-weight:800;text-transform:none;
+}
+.dashboard-top .clock-zone-btn:hover{background:rgba(255,255,255,.38)}
+.dashboard-top .clock-zone-btn.active{
+  background:#2b4390!important;color:#fff!important;border-color:#2b4390!important;
+}
+.dashboard-top #liveDay{
+  color:#17223d;font-size:11px;font-weight:780;margin:9px 0 4px;
+}
+.dashboard-top #liveTime{
+  color:#0c1732;font-size:23px;font-weight:890;letter-spacing:-.04em;
+}
+.dashboard-top #liveZoneLabel{color:#17223d;font-size:10px;font-weight:700}
+
+/* A single highlighted next step rather than making every task compete. */
+#workspace-today #commandTasks .today-task.is-next{
+  position:relative;
+  background:linear-gradient(120deg,#d2dcf8,#e2e7fa);
+  border:2px solid #7388cc;
+  padding:14px 15px;
+  box-shadow:0 5px 16px rgba(63,79,145,.11);
+}
+#workspace-today #commandTasks .today-task.is-next strong{
+  color:#101b43;font-size:14px;font-weight:860;
+}
+#workspace-today #commandTasks .today-task.is-next small{color:#1d3158}
+#workspace-today #commandTasks .today-task.is-next::after{
+  content:"NEXT";position:absolute;right:13px;top:10px;
+  padding:3px 7px;font-size:9px;font-weight:900;letter-spacing:.06em;
+  color:#fff;background:#2b4390;border-radius:5px;
+}
+#workspace-today #commandTasks .today-task.is-next span{padding-right:38px}
+#workspace-today .today-summary-top strong{font-size:34px;color:var(--accent)}
+#workspace-overview .metric,
+#workspace-overview .readiness-score{font-size:32px;color:var(--accent);font-weight:890;letter-spacing:-.06em}
+#workspace-plan .roadmap-meta .pill{font-size:12px;font-weight:800;padding:8px 11px}
+#workspace-plan .roadmap-today .sprint-track>div{background:var(--accent)}
+#workspace-plan .roadmap-today .sprint-day{border-color:var(--accent)}
+
+/* Dark mode retains high readability without bright white panels. */
+html[data-theme="dark"] body>header.dashboard-top{color:#f5f7fd}
+html[data-theme="dark"] .dashboard-top .header-eyebrow{color:#aebdfd}
+html[data-theme="dark"] .dashboard-top .header-eyebrow::before{background:#a5b6ff}
+html[data-theme="dark"] .dashboard-top .header-title-area h1,
+html[data-theme="dark"] .dashboard-top .sub{color:#eff3ff!important}
+html[data-theme="dark"] .dashboard-top .header-next{
+  background:rgba(255,255,255,.07);border-color:#586483;color:#f5f6ff
+}
+html[data-theme="dark"] .dashboard-top .header-next-label,
+html[data-theme="dark"] .dashboard-top #headerNextModule{color:#f5f6ff}
+html[data-theme="dark"] .dashboard-top .countdown-spotlight{
+  background:linear-gradient(127deg,#273c79,#36488d 54%,#4d407b);
+  border-color:#6074bc;box-shadow:0 12px 36px rgba(0,0,0,.2);
+}
+html[data-theme="dark"] .dashboard-top .cd-eyebrow,
+html[data-theme="dark"] .dashboard-top #countdownDateLabel,
+html[data-theme="dark"] .dashboard-top #countdownHeroUnit,
+html[data-theme="dark"] .dashboard-top .cd-mode-label,
+html[data-theme="dark"] .dashboard-top .cd-secondary-caption,
+html[data-theme="dark"] .dashboard-top .countdown-unit,
+html[data-theme="dark"] .dashboard-top .countdown-name{color:#f2f3ff}
+html[data-theme="dark"] .dashboard-top #countdownHeroValue,
+html[data-theme="dark"] .dashboard-top .countdown-value{color:#fff}
+html[data-theme="dark"] .dashboard-top .cd-base{background:rgba(22,31,76,.25);border-color:#5666a3}
+html[data-theme="dark"] .dashboard-top .cd-secondary .countdown-unit+.countdown-unit{border-color:#596cba}
+html[data-theme="dark"] .dashboard-top .cd-mode-switch{background:rgba(255,255,255,.09)}
+html[data-theme="dark"] .dashboard-top .cd-mode-switch button{color:#f2f3ff}
+html[data-theme="dark"] .dashboard-top .cd-mode-switch button.active{background:#dbe2ff;color:#182a63}
+html[data-theme="dark"] .dashboard-top .theme-toggle,
+html[data-theme="dark"] .dashboard-top .live-clock{background:rgba(255,255,255,.06);border-color:#525e7e;color:#f5f7ff}
+html[data-theme="dark"] .dashboard-top #liveDay,
+html[data-theme="dark"] .dashboard-top #liveTime,
+html[data-theme="dark"] .dashboard-top #liveZoneLabel{color:#f5f7ff}
+html[data-theme="dark"] .dashboard-top .clock-zone-btn{color:#eef0ff}
+html[data-theme="dark"] .dashboard-top .clock-zone-btn.active{background:#dbe2ff!important;color:#1c306a!important;border-color:#dbe2ff!important}
+html[data-theme="dark"] #workspace-today #commandTasks .today-task.is-next{
+  background:#28385f;border-color:#768ce0;
+}
+html[data-theme="dark"] #workspace-today #commandTasks .today-task.is-next strong,
+html[data-theme="dark"] #workspace-today #commandTasks .today-task.is-next small{color:#fff}
+
+@media(max-width:1200px){
+  .dashboard-top .header-row{grid-template-columns:minmax(215px,.75fr) minmax(390px,1.4fr);gap:16px}
+  .dashboard-top .theme-area{grid-column:1/-1;display:grid;grid-template-columns:auto minmax(285px,1fr);align-items:center}
+  .dashboard-top .theme-toggle{width:auto;padding:10px 16px}
+  .dashboard-top .live-clock{display:flex;flex-wrap:wrap;gap:7px 12px;justify-content:flex-end;align-items:center;padding:9px 15px}
+  .dashboard-top #liveDay{margin:0}
+  .dashboard-top .clock-switcher{margin-right:7px}
+}
+@media(max-width:820px){
+  body>header.dashboard-top{padding:16px 15px}
+  .dashboard-top .header-row{grid-template-columns:1fr}
+  .dashboard-top .header-title-area{display:grid;grid-template-columns:1fr auto;gap:4px 15px;align-items:center}
+  .dashboard-top .header-eyebrow,.dashboard-top .header-title-area h1,.dashboard-top .sub{grid-column:1}
+  .dashboard-top .header-title-area h1{font-size:26px;margin:7px 0 0}
+  .dashboard-top .header-next{grid-row:1/4;grid-column:2;margin-top:0;min-width:155px}
+  .dashboard-top .countdown-spotlight{min-height:0}
+  .dashboard-top .cd-hero{padding:7px 18px 13px}
+  .dashboard-top .cd-head{padding:13px 18px 0}
+  .dashboard-top .cd-base{padding:13px 18px}
+  .dashboard-top .theme-area{grid-column:1;display:flex;flex-direction:row;align-items:stretch}
+  .dashboard-top .theme-toggle{width:auto;flex:none}
+  .dashboard-top .live-clock{flex:1;display:flex;flex-wrap:wrap;justify-content:center}
+}
+@media(max-width:580px){
+  .dashboard-top .header-title-area{grid-template-columns:1fr}
+  .dashboard-top .header-next{grid-column:1;grid-row:auto;margin-top:10px;max-width:100%}
+  .dashboard-top .cd-head{flex-wrap:wrap;gap:7px}
+  .dashboard-top #countdownDateLabel{font-size:10px}
+  .dashboard-top .cd-hero{flex-direction:column;align-items:flex-start;gap:7px}
+  .dashboard-top #countdownHeroValue{font-size:76px}
+  .dashboard-top .cd-mode{align-items:flex-start;padding-bottom:0}
+  .dashboard-top .cd-base{grid-template-columns:1fr}
+  .dashboard-top .cd-syllabus{width:100%}
+  .dashboard-top .theme-area{flex-direction:column;gap:8px}
+  .dashboard-top .theme-toggle{width:100%}
+  .dashboard-top .live-clock{width:100%;padding:12px}
+  .dashboard-top .cd-secondary{gap:8px}
+  .dashboard-top .countdown-value{font-size:19px}
+  #workspace-today #commandTasks .today-task.is-next span{padding-right:26px}
+}
+@media(prefers-reduced-motion:reduce){
+  .dashboard-top .cd-syllabus,
+  .dashboard-top .cd-mode-switch button,
+  .dashboard-top .header-next{transition:none}
+  .dashboard-top .cd-syllabus:hover,
+  .dashboard-top .header-next:hover{transform:none}
+}
