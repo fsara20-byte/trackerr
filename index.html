@@ -375,19 +375,54 @@ header{position:relative;padding:12px 23px}header h1{font-size:18px;font-weight:
 
 </style>
 <link rel="stylesheet" href="./workspace.css?v=20261104-header3"/>
+<link rel="stylesheet" href="./countdown-feature.css?v=20261104a"/>
 </head>
 <body>
-<header><div class="header-row"><div class="header-title-area">
-  <h1>CFA Level I Study Dashboard</h1>
-  <div class="exam-countdown" id="examCountdown" aria-live="polite">
-    <span class="countdown-label">Exam countdown</span>
-    <span class="countdown-unit"><span class="countdown-value" id="countdownMonths">—</span><span class="countdown-name">Months</span></span>
-    <span class="countdown-unit"><span class="countdown-value" id="countdownDays">—</span><span class="countdown-name">Days</span></span>
-    <span class="countdown-unit"><span class="countdown-value" id="countdownTotalDays">—</span><span class="countdown-name">Total days left</span></span>
-    <span class="countdown-date" id="countdownDateLabel">Set your exam date below</span>
+<header class="dashboard-top"><div class="header-row">
+  <div class="header-title-area">
+    <div class="header-eyebrow">CFA LEVEL I · FEBRUARY 2027</div>
+    <h1>CFA Level I<span>Study Dashboard</span></h1>
+    <p class="sub">Daily focus, curriculum and mock tracking</p>
+    <a class="header-next" href="#todayCommand" aria-label="Go to your next scheduled study module">
+      <span class="header-next-icon" aria-hidden="true">→</span>
+      <span><span class="header-next-label">YOUR NEXT MODULE</span><strong id="headerNextModule">Open today's checklist</strong></span>
+    </a>
   </div>
-  <div class="sub">Daily focus, curriculum and mock tracking</div>
-</div><div class="theme-area"><button aria-pressed="false" class="theme-toggle" id="themeToggle" onclick="toggleTheme()" type="button"><span class="theme-dot"></span><span id="themeToggleText">Dark mode</span></button><div class="live-clock">
+  <div class="exam-countdown countdown-spotlight" id="examCountdown" aria-label="CFA Level I exam countdown">
+    <div class="cd-head">
+      <span class="cd-eyebrow"><span class="cd-signal" aria-hidden="true"></span>EXAM COUNTDOWN</span>
+      <span id="countdownDateLabel">24 Feb 2027</span>
+    </div>
+    <div class="cd-hero">
+      <div class="cd-primary">
+        <span id="countdownHeroValue" aria-live="polite">—</span>
+        <span id="countdownHeroUnit">DAYS TO YOUR EXAM</span>
+      </div>
+      <div class="cd-mode">
+        <span class="cd-mode-label">DISPLAY</span>
+        <div class="cd-mode-switch" role="group" aria-label="Countdown display units">
+          <button type="button" data-countdown-mode="days" aria-pressed="true" class="active">Days</button>
+          <button type="button" data-countdown-mode="weeks" aria-pressed="false">Weeks</button>
+          <button type="button" data-countdown-mode="months" aria-pressed="false">Months</button>
+        </div>
+      </div>
+    </div>
+    <div class="cd-base">
+      <div class="cd-breakdown">
+        <div class="cd-secondary-caption">TIME REMAINING</div>
+        <div class="cd-secondary">
+          <span class="countdown-unit"><span class="countdown-value" id="countdownMonths">—</span><span class="countdown-name">months</span></span>
+          <span class="countdown-unit"><span class="countdown-value" id="countdownDays">—</span><span class="countdown-name">days</span></span>
+          <span class="countdown-unit"><span class="countdown-value" id="countdownTotalDays">—</span><span class="countdown-name">total days</span></span>
+        </div>
+      </div>
+      <a class="cd-syllabus" id="syllabusFocus" href="#sprintChecklist" aria-label="Open study plan and syllabus deadline">
+        <span class="cd-syllabus-caption">SYLLABUS TARGET · 30 NOV</span>
+        <span class="cd-syllabus-value"><strong id="syllabusRemaining">—</strong><span id="syllabusRemainingUnit">DAYS TO FINISH SYLLABUS</span></span>
+      </a>
+    </div>
+  </div>
+  <div class="theme-area"><button aria-pressed="false" class="theme-toggle" id="themeToggle" onclick="toggleTheme()" type="button"><span class="theme-dot"></span><span id="themeToggleText">Dark mode</span></button><div class="live-clock">
   <div class="clock-switcher" role="group" aria-label="Display time zone">
     <button class="clock-zone-btn" data-clock-zone="Dubai" onclick="setClockZone('Dubai')" type="button">Dubai</button>
     <button class="clock-zone-btn" data-clock-zone="Europe" onclick="setClockZone('Europe')" type="button">Europe</button>
@@ -396,8 +431,8 @@ header{position:relative;padding:12px 23px}header h1{font-size:18px;font-weight:
   <div id="liveDay">—</div>
   <strong id="liveTime">—</strong>
   <span id="liveZoneLabel">Dubai time</span>
-</div></div></div>
-</header>
+</div></div>
+</div></header>
 <nav class="top-nav" aria-label="Dashboard sections">
   <a href="#todayCommand">Today</a>
   <a href="#sprintChecklist">3 Nov – 2 Dec checklist</a><a href="#overview">Overview</a>
@@ -1623,4 +1658,5 @@ updateLiveClock();
 setInterval(()=>{updateLiveClock();updateExamCountdown()},1000);
 </script>
 <script src="./workspace.js?v=20261104"></script>
+<script src="./countdown-experience.js?v=20261104b"></script>
 </body></html>
